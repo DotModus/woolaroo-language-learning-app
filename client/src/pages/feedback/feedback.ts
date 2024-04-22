@@ -43,6 +43,8 @@ export class FeedbackPageComponent implements AfterViewInit {
       nativeWord: new FormControl(word ? word.translation : '', []),
       englishWord: new FormControl(word ? word.english : '', []),
       transliteration: new FormControl(word ? word.transliteration : '', []),
+      suggestedTranslation: new FormControl('', []),
+      suggestedTransliteration: new FormControl('', []),
       recording: new FormControl(null, []),
       content: new FormControl('', [
         Validators.required

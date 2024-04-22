@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IFeedbackService, FEEDBACK_CONFIG } from 'services/feedback';
-import { AddedWord, Feedback } from 'services/entities/feedback';
+import { Feedback } from 'services/entities/feedback';
 import {getLogger} from 'util/logging';
 
 interface APIFeedbackConfig {
@@ -33,6 +33,8 @@ export class APIFeedbackService implements IFeedbackService {
       language: feedback.language,
       native_language: feedback.nativeLanguage,
       transliteration: feedback.transliteration ? feedback.transliteration.toLowerCase() : feedback.transliteration,
+      suggested_translation: feedback.suggestedTranslation ? feedback.suggestedTranslation.toLowerCase() : feedback.suggestedTranslation,
+      suggested_transliteration: feedback.suggestedTransliteration ? feedback.suggestedTransliteration.toLowerCase() : feedback.suggestedTransliteration,
       sound_link: soundUrl,
       types: feedback.types,
       content: feedback.content
@@ -41,21 +43,25 @@ export class APIFeedbackService implements IFeedbackService {
     logger.log('Feedback sent');
   }
 
-  public async addWord(word: AddedWord): Promise<any> {
+  public async addWord(feedback: Feedback): Promise<any> {
     let soundUrl: string|null = null;
-    if (word.recording) {
+    if (feedback.recording) {
       logger.log('Sending audio');
-      soundUrl = await this.http.post(this.config.addWordAudioEndpointURL, word.recording, { responseType: 'text' }).toPromise();
+      soundUrl = await this.http.post(this.config.addWordAudioEndpointURL, feedback.recording, { responseType: 'text' }).toPromise();
     }
     logger.log('Adding word');
     const requestBody = {
-      primary_word: word.word ? word.word.toLowerCase() : word.word,
-      english_word: word.englishWord ? word.englishWord.toLowerCase() : word.englishWord,
-      translation: word.nativeWord ? word.nativeWord.toLowerCase() : word.nativeWord,
-      transliteration: word.transliteration ? word.transliteration.toLowerCase() : word.transliteration,
-      language: word.language,
-      native_language: word.nativeLanguage,
-      sound_link: soundUrl
+      primary_word: feedback.word ? feedback.word.toLowerCase() : feedback.word,
+      english_word: feedback.englishWord ? feedback.englishWord.toLowerCase() : feedback.englishWord,
+      translation: feedback.nativeWord ? feedback.nativeWord.toLowerCase() : feedback.nativeWord,
+      language: feedback.language,
+      native_language: feedback.nativeLanguage,
+      transliteration: feedback.transliteration ? feedback.transliteration.toLowerCase() : feedback.transliteration,
+      suggested_translation: feedback.suggestedTranslation ? feedback.suggestedTranslation.toLowerCase() : feedback.suggestedTranslation,
+      suggested_transliteration: feedback.suggestedTransliteration ? feedback.suggestedTransliteration.toLowerCase() : feedback.suggestedTransliteration,
+      sound_link: soundUrl,
+      types: ["suggested"],
+      content: ''
     };
     await this.http.post(this.config.addWordEndpointURL, requestBody, { responseType: 'text' }).toPromise();
     logger.log('Word added');

@@ -1,21 +1,20 @@
 export enum FeedbackType {
-  IncorrectTranslation = 'IncorrectTranslation',
-  OffensiveTranslation = 'OffensiveTranslation',
-  AlternateTranslation = 'AlternateTranslation',
+  IncorrectTranslation = 'incorrect',
+  OffensiveTranslation = 'offensive',
+  SuggestedTranslation = 'offensive',
   Other = 'Other'
 }
 
-export interface AddedWord {
+export interface Feedback {
   word: string;
   language: string;
   englishWord: string;
   nativeWord: string;
   nativeLanguage: string;
   transliteration: string;
+  suggestedTranslation: string;
+  suggestedTransliteration: string;
   recording: Blob|null;
-}
-
-export interface Feedback extends AddedWord {
   types: FeedbackType[];
   content: string;
 }

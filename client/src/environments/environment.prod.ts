@@ -403,8 +403,8 @@ export const environment = {
       type: APIFeedbackService,
       config: {
         addWordAudioEndpointURL: `${params.apiUrl}/saveAudioSuggestions`,
-        addWordEndpointURL: `${params.apiUrl}/addSuggestions`,
-        feedbackEndpointURL: `${params.apiUrl}/addFeedback`
+        addWordEndpointURL: `${params.apiUrl}/create_feedback`,
+        feedbackEndpointURL: `${params.apiUrl}/create_feedback`
       }
     }
   }

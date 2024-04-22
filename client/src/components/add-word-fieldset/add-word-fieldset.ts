@@ -50,9 +50,9 @@ export class AddWordFieldsetComponent {
   // only show primary language word if current language is not english
   public get primaryLanguageWordAvailable(): boolean { return this.i18n.currentLanguage.code != DEFAULT_LOCALE; }
 
-  @Input()
-  public formGroup: FormGroup | undefined = undefined;
-
+  @Input() public formGroup: FormGroup | undefined = undefined;
+  @Input() public includeRecording: boolean = true;
+  
   constructor(
     @Inject(ADD_WORD_FIELDSET_CONFIG) private config: AddWordFieldsetConfig,
     private zone: NgZone,

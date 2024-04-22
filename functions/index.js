@@ -106,7 +106,7 @@ async function saveFeedback(spreadsheetId, sheetTitle, data) {
     });
 }
 
-exports.addSuggestions = async (req, res) => {
+exports.create_feedback = async (req, res) => {
     addSecurityHeaders(res);
     return cors(req, res, async () => {
         if (!validation.isTargetLanguage(req.body.native_language)) {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IFeedbackService } from '../feedback';
-import { Feedback, AddedWord } from '../entities/feedback';
+import { Feedback } from '../entities/feedback';
 import {getLogger} from 'util/logging';
 
 const logger = getLogger('MockFeedbackService');
@@ -16,10 +16,10 @@ export class MockFeedbackService implements IFeedbackService {
     });
   }
 
-  public addWord(word: AddedWord): Promise<any> {
+  public addWord(feedback: Feedback): Promise<any> {
     return new Promise((resolve) => {
       setTimeout(() => {
-        logger.log('Added word: ' + word.englishWord);
+        logger.log('Added word: ' + feedback.englishWord);
         resolve();
       }, 2000);
     });

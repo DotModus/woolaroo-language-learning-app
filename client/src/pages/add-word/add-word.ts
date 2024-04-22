@@ -13,7 +13,7 @@ import { environment } from '../../environments/environment';
 import { DEFAULT_LOCALE } from '../../util/locale';
 import { I18nService } from '../../i18n/i18n.service';
 import { EndangeredLanguageService } from '../../services/endangered-language';
-import { AddedWord } from '../../services/entities/feedback';
+import { Feedback } from '../../services/entities/feedback';
 import { getLogger } from '../../util/logging';
 
 const logger = getLogger('AddWordPageComponent');
@@ -52,8 +52,17 @@ export class AddWordPageComponent implements AfterViewInit {
       ]),
       transliteration: new FormControl(word ? word.transliteration : '', [
       ]),
+      suggestedTranslation: new FormControl('', [
+      ]),
+      suggestedTransliteration: new FormControl('', [
+      ]),
       recording: new FormControl(null, [
       ]),
+      content: new FormControl(null, [
+      ]),
+      types: new FormControl(null, [
+      ]),
+
     });
     this.prevPageCssClass = history.state.prevPageCssClass;
   }
@@ -72,12 +81,12 @@ export class AddWordPageComponent implements AfterViewInit {
     }
     this.submittingForm = true;
     const loadingPopup = this.dialog.open(LoadingPopUpComponent, { panelClass: 'loading-popup' });
-    const addedWord: AddedWord = this.form.value;
-    if (!addedWord.word && this.i18n.currentLanguage.code == DEFAULT_LOCALE) {
-      addedWord.word = addedWord.englishWord;
+    const feedback: Feedback = this.form.value;
+    if (!feedback.word && this.i18n.currentLanguage.code == DEFAULT_LOCALE) {
+      feedback.word = feedback.englishWord;
     }
-    addedWord.language = this.i18n.currentLanguage.code;
-    addedWord.nativeLanguage = this.endangeredLanguageService.currentLanguage.code;
+    feedback.language = this.i18n.currentLanguage.code;
+    feedback.nativeLanguage = this.endangeredLanguageService.currentLanguage.code;
     this.feedbackService.addWord(this.form.value).then(
       () => {
         logger.log('Added word submitted');

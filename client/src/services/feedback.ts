@@ -1,9 +1,9 @@
 import { InjectionToken } from '@angular/core';
-import { Feedback, AddedWord } from './entities/feedback';
+import { Feedback } from './entities/feedback';
 
 export interface IFeedbackService {
   sendFeedback(feedback: Feedback): Promise<any>;
-  addWord(word: AddedWord): Promise<any>;
+  addWord(feedback: Feedback): Promise<any>;
 }
 
 export const FEEDBACK_SERVICE = new InjectionToken<IFeedbackService>('Feedback service');

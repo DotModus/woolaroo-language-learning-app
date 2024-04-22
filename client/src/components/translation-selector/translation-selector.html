@@ -24,8 +24,7 @@
   <audio #audioPlayer [src]="selectedWord.soundURL | gcsUrl" preload="none" (play)="onAudioPlaying()"
     (ended)="onAudioStopped()" (pause)="onAudioStopped()"></audio>
 </div>
-<div class="translation-not-found" [class.hidden]="!selectedWordVisible"
-  *ngIf="selectedWord && !selectedWord.translation">
+<div class="translation-not-found" [class.hidden]="!selectedWordVisible">
   <div class="message" (click)="onAddTranslationClick()">
     <app-icon icon="add" shadow="true"></app-icon>
     <span [innerHTML]="'Add word' | translate:'addWord'"></span>
