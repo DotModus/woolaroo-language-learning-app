@@ -20,29 +20,37 @@ export class APIFeedbackService implements IFeedbackService {
 	public async sendFeedback(feedback: Feedback): Promise<any> {
 		logger.log("Sending feedback");
 		const requestBody = {
-			primary_word: feedback.word
-				? feedback.word.toLowerCase()
-				: feedback.word,
-			english_word: feedback.englishWord
-				? feedback.englishWord.toLowerCase()
-				: feedback.englishWord,
-			translation: feedback.nativeWord
-				? feedback.nativeWord.toLowerCase()
-				: feedback.nativeWord,
-			transliteration: feedback.transliteration
-				? feedback.transliteration.toLowerCase()
-				: feedback.transliteration,
-			suggested_translation: feedback.suggestedTranslation
-				? feedback.suggestedTranslation.toLowerCase()
-				: feedback.suggestedTranslation,
-			suggested_transliteration: feedback.suggestedTransliteration
-				? feedback.suggestedTransliteration.toLowerCase()
-				: feedback.suggestedTransliteration,
-			language: feedback.language,
-			native_language: feedback.nativeLanguage,
-			types: feedback.types,
-			content: feedback.content || "",
-		};
+			primary_word: feedback.word 
+				? feedback.word.toLowerCase() 
+				: "",
+			english_word: feedback.englishWord 
+				? feedback.englishWord.toLowerCase() 
+				: "",
+			translation: feedback.nativeWord 
+				? feedback.nativeWord.toLowerCase() 
+				: "",
+			transliteration: feedback.transliteration 
+				? feedback.transliteration.toLowerCase() 
+				: "",
+			suggested_translation: feedback.suggestedTranslation 
+				? feedback.suggestedTranslation.toLowerCase() 
+				: "",
+			suggested_transliteration: feedback.suggestedTransliteration 
+				? feedback.suggestedTransliteration.toLowerCase() 
+				: "",
+			language: feedback.language 
+				? feedback.language 
+				: "",
+			native_language: feedback.nativeLanguage 
+				? feedback.nativeLanguage 
+				: "",
+			types: feedback.types 
+				? feedback.types 
+				: "",
+			content: feedback.content 
+				? feedback.content 
+				: "",
+		};		
 		const resp = await this.http
 			.post(this.config.feedbackEndpointURL, requestBody, {
 				responseType: "text",
