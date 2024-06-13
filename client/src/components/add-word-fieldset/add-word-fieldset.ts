@@ -54,11 +54,4 @@ export class AddWordFieldsetComponent {
     this.gboardUrl = this.operatingSystem === OperatingSystem.Android ?
       this.config.androidGBoardUrl : this.config.iosGBoardUrl;
   }
-
-  public fieldHasError(field: string, error: string): boolean {
-    if (!this.formGroup) {
-      return false;
-    }
-    return this.formGroup.controls[field].hasError(error);
-  }
 }
