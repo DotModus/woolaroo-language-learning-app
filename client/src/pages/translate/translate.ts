@@ -383,7 +383,6 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 		this.renderShareImage();
 	}
 
-	// Make necessary changes such that the following function uses the right transalation and not the first in array
 	onWordShared({
 		word,
 		translation,
