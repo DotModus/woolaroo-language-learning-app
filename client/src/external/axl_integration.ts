@@ -1,9 +1,4 @@
-declare global {
-    class AxL {
-        handshake(): Promise<{[key: string]: any}>
-    }
-}
-
+import AxL from './axl';
 
 export const axlHandshake = async () => {
     const axl = new AxL();

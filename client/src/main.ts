@@ -3,11 +3,11 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 import { getLogger, enableLogging } from './util/logging';
-import { axlHandshake } from './external/axl'
 
 if (environment.production) {
   enableProdMode();
 } else {
+  console.log("It should be in dev mode");
   (window as any)._y010 = 1;
 }
 if (environment.loggingEnabled) {
@@ -15,6 +15,8 @@ if (environment.loggingEnabled) {
 }
 
 const logger = getLogger('EndangeredLanguageService');
+
+import { axlHandshake } from './external/axl_integration';
 
 axlHandshake()
   .then(() => {
