@@ -1,7 +1,7 @@
 import AxL from './axl';
 
-export const axlHandshake = async () => {
+export const axlHandshake = () => {
     const axl = new AxL();
     const handshake = axl.handshake();
-    return handshake;
+    return {axl, handshake};
 }
