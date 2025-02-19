@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, Inject, InjectionToken } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IAnalyticsService, ANALYTICS_SERVICE } from '../../services/analytics';
 
 interface TermsPageConfig {
@@ -20,6 +20,7 @@ export class TermsPageComponent implements AfterViewInit {
 
   constructor(@Inject(TERMS_PAGE_CONFIG) private config: TermsPageConfig,
     private router: Router,
+    private route: ActivatedRoute,
     @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService) {
     this.content = config.content;
   }
@@ -30,6 +31,6 @@ export class TermsPageComponent implements AfterViewInit {
 
   onCloseClick(ev: MouseEvent) {
     ev.stopPropagation();
-    history.back();
+    this.router.navigate([".."], {relativeTo: this.route})
   }
 }

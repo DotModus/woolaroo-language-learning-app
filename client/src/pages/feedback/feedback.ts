@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Inject } from '@angular/core';
 import { Location } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
@@ -31,6 +31,7 @@ export class FeedbackPageComponent implements AfterViewInit {
 
   constructor(private router: Router,
     private location: Location,
+    private route: ActivatedRoute,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private i18n: I18nService,
@@ -104,7 +105,7 @@ export class FeedbackPageComponent implements AfterViewInit {
   onCloseClick(ev: Event) {
     ev.stopPropagation();
     ev.preventDefault();
-    history.back();
+    this.router.navigate([".."], {relativeTo: this.route})
   }
 
 

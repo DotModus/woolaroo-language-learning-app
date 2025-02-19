@@ -88,4 +88,4 @@ handlers:
         style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
         media-src 'self' https://storage.googleapis.com https://www.googleapis.com;
         manifest-src 'self';
-        frame-ancestors 'self' https://axl-debugger-dot-cilex-common.appspot.com;
+        frame-ancestors 'self' https://axl-debugger-dot-cilex-common.appspot.com https://artsandculture.google.com;

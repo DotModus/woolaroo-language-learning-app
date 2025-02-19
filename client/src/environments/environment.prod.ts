@@ -35,13 +35,13 @@ export const environment = {
 				direction: "ltr",
 				default: params.language === "es",
 			},
-			/*{
-		code: 'hi',
-		name: 'हिन्दी',
-		file: params.assetsBaseUrl + 'locale/hi.json',
-		direction: 'ltr',
-		default: params.language === 'hi'
-	  },*/
+			{
+				code: 'hi',
+				name: 'हिन्दी',
+				file: params.assetsBaseUrl + 'locale/hi.json',
+				direction: 'ltr',
+				default: params.language === 'hi'
+			},
 			{
 				code: "ar",
 				name: "اَلْعَرَبِيَّةُ",
