@@ -39,12 +39,12 @@ export const environment = {
 				file: params.assetsBaseUrl + "assets/locale/es.json",
 				direction: "ltr",
 			},
-			/*{
-        code: 'hi',
-        name: 'हिन्दी',
-        file: params.assetsBaseUrl + 'assets/locale/hi.json',
-        direction: 'ltr'
-      },*/
+			{
+				code: 'hi',
+				name: 'हिन्दी',
+				file: params.assetsBaseUrl + 'assets/locale/hi.json',
+				direction: 'ltr'
+			},
 			{
 				code: "ar",
 				name: "اَلْعَرَبِيَّةُ",

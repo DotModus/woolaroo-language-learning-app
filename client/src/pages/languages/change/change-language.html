@@ -5,9 +5,6 @@
 	<app-camera-preview></app-camera-preview>
 	}
 
-	<button (click)="onCloseClick()" class="close" aria-label="Close">
-		<app-icon icon="close"></app-icon>
-	</button>
 	<div class="ui-language">
 		<span
 			class="label"
@@ -66,5 +63,9 @@
 	>
 		<span [innerHTML]="'View by region'| translate:'view_by_region'"></span>
 	</button>
+	<button mat-flat-button color="accent" (click)="onCloseClick()" class="close">
+		<span [innerHTML]="'Close' | translate:'close'"></span>
+	</button>
+
 	}
 </div>

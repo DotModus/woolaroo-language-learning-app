@@ -47,17 +47,29 @@ export class I18nService {
 		@Inject(I18N_SERVICE_CONFIG) private config: I18nServiceConfig
 	) {
 		this._translations = null;
-		this._currentLanguage =
-			this.config.languages.find((lang) => lang.default) ||
-			this.config.languages[0];
+		this.checkParams();
 		this.initI8n();
+	}
+
+	checkParams() {
+		const windowparams = new URLSearchParams(window.location.search);
+		const docparams = new URLSearchParams(document.location.search);
+		const params = windowparams.size > 0 ? windowparams : docparams;
+		const paramslang = params.get("locale") || params.get("lang");
+		this._currentLanguage = this.config.languages.find((lang) => {
+			if (paramslang) {
+				localStorage.removeItem('profile');
+				console.log(paramslang);
+				return lang.code === paramslang;
+			} else {
+				return lang.default || this.config.languages[0];
+			}
+		})
 	}
 
 	public async initI8n() {
 		this._translations = null;
-		this._currentLanguage =
-			this.config.languages.find((lang) => lang.default) ||
-			this.config.languages[0];
+		this.checkParams();
 		await this.loadTranslations(this._currentLanguage);
 	}
 

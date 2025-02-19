@@ -276,15 +276,34 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 		history.replaceState(state, "");
 	}
 
+	async cleanTranslationResponse(translations: WordTranslation[]): Promise<WordTranslation[]> {
+		const result = translations.map((item: WordTranslation, index: number) => {
+			if (item?.translations?.length > 0) {
+				let resi = item.translations.map((el: Translation, index) => el.translation.length ? el : null).filter(x => x !== null);
+				if (resi.length > 0) {
+					return item
+				} else {
+					return null
+				}
+			} else {
+
+				return null
+			}
+		}).filter(x => x !== null);
+		return result
+	}
+
 	async loadTranslations(words: string[]): Promise<void> {
 		let translations: WordTranslation[];
 		try {
-			translations = await this.translationService.translate(
+			
+			let _translations: WordTranslation[] = await this.translationService.translate(
 				words,
 				this.i18n.currentLanguage.code,
 				this.endangeredLanguageService.currentLanguage.code,
 				1
-			);
+			)
+			translations = await this.cleanTranslationResponse(_translations);
 		} catch (ex) {
 			logger.warn("Error loading translations", ex);
 			// show words as if none had translations

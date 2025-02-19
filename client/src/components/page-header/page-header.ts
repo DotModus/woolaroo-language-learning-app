@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-page-header',
@@ -6,8 +7,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./page-header.scss']
 })
 export class PageHeaderComponent {
+
+  constructor(
+    private readonly router: Router,
+    private readonly route: ActivatedRoute
+  ) { }
+
   onCloseClick(ev: MouseEvent) {
     ev.stopPropagation();
-    history.back();
+    this.router.navigate([".."], {relativeTo: this.route})
   }
 }
