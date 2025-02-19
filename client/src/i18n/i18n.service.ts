@@ -59,7 +59,6 @@ export class I18nService {
 		this._currentLanguage = this.config.languages.find((lang) => {
 			if (paramslang) {
 				localStorage.removeItem('profile');
-				console.log(paramslang);
 				return lang.code === paramslang;
 			} else {
 				return lang.default || this.config.languages[0];
