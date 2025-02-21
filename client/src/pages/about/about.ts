@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, Inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IAnalyticsService, ANALYTICS_SERVICE } from '../../services/analytics';
 
 @Component({
@@ -9,6 +9,7 @@ import { IAnalyticsService, ANALYTICS_SERVICE } from '../../services/analytics';
 })
 export class AboutPageComponent implements AfterViewInit {
   constructor(private router: Router,
+    private route: ActivatedRoute,
     @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService) {
   }
 
@@ -18,6 +19,6 @@ export class AboutPageComponent implements AfterViewInit {
 
   onCloseClick(ev: MouseEvent) {
     ev.stopPropagation();
-    history.back();
+    this.router.navigate([".."], {relativeTo: this.route})
   }
 }

@@ -126,20 +126,12 @@
 		}
 	}
 	.close {
-		@include icon-button;
 		color: mat.get-color-from-palette($app-inverted, "500-contrast");
-		position: absolute;
-		top: 8px;
-		right: 8px;
-		width: 36px;
-		height: 36px;
-		app-icon {
-			width: 24px;
-			height: 24px;
-			padding: 5px;
-			border-radius: 50%;
-			background-color: rgba(0, 0, 0, 0.3);
-		}
+		background-color: #4d4949 !important;
+		width: calc(100vw - 80px);
+		max-width: 320px;
+		margin-bottom: 40px;
+		flex: 0 0 auto;
 	}
 	.next {
 		width: calc(100vw - 80px);

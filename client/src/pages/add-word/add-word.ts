@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Inject, NgZone } from "@angular/core";
 import { Location } from "@angular/common";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
@@ -34,6 +34,7 @@ export class AddWordPageComponent implements AfterViewInit {
 
 	constructor(
 		private router: Router,
+		private route: ActivatedRoute,
 		private location: Location,
 		private dialog: MatDialog,
 		private snackBar: MatSnackBar,
@@ -151,6 +152,6 @@ export class AddWordPageComponent implements AfterViewInit {
 	onCloseClick(ev: Event) {
 		ev.preventDefault();
 		ev.stopPropagation();
-		history.back();
+		this.router.navigate([".."], {relativeTo: this.route})
 	}
 }

@@ -63,7 +63,7 @@ export class ViewLanguagePageComponent {
 
 	onBackClick(ev: MouseEvent) {
 		ev.stopPropagation();
-		history.back();
+		this.router.navigate([".."], {relativeTo: this.route})
 	}
 	prefixImageUrl(sampleWordImageURL: string): string {
 		return `${this.endangeredLanguageService.imageAssetsURL}${sampleWordImageURL}`;
