@@ -1,4 +1,3 @@
-import { axlHandshake } from './../../external/axl_integration';
 import { HttpClient } from "@angular/common/http";
 import {
 	Component,
