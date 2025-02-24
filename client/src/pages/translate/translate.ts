@@ -1,3 +1,4 @@
+import { axlHandshake } from './../../external/axl_integration';
 import { HttpClient } from "@angular/common/http";
 import {
 	Component,
@@ -12,7 +13,7 @@ import {
 	MatDialog,
 	MatDialogRef
 } from "@angular/material/dialog";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { AppRoutes } from "../../app/routes";
 import { LoadingPopUpComponent } from "../../components/loading-popup/loading-popup";
 import { I18nService } from "../../i18n/i18n.service";
@@ -146,6 +147,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 		private http: HttpClient,
 		private dialog: MatDialog,
 		private router: Router,
+		private route: ActivatedRoute,
 		private zone: NgZone,
 		private sessionService: SessionService,
 		private i18n: I18nService,
@@ -164,6 +166,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 				: -1;
 		const image: Blob | undefined = history.state.image;
 		const imageURL: string | undefined = history.state.imageURL;
+		const targetLanguage = this.route.snapshot.queryParams.target_lang;
 		const words: string[] | undefined =
 			history.state.words || this.config.debugWords;
 		let loadingPopUp: MatDialogRef<any> | undefined =
@@ -180,6 +183,10 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 					(this.sessionService.currentSession.currentModal = null),
 			});
 		}
+
+		this.endangeredLanguageService.setLanguage(
+			targetLanguage || 'san'
+		);
 		this.initImageTranslations(image, imageURL, words).then(
 			() => {
 				loadingPopUp?.close();
@@ -296,7 +303,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 	async loadTranslations(words: string[]): Promise<void> {
 		let translations: WordTranslation[];
 		try {
-			
+
 			let _translations: WordTranslation[] = await this.translationService.translate(
 				words,
 				this.i18n.currentLanguage.code,

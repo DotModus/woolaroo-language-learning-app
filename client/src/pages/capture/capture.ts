@@ -6,7 +6,7 @@ import {
 	ViewChild,
 } from "@angular/core";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import {
 	CameraPreviewComponent,
 	CameraPreviewStatus,
@@ -30,6 +30,7 @@ const logger = getLogger("CapturePageComponent");
 
 export class ImageLoaderPageBase {
 	constructor(
+		private route: ActivatedRoute,
 		protected router: Router,
 		protected i18n: I18nService,
 		protected dialog: MatDialog,
@@ -61,8 +62,12 @@ export class ImageLoaderPageBase {
 		this.imageRecognitionService.loadDescriptions(image).then(
 			(descriptions) => {
 				if (descriptions.length > 0) {
+					const targetLanguage = this.route.snapshot.queryParams.target_lang;
+
+					let url = targetLanguage ? `${AppRoutes.Translate}?target_lang=${targetLanguage}` : AppRoutes.Translate;
+
 					this.router
-						.navigateByUrl(AppRoutes.Translate, {
+						.navigateByUrl(url, {
 							state: {
 								image,
 								imageURL: URL.createObjectURL(image),
@@ -124,6 +129,7 @@ export class CapturePageComponent
 	public sidenavOpen = false;
 
 	constructor(
+		route: ActivatedRoute,
 		router: Router,
 		dialog: MatDialog,
 		sessionService: SessionService,
@@ -133,7 +139,7 @@ export class CapturePageComponent
 		imageRecognitionService: IImageRecognitionService,
 		@Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService
 	) {
-		super(router, i18n, dialog, sessionService, imageRecognitionService);
+		super(route, router, i18n, dialog, sessionService, imageRecognitionService);
 	}
 
 	ngAfterViewInit() {
@@ -197,6 +203,8 @@ export class CapturePageComponent
 	}
 
 	onCaptureClick() {
+		console.log("onCaptureClick");
+
 		if (!this.cameraPreview) {
 			return;
 		} else if (this.cameraPreview.status !== CameraPreviewStatus.Started) {

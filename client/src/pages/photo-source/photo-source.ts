@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, Inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { IAnalyticsService, ANALYTICS_SERVICE } from '../../services/analytics';
 import { IImageRecognitionService, IMAGE_RECOGNITION_SERVICE } from '../../services/image-recognition';
@@ -21,14 +21,16 @@ export class PhotoSourcePageComponent extends ImageLoaderPageBase implements Aft
   private _profileService: IProfileService;
   public get cameraIsAvailable() { return cameraStreamIsAvailable(); }
 
-  constructor(router: Router,
-    dialog: MatDialog,
+  constructor(
+    route: ActivatedRoute,
+    router: Router,
     i18n: I18nService,
+    dialog: MatDialog,
     sessionService: SessionService,
     @Inject(PROFILE_SERVICE) profileService: IProfileService,
     @Inject(IMAGE_RECOGNITION_SERVICE) imageRecognitionService: IImageRecognitionService,
     @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService) {
-    super(router, i18n, dialog, sessionService, imageRecognitionService);
+    super(route, router, i18n, dialog, sessionService, imageRecognitionService);
     this._profileService = profileService;
   }
 
