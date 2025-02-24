@@ -203,7 +203,6 @@ export class CapturePageComponent
 	}
 
 	onCaptureClick() {
-		console.log("onCaptureClick");
 
 		if (!this.cameraPreview) {
 			return;
