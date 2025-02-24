@@ -125,12 +125,20 @@ export class AppComponent implements OnInit {
 				while (route.firstChild) {
 					route = route.firstChild;
 				}
+				const targetLanguage = route.snapshot.queryParams.target_lang;
+
 				route.paramMap.subscribe((map) => {
+
 					const uiLanguage = map.get("uiLanguage");
+
 					if (uiLanguage) {
 						this.i18nService.setLanguage(uiLanguage);
+					} else if (targetLanguage) {
+						this.i18nService.setLanguage(targetLanguage);
 					}
+
 					const endangeredLanguage = map.get("endangeredLanguage");
+
 					if (endangeredLanguage) {
 						this.endangeredLanguageService.setLanguage(
 							endangeredLanguage
