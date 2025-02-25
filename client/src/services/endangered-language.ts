@@ -7,6 +7,7 @@ import {
 import { getLogger } from "../util/logging";
 import { HttpClient } from "@angular/common/http";
 import { I18nService } from "../i18n/i18n.service";
+import AxL from "../external/axl";
 
 const logger = getLogger("EndangeredLanguageService");
 
@@ -144,6 +145,8 @@ export class EndangeredLanguageService {
 		this._currentLanguage = newLanguage;
 		this.currentLanguageChanged.emit(this._currentLanguage.code);
 		localStorage.setItem("currentLanguage", code);
+		const URL_PARAMS = JSON.parse(localStorage.getItem('URL_PARAMS') || '{}');
+		window.axl.sendMessage(AxL.ChildToHost.SET_URL_PARAMS, { ...URL_PARAMS, target_lang: code });
 	}
 
 	public setLanguages(languages: EndangeredLanguage[]) {

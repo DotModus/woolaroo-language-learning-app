@@ -7,6 +7,7 @@ import {
 import { HttpClient } from "@angular/common/http";
 import { Direction } from "@angular/cdk/bidi";
 import { getLogger } from "../util/logging";
+import AxL from "../external/axl";
 
 export interface Language {
 	code: string;
@@ -81,6 +82,8 @@ export class I18nService {
 		}
 		this._currentLanguage = language;
 		await this.loadTranslations(language);
+		const URL_PARAMS = JSON.parse(localStorage.getItem('URL_PARAMS') || '{}');
+		window.axl.sendMessage(AxL.ChildToHost.SET_URL_PARAMS, { ...URL_PARAMS, lang: language.code });
 	}
 
 	async loadTranslations(lang: Language) {
