@@ -68,7 +68,7 @@ export class TranslationSelectorComponent {
 	}
 
 	public selectedTranslation: string | null = null;
-
+	public showSentence = true;
 	public selectedWordVisible = false;
 	public selectedWord: WordTranslation | null = null;
 	@Input()
@@ -200,6 +200,10 @@ export class TranslationSelectorComponent {
 				translation: this.selectedTranslation,
 			});
 		}
+	}
+
+	toggleShowSentence() {
+		this.showSentence = !this.showSentence;
 	}
 
 	onTranslationSelectionChange(ev: number) {
