@@ -17,7 +17,9 @@
 	<div class="translation">
 		<div class="regions">
 
-			<app-scroll-list [currentItem]="translationIndex"
+			<app-scroll-list
+				[currentItem]="translationIndex"
+				*ngIf="!showSentence"
 				(currentItemChanged)="onTranslationSelectionChange($event)" dir="ltr">
 				@for(_trans of selectedWord.translations; track trackTrans){
 				<ng-container>
@@ -25,9 +27,9 @@
 				</ng-container>Y
 				}
 			</app-scroll-list>
-			<span></span>
+
 			<div class="sentence"
-				*ngIf="selectedWord.translations[0].sentence.toLowerCase() !== selectedWord.translations[0].transliteration.toLowerCase() && selectedWord.translations[0].sentence !=null">
+				*ngIf="selectedWord.translations[0].sentence.toLowerCase() !== selectedWord.translations[0].transliteration.toLowerCase() && selectedWord.translations[0].sentence !=null && showSentence">
 				<span>{{ selectedWord.translations[0].split_sentence[0] }}&nbsp;</span>
 				<span class="main-word">{{ selectedWord.translations[0].split_sentence[1] }}</span>
 				<span>&nbsp;{{ selectedWord.translations[0].split_sentence[2] }}</span>
@@ -37,11 +39,19 @@
 							[ngClass]="{ 'main-word': word.replace('.','').replace(',','').trim() == selectedWord.translations[0].translated_word.trim()}">{{word.replace('.','')}}</span>
 						<span
 							*ngIf="i < selectedWord.translations[0].sentence.split(' ').length - 1">&nbsp;</span></span>
-					  
+
 
 				</span> -->
 
 			</div>
+			<span>
+				<button class='view-word'  *ngIf='showSentence' (click)="toggleShowSentence()">
+					Show word
+				</button>
+				<button class='view-word'  *ngIf='!showSentence' (click)="toggleShowSentence()">
+					View word in sentence by Gemini
+				</button>
+			</span>
 		</div>
 
 

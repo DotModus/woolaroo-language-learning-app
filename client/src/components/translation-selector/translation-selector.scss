@@ -62,7 +62,7 @@
         background-color: rgb(255, 162, 0);
       }
     }
-  
+
   }
 	.translation,
 	.transliteration {
@@ -261,5 +261,12 @@ app-word-scroll-list {
     letter-spacing: 0.1rem;
     text-align: center;
     color: #fff;
+	text-shadow: 1px 1px 5px rgb(0, 0, 0) !important;
+}
+
+.view-word {
+	font-size: 16px !important;
+	color: #f59a41 !important;
+	text-decoration: underline !important;
 	text-shadow: 1px 1px 5px rgb(0, 0, 0) !important;
 }

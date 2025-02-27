@@ -83,7 +83,9 @@ export class I18nService {
 		this._currentLanguage = language;
 		await this.loadTranslations(language);
 		const URL_PARAMS = JSON.parse(localStorage.getItem('URL_PARAMS') || '{}');
-		window.axl.sendMessage(AxL.ChildToHost.SET_URL_PARAMS, { ...URL_PARAMS, lang: language.code });
+
+		const message = { ...URL_PARAMS, lang: language.code };
+		window.axl.sendMessage(AxL.ChildToHost.SET_URL_PARAMS, message);
 	}
 
 	async loadTranslations(lang: Language) {
