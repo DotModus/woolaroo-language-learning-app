@@ -10,6 +10,8 @@ import {
 import { IProfileService, PROFILE_SERVICE } from "../../../services/profile";
 import { loadCapturePageURL } from "../../../util/camera";
 import { getLogger } from "../../../util/logging";
+import { AxlService } from "../../../services/axl.service";
+import AxL from "../../../external/axl";
 interface PersistHistory {
 	image: Blob;
 	imageURL: string;
@@ -79,6 +81,7 @@ export class ChangeLanguagePageComponent implements AfterViewInit {
 	constructor(
 		private router: Router,
 		private i18nService: I18nService,
+		private axl: AxlService,
 		@Inject(PROFILE_SERVICE) private profileService: IProfileService,
 		private endangeredLanguageService: EndangeredLanguageService
 	) {
@@ -114,6 +117,7 @@ export class ChangeLanguagePageComponent implements AfterViewInit {
 	onUILanguageChanged(index: number) {
 		this._currentUILanguageIndex = index;
 		this.i18nService.setLanguage(this.i18nService.languages[index]?.code);
+		this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: `select primary language - ${this.i18nService.languages[index]?.code}` });
 	}
 
 	onEndangeredLanguageChanged(index: number) {
@@ -127,6 +131,7 @@ export class ChangeLanguagePageComponent implements AfterViewInit {
 		this.endangeredLanguageService.setLanguage(
 			this.endangeredLanguageService.languages[_index]?.code
 		);
+
 	}
 
 	onCloseClick() {
@@ -160,6 +165,7 @@ export class ChangeLanguagePageComponent implements AfterViewInit {
 				this.currentEndangeredLanguageIndex
 			]?.code;
 		await this.profileService.saveProfile(profile);
+		this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: `choose language - ${this.endangeredLanguageService.languages[this.currentEndangeredLanguageIndex]?.code }` });
 	}
 
 	private _sortLanguages(
@@ -181,6 +187,7 @@ export class ChangeLanguagePageComponent implements AfterViewInit {
 
 		if (e.region === "all" && e.language === null) {
 			_endangeredLanguages = this.allLanguages;
+			this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: `choose region - all` });
 		} else if (
 			e.region !== "none" &&
 			e.region !== "" &&
@@ -189,6 +196,7 @@ export class ChangeLanguagePageComponent implements AfterViewInit {
 			_endangeredLanguages = this.allLanguages.filter(
 				(lan) => (typeof lan.region === 'string' ? lan.region.toLowerCase() : lan.region) === e.region.toLowerCase()
 			);
+			this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: `choose region - ${e.region.toLowerCase()}` });
 		} else if (
 			e.language !== "none" &&
 			e.language !== "" &&

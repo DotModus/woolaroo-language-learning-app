@@ -270,3 +270,54 @@ app-word-scroll-list {
 	text-decoration: underline !important;
 	text-shadow: 1px 1px 5px rgb(0, 0, 0) !important;
 }
+
+.no-translation-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60px;
+    padding: 10px 20px;
+    margin: 10px auto;
+    max-width: 260px;
+    background: linear-gradient(135deg, rgba(245, 154, 65, 0.15) 0%, rgba(0, 0, 0, 0.2) 100%);
+    border-radius: 12px;
+    // border-left: 4px solid #f59a41;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .no-translation-message {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 12px;
+        text-align: center;
+        color: #fff;
+
+        app-icon {
+            font-size: 1.6rem;
+            color: #f59a41;
+            filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
+            transition: transform 0.3s ease;
+
+            &:hover {
+                transform: scale(1.1);
+            }
+        }
+
+        span {
+            font-size: 1.4rem;
+            font-weight: 500;
+            letter-spacing: 0.05rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(90deg, #fff, #f8f8f8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    }
+}

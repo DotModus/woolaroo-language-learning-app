@@ -35,6 +35,8 @@ import { validateImageData, validateImageURL } from "../../util/image";
 import { getLogger } from "../../util/logging";
 import { isMobileDevice } from "../../util/platform";
 import { share } from "../../util/share";
+import AxL from "../../external/axl";
+import { AxlService } from "../../services/axl.service";
 
 const logger = getLogger("TranslatePageComponent");
 
@@ -149,6 +151,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 		private zone: NgZone,
 		private sessionService: SessionService,
 		private i18n: I18nService,
+		private axl: AxlService,
 		private endangeredLanguageService: EndangeredLanguageService,
 		@Inject(TRANSLATION_SERVICE)
 		private translationService: ITranslationService,
@@ -333,6 +336,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 	}
 
 	onSubmitFeedbackClick() {
+		this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: "click share feedback button" });
 		this.router.createUrlTree([], {});
 		this.router.navigateByUrl(AppRoutes.Feedback, {
 			state: { word: this.selectedWord },
@@ -340,6 +344,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 	}
 
 	onViewLanguageClick() {
+		this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: "view language" });
 		this.router.navigate([
 			AppRoutes.ListLanguages,
 			this.endangeredLanguageService.currentLanguage.code,
@@ -347,6 +352,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 	}
 
 	onSwitchLanguageClick() {
+		this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: "switch language" });
 		this.router.navigateByUrl(AppRoutes.ChangeLanguage, {
 			state: this._persistedHistory,
 		});

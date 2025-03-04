@@ -2,7 +2,6 @@ import { AfterViewInit, Component, Inject } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ErrorPopUpComponent } from '../../components/error-popup/error-popup';
@@ -15,6 +14,8 @@ import { I18nService } from '../../i18n/i18n.service';
 import { EndangeredLanguageService } from '../../services/endangered-language';
 import { DEFAULT_LOCALE } from '../../util/locale';
 import { getLogger } from '../../util/logging';
+import AxL from '../../external/axl';
+import { AxlService } from '../../services/axl.service';
 
 const logger = getLogger('FeedbackPageComponent');
 
@@ -33,7 +34,8 @@ export class FeedbackPageComponent implements AfterViewInit {
     private location: Location,
     private route: ActivatedRoute,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar,
+	private snackBar: MatSnackBar,
+	private axl: AxlService,
     private i18n: I18nService,
     private endangeredLanguageService: EndangeredLanguageService,
     @Inject(FEEDBACK_SERVICE) private feedbackService: IFeedbackService,
@@ -67,7 +69,8 @@ export class FeedbackPageComponent implements AfterViewInit {
     }
     if (!this.feedbackForm.valid) {
       return;
-    }
+	}
+	this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: "share feedback" });
     this.submittingForm = true;
     const loadingPopup = this.dialog.open(LoadingPopUpComponent, { panelClass: 'loading-popup' });
     const feedback: Feedback = this.feedbackForm.value;
