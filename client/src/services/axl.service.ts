@@ -57,30 +57,4 @@ sendAxlMessage(type: string, payload: any): void {
 	window.axl.sendMessage(type, { ...payload });
 }
 
-
-  /**
-   * Update language parameters based on AxL data
-   * This is a wrapper around the existing setLangParams functionality
-   */
-  updateLanguageParams(params: AxlParams): void {
-    if (params?.target_lang || params?.lang) {
-      const profile: any = JSON.parse(window.localStorage.getItem('profile') || '{}');
-      let currentLanguage = window.localStorage.getItem('currentLanguage');
-
-      if (profile) {
-        profile.endangeredLanguage = params?.target_lang;
-        profile.language = params?.lang;
-        window.localStorage.setItem('profile', JSON.stringify(profile));
-      }
-
-      if (currentLanguage) {
-        currentLanguage = params?.target_lang;
-        window.localStorage.setItem('currentLanguage', currentLanguage);
-      }
-
-      window.localStorage.setItem('URL_PARAMS', JSON.stringify(params));
-
-      this.logger.log('Language parameters updated from AxL');
-    }
-  }
 }
