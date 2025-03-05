@@ -70,7 +70,7 @@ export class TranslationSelectorComponent {
 	}
 
 	public selectedTranslation: string | null = null;
-	public showSentence = true;
+	public showSentence = false;
 	public selectedWordVisible = false;
 	public selectedWord: WordTranslation | null = null;
 	@Input()
