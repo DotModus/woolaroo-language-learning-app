@@ -25,6 +25,8 @@ import { addOpenedListener } from "../../util/dialog";
 import { I18nService } from "../../i18n/i18n.service";
 import { IProfileService, PROFILE_SERVICE } from "../../services/profile";
 import { getLogger } from "../../util/logging";
+import AxL from "../../external/axl";
+import { AxlService } from "../../services/axl.service";
 
 const logger = getLogger("CapturePageComponent");
 
@@ -134,6 +136,7 @@ export class CapturePageComponent
 		dialog: MatDialog,
 		sessionService: SessionService,
 		i18n: I18nService,
+		private axl: AxlService,
 		@Inject(PROFILE_SERVICE) private profileService: IProfileService,
 		@Inject(IMAGE_RECOGNITION_SERVICE)
 		imageRecognitionService: IImageRecognitionService,
@@ -203,6 +206,8 @@ export class CapturePageComponent
 	}
 
 	onCaptureClick() {
+
+		this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: `take picture` });
 
 		if (!this.cameraPreview) {
 			return;

@@ -13,6 +13,8 @@ import {
 } from "../../services/entities/translation";
 import { Point } from "../../util/geometry";
 import { getLogger } from "../../util/logging";
+import { AxlService } from "../../services/axl.service";
+import AxL from "../../external/axl";
 
 enum AudioState {
 	Stopped,
@@ -68,7 +70,7 @@ export class TranslationSelectorComponent {
 	}
 
 	public selectedTranslation: string | null = null;
-	public showSentence = true;
+	public showSentence = false;
 	public selectedWordVisible = false;
 	public selectedWord: WordTranslation | null = null;
 	@Input()
@@ -95,9 +97,12 @@ export class TranslationSelectorComponent {
 		return this._translationIndex;
 	}
 
-	constructor() {}
+	constructor(
+		private axl: AxlService
+	) {}
 
 	onPlayAudioClick() {
+		this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: "click audio icon" });
 		if (!this.audioPlayer || !this.audioPlayer.nativeElement) {
 			logger.warn("Audio player not initialized");
 			return;
@@ -122,6 +127,7 @@ export class TranslationSelectorComponent {
 	onAudioPlaying() {
 		logger.log("Audio playing");
 		this.audioState = AudioState.Playing;
+
 	}
 
 	onAudioStopped() {
@@ -190,6 +196,7 @@ export class TranslationSelectorComponent {
 	}
 
 	onShareClick() {
+		this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: "click share button" });
 		if (
 			this.selectedWordVisible &&
 			this.selectedWord &&
@@ -203,6 +210,7 @@ export class TranslationSelectorComponent {
 	}
 
 	toggleShowSentence() {
+		this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: "toggle word/sentence" });
 		this.showSentence = !this.showSentence;
 	}
 

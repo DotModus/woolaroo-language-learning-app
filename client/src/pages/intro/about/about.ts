@@ -14,6 +14,8 @@ import {
 	OperatingSystem,
 } from "../../../util/platform";
 import { cameraStreamIsAvailable } from "../../../util/camera";
+import { AxlService } from "../../../services/axl.service";
+import AxL from '../../../external/axl';
 
 @Component({
 	selector: "app-page-intro-about",
@@ -34,6 +36,7 @@ export class IntroAboutPageComponent implements AfterViewInit {
 	tAndC: boolean = true;
 	constructor(
 		private router: Router,
+		private axl: AxlService,
 		@Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
 		@Inject(PROFILE_SERVICE) private profileService: IProfileService
 	) {}
@@ -43,6 +46,7 @@ export class IntroAboutPageComponent implements AfterViewInit {
 	}
 
 	onNextClick() {
+		this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: "get started" });
 		this.profileService.loadProfile().then(
 			(profile) => this.nextPage(profile),
 			() => this.nextPage()

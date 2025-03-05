@@ -1,5 +1,5 @@
 <div class="translation-container" [class.hidden]="!selectedWordVisible"
-	*ngIf="selectedWord && displayTranslation?.translation">
+	*ngIf="selectedWord && displayTranslation?.translation; else no_translation">
 	<div class="transliteration" *ngIf="displayTranslation?.transliteration">
 		<span class="add">
 			<button *ngIf="displayTranslation?.transliteration" (click)="onAddTranslationClick()">
@@ -71,6 +71,15 @@
 		(ended)="onAudioStopped()" (pause)="onAudioStopped()"></audio>
 </div>
 
+<ng-template #no_translation>
+    <div class="no-translation-container">
+        <div class="no-translation-message">
+            <app-icon icon="info" shadow="true"></app-icon>
+            <span>No translation available</span>
+        </div>
+    </div>
+</ng-template>
+
 <div class="translation-not-found" [class.hidden]="!selectedWordVisible"
 	*ngIf="selectedWord && !displayTranslation?.translation">
 	<div class="message" (click)="onAddTranslationClick()" (keydown)="onKeyDown($event)">
@@ -83,7 +92,3 @@
 <app-word-scroll-list [translations]="translations" [defaultSelectedWordIndex]="defaultSelectedWordIndex"
 	(selectedWordChanged)="onSelectedWordChanged($event)" (targetPositionChanged)="onTargetPositionChanged($event)">
 </app-word-scroll-list>
-
-<div *ngIf="!translations" class="no-translations-container">
-	<span>No translations found. Please try another picture.</span>
-</div>

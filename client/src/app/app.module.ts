@@ -21,6 +21,7 @@ import { AddWordPageModule } from "../pages/add-word/add-word.module";
 import { CaptionImagePageModule } from "../pages/caption-image/caption-image.module";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { environment } from "../environments/environment";
+import { AxlService } from "../services/axl.service";
 
 @NgModule({
 	declarations: [AppComponent],
@@ -47,7 +48,10 @@ import { environment } from "../environments/environment";
 			enabled: environment.production,
 		}),
 	],
-	// providers: [{ provide: APP_BASE_HREF, useValue: '/woolaroo/' }],
+	providers: [
+		// { provide: APP_BASE_HREF, useValue: '/woolaroo/' },
+		AxlService
+	],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}

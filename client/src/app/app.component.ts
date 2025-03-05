@@ -17,6 +17,7 @@ import {
 	isInStandaloneMode,
 } from "../util/platform";
 import { getLogger } from "../util/logging";
+import { AxlService } from "../services/axl.service";
 
 const logger = getLogger("ChangeLanguagePageComponent");
 
@@ -35,6 +36,7 @@ export class AppComponent implements OnInit {
 		private i18nService: I18nService,
 		private endangeredLanguageService: EndangeredLanguageService,
 		private dir: Directionality,
+		private axlService: AxlService,
 		@Inject(PROFILE_SERVICE) private profileService: IProfileService
 	) {
 		// restore page state on back navigation
@@ -58,6 +60,12 @@ export class AppComponent implements OnInit {
 				};
 			});
 		this.initLanguages();
+
+		// Check for existing AxL parameters
+		const axlParams = this.axlService.getAxlParams();
+		if (axlParams) {
+			logger.log('Found stored AxL parameters');
+		}
 	}
 
 	ngOnInit(): void {
