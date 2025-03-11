@@ -127,7 +127,6 @@ export class TranslationSelectorComponent {
 	onAudioPlaying() {
 		logger.log("Audio playing");
 		this.audioState = AudioState.Playing;
-
 	}
 
 	onAudioStopped() {
@@ -197,16 +196,21 @@ export class TranslationSelectorComponent {
 
 	onShareClick() {
 		this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: "click share button" });
-		if (
-			this.selectedWordVisible &&
-			this.selectedWord &&
-			this.selectedTranslation
-		) {
-			this.wordShared.emit({
-				word: this.selectedWord,
-				translation: this.selectedTranslation,
-			});
-		}
+		this.axl.sendAxlMessage(AxL.ChildToHost.SHARE, {
+			title: 'Check out this thing.',
+			text: 'I found this interesting thing.',
+			image: 'https://url/of/an/image/thumbnail'
+		});
+		// if (
+		// 	this.selectedWordVisible &&
+		// 	this.selectedWord &&
+		// 	this.selectedTranslation
+		// ) {
+		// 	this.wordShared.emit({
+		// 		word: this.selectedWord,
+		// 		translation: this.selectedTranslation,
+		// 	});
+		// }
 	}
 
 	toggleShowSentence() {

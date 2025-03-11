@@ -352,7 +352,12 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 	}
 
 	onSwitchLanguageClick() {
-		this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: "switch language" });
+		const lang = this.endangeredLanguageService.currentLanguage;
+		this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, {
+			action: "switch language",
+			label: lang?.name,
+			value: lang?.code
+		});
 		this.router.navigateByUrl(AppRoutes.ChangeLanguage, {
 			state: this._persistedHistory,
 		});
