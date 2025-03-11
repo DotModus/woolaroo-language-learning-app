@@ -165,7 +165,8 @@ export class ChangeLanguagePageComponent implements AfterViewInit {
 				this.currentEndangeredLanguageIndex
 			]?.code;
 		await this.profileService.saveProfile(profile);
-		this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: `choose language - ${this.endangeredLanguageService.languages[this.currentEndangeredLanguageIndex]?.code }` });
+
+		this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: 'choose language', label: this.endangeredLanguageService.languages[this.currentEndangeredLanguageIndex]?.name, value: this.endangeredLanguageService.languages[this.currentEndangeredLanguageIndex]?.code  });
 	}
 
 	private _sortLanguages(

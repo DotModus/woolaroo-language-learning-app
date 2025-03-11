@@ -27,6 +27,10 @@ import { IProfileService, PROFILE_SERVICE } from "../../services/profile";
 import { getLogger } from "../../util/logging";
 import AxL from "../../external/axl";
 import { AxlService } from "../../services/axl.service";
+import {
+	EndangeredLanguage,
+	EndangeredLanguageService,
+} from "../../services/endangered-language";
 
 const logger = getLogger("CapturePageComponent");
 
@@ -140,7 +144,8 @@ export class CapturePageComponent
 		@Inject(PROFILE_SERVICE) private profileService: IProfileService,
 		@Inject(IMAGE_RECOGNITION_SERVICE)
 		imageRecognitionService: IImageRecognitionService,
-		@Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService
+		@Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
+		private endangeredLanguageService: EndangeredLanguageService
 	) {
 		super(route, router, i18n, dialog, sessionService, imageRecognitionService);
 	}
@@ -207,7 +212,9 @@ export class CapturePageComponent
 
 	onCaptureClick() {
 
-		this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: `take picture` });
+		const lang = this.endangeredLanguageService.currentLanguage;
+
+		this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: `take picture`, label: lang?.name, value: lang?.code });
 
 		if (!this.cameraPreview) {
 			return;
