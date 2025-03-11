@@ -24,7 +24,7 @@ export class TranslatePipe implements PipeTransform {
 
 			return (
 				language?.shortDescriptions[
-					this.i18nService.currentLanguage.code
+					this?.i18nService?.currentLanguage?.code || 'en'
 				] || text
 			);
 		}
