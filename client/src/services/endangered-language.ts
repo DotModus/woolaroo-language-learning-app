@@ -121,7 +121,7 @@ export class EndangeredLanguageService {
 			return {
 				code: region,
 				name: this._allRegions[region][
-					this.i18nService.currentLanguage.code
+					this.i18nService?.currentLanguage?.code || 'en'
 				],
 			};
 		});
