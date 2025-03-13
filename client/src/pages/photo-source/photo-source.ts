@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { IAnalyticsService, ANALYTICS_SERVICE } from '../../services/analytics';
 import { IImageRecognitionService, IMAGE_RECOGNITION_SERVICE } from '../../services/image-recognition';
@@ -23,14 +24,15 @@ export class PhotoSourcePageComponent extends ImageLoaderPageBase implements Aft
 
   constructor(
     route: ActivatedRoute,
-    router: Router,
+	router: Router,
+	location: Location,
     i18n: I18nService,
     dialog: MatDialog,
     sessionService: SessionService,
     @Inject(PROFILE_SERVICE) profileService: IProfileService,
     @Inject(IMAGE_RECOGNITION_SERVICE) imageRecognitionService: IImageRecognitionService,
     @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService) {
-    super(route, router, i18n, dialog, sessionService, imageRecognitionService);
+    super(route, router, location, i18n, dialog, sessionService, imageRecognitionService);
     this._profileService = profileService;
   }
 
@@ -43,7 +45,8 @@ export class PhotoSourcePageComponent extends ImageLoaderPageBase implements Aft
       profile => {
         if (!profile.language || !profile.endangeredLanguage) {
           // no language chosen - let user change language
-          this.router.navigateByUrl(AppRoutes.ChangeLanguage);
+			// this.router.navigateByUrl(AppRoutes.ChangeLanguage);
+			this.location.replaceState(AppRoutes.ChangeLanguage)
         } else {
           // language chosen - show loading popup then navigate to capture image
           const loadingPopUp = this.dialog.open(LoadingPopUpComponent,
@@ -52,11 +55,15 @@ export class PhotoSourcePageComponent extends ImageLoaderPageBase implements Aft
           loadingPopUp.beforeClosed().subscribe({
             complete: () => this.sessionService.currentSession.currentModal = null
           });
-          addOpenedListener(loadingPopUp, () => this.router.navigateByUrl(AppRoutes.CaptureImage));
+			addOpenedListener(
+				loadingPopUp,
+			// () => this.router.navigateByUrl(AppRoutes.CaptureImage));
+				() => this.location.replaceState(AppRoutes.CaptureImage))
         }
       },
       () => {
-        this.router.navigateByUrl(AppRoutes.ChangeLanguage);
+		//   this.router.navigateByUrl(AppRoutes.ChangeLanguage);
+		  this.location.replaceState(AppRoutes.ChangeLanguage)
       }
     );
   }

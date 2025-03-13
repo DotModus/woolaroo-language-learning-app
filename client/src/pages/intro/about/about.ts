@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, HostBinding, Inject } from "@angular/core";
 import { Router } from "@angular/router";
+import { Location } from '@angular/common';
 import { AppRoutes } from "../../../app/routes";
 import {
 	IAnalyticsService,
@@ -36,6 +37,7 @@ export class IntroAboutPageComponent implements AfterViewInit {
 	tAndC: boolean = true;
 	constructor(
 		private router: Router,
+		private location: Location,
 		private axl: AxlService,
 		@Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
 		@Inject(PROFILE_SERVICE) private profileService: IProfileService
@@ -54,7 +56,8 @@ export class IntroAboutPageComponent implements AfterViewInit {
 	}
 
 	onViewTermsClick() {
-		this.router.navigateByUrl(AppRoutes.TermsAndConditions);
+		// this.router.navigateByUrl(AppRoutes.TermsAndConditions);
+		this.location.replaceState(AppRoutes.TermsAndConditions)
 	}
 
 	nextPage(profile: Profile | null = null) {
@@ -62,9 +65,11 @@ export class IntroAboutPageComponent implements AfterViewInit {
 			(!profile || !profile.termsAgreed) &&
 			environment.pages.termsAndPrivacy.enabled
 		) {
-			this.router.navigateByUrl(AppRoutes.IntroTermsAndConditions);
+			// this.router.navigateByUrl(AppRoutes.IntroTermsAndConditions);
+			this.location.replaceState(AppRoutes.IntroTermsAndConditions)
 		} else {
-			this.router.navigateByUrl(AppRoutes.ChangeLanguage);
+			// this.router.navigateByUrl(AppRoutes.ChangeLanguage);
+			this.location.replaceState(AppRoutes.ChangeLanguage)
 		}
 	}
 }

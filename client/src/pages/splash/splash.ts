@@ -8,6 +8,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { IAnalyticsService, ANALYTICS_SERVICE } from '../../services/analytics';
 import { IProfileService, PROFILE_SERVICE } from '../../services/profile';
 import { AppRoutes } from '../../app/routes';
@@ -43,7 +44,8 @@ export class SplashPageComponent implements AfterViewInit, OnDestroy {
   public get isLoading(): boolean { return !this.videoStarted && !this.logosVisible; }
 
   constructor(@Inject(SPLASH_PAGE_CONFIG) private config: SplashPageConfig,
-    private router: Router,
+	private router: Router,
+	private location: Location,
     @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
     @Inject(PROFILE_SERVICE) private profileService: IProfileService) {
   }
@@ -121,24 +123,29 @@ export class SplashPageComponent implements AfterViewInit, OnDestroy {
     this.clearTimeout();
     this.setTimeoutToNavigate(this.config.logosDuration);
   }
-  
+
   navigateToNextPage() {
     this.profileService.loadProfile().then(
       (profile) => {
         const skipIntro = (environment.pages.termsAndPrivacy.enabled && profile.termsAgreed)
           || (!environment.pages.termsAndPrivacy.enabled && profile.introViewed);
         if (!skipIntro) {
-          this.router.navigateByUrl(AppRoutes.Intro);
+			// this.router.navigateByUrl(AppRoutes.Intro);
+			this.location.replaceState(AppRoutes.Intro);
         } else if (!profile.language || !profile.endangeredLanguage) {
-          this.router.navigateByUrl(AppRoutes.ChangeLanguage);
+        //   this.router.navigateByUrl(AppRoutes.ChangeLanguage);
+		  this.location.replaceState(AppRoutes.ChangeLanguage);
         } else {
           loadCapturePageURL().then(
-            url => this.router.navigateByUrl(url),
-            () => this.router.navigateByUrl(AppRoutes.CaptureImage)
+            // url => this.router.navigateByUrl(url),
+			  // () => this.router.navigateByUrl(AppRoutes.CaptureImage)
+			  url => this.location.replaceState(url),
+            () => this.location.replaceState(AppRoutes.CaptureImage)
           );
         }
       },
-      () => this.router.navigateByUrl(AppRoutes.Intro)
+		//   () => this.router.navigateByUrl(AppRoutes.Intro)
+		() => this.location.replaceState(AppRoutes.Intro)
     );
   }
 

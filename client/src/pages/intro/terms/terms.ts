@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { IAnalyticsService, ANALYTICS_SERVICE } from '../../../services/analytics';
 import { IProfileService, PROFILE_SERVICE } from '../../../services/profile';
 import { AppRoutes } from '../../../app/routes';
@@ -14,7 +15,8 @@ export class IntroTermsPageComponent implements AfterViewInit {
   private agreement: ElementRef | null = null;
   public termsUrl = AppRoutes.TermsAndConditions;
 
-  constructor(private router: Router,
+	constructor(private router: Router,
+	  private location: Location,
     @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
     @Inject(PROFILE_SERVICE) private profileService: IProfileService) {
   }
@@ -28,7 +30,8 @@ export class IntroTermsPageComponent implements AfterViewInit {
         const link = links[k] as HTMLAnchorElement;
         link.addEventListener('click', (ev) => {
           ev.preventDefault();
-          this.router.navigateByUrl(link.pathname);
+			// this.router.navigateByUrl(link.pathname);
+			this.location.replaceState(link.pathname)
         });
       }
     }
@@ -39,9 +42,13 @@ export class IntroTermsPageComponent implements AfterViewInit {
       (profile) => {
         profile.termsAgreed = true;
         profile.introViewed = true;
-        this.profileService.saveProfile(profile).finally(() => this.router.navigateByUrl(AppRoutes.ChangeLanguage));
+			this.profileService.saveProfile(profile).finally(
+				// () => this.router.navigateByUrl(AppRoutes.ChangeLanguage)
+				() => this.location.replaceState(AppRoutes.ChangeLanguage)
+			);
       },
-      () => this.router.navigateByUrl(AppRoutes.ChangeLanguage)
+		//   () => this.router.navigateByUrl(AppRoutes.ChangeLanguage)
+		() => this.location.replaceState(AppRoutes.ChangeLanguage)
     );
   }
 }
