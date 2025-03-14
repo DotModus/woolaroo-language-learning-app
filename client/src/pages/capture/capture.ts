@@ -7,7 +7,6 @@ import {
 } from "@angular/core";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Location } from '@angular/common';
 import {
 	CameraPreviewComponent,
 	CameraPreviewStatus,
@@ -39,15 +38,12 @@ export class ImageLoaderPageBase {
 	constructor(
 		private route: ActivatedRoute,
 		protected router: Router,
-		protected location: Location,
 		protected i18n: I18nService,
 		protected dialog: MatDialog,
 		protected sessionService: SessionService,
 		@Inject(IMAGE_RECOGNITION_SERVICE)
 		protected imageRecognitionService: IImageRecognitionService
-	) {
-		console.log(this.location.path())
-	}
+	) {}
 
 	onImageUploaded(image: Blob) {
 		const loadingPopUp = this.dialog.open(LoadingPopUpComponent, {
@@ -76,48 +72,34 @@ export class ImageLoaderPageBase {
 
 					let url = targetLanguage ? `${AppRoutes.Translate}?target_lang=${targetLanguage}` : AppRoutes.Translate;
 
-					// this.router
-					// 	.navigateByUrl(url, {
-					// 		state: {
-					// 			image,
-					// 			imageURL: URL.createObjectURL(image),
-					// 			words: descriptions.map((d) => d.description),
-					// 		},
-					// 	})
-					// 	.then(
-					// 		(success) => {
-					// 			if (!success) {
-					// 				loadingPopUp.close();
-					// 			}
-					// 		},
-					// 		() => loadingPopUp.close()
-					// 	);
-					this.location.replaceState(
-						url,
-						'',
-						{
-							image,
-							imageURL: URL.createObjectURL(image),
-							words: descriptions.map((d) => d.description),
-						}
-					);
-					loadingPopUp.close();
+					this.router
+						.navigateByUrl(url, {
+							state: {
+								image,
+								imageURL: URL.createObjectURL(image),
+								words: descriptions.map((d) => d.description),
+							},
+							replaceUrl: true
+						})
+						.then(
+							(success) => {
+								if (!success) {
+									loadingPopUp.close();
+								}
+							},
+							() => loadingPopUp.close()
+						);
 
 				} else {
-					// this.router
-					// 	.navigateByUrl(AppRoutes.CaptionImage, {
-					// 		state: {
-					// 			image,
-					// 			imageURL: URL.createObjectURL(image),
-					// 		},
-					// 	})
-					// 	.finally(() => loadingPopUp.close());
-					this.location.replaceState(
-						AppRoutes.CaptionImage,
-						'',
-						{ image, imageURL: URL.createObjectURL(image) }
-					);
-					loadingPopUp.close();
+					this.router
+						.navigateByUrl(AppRoutes.CaptionImage, {
+							state: {
+								image,
+								imageURL: URL.createObjectURL(image),
+							},
+							replaceUrl: true
+						})
+						.finally(() => loadingPopUp.close());
 				}
 			},
 			(err) => {
@@ -132,10 +114,11 @@ export class ImageLoaderPageBase {
 				this.dialog.open(ErrorPopUpComponent, {
 					data: { message: errorMessage, title: errorTitle },
 				});
-				// this.router.navigateByUrl(AppRoutes.CaptionImage, {
-				// 	state: { image, imageURL: URL.createObjectURL(image) },
-				// });
-				this.location.replaceState(AppRoutes.CaptionImage, '', { image, imageURL: URL.createObjectURL(image) });
+				this.router.navigateByUrl(AppRoutes.CaptionImage, {
+					state: { image, imageURL: URL.createObjectURL(image) },
+					replaceUrl: true
+				});
+
 			}
 		);
 	}
@@ -159,7 +142,6 @@ export class CapturePageComponent
 	constructor(
 		route: ActivatedRoute,
 		router: Router,
-		location: Location,
 		dialog: MatDialog,
 		sessionService: SessionService,
 		i18n: I18nService,
@@ -170,7 +152,7 @@ export class CapturePageComponent
 		@Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
 		private endangeredLanguageService: EndangeredLanguageService
 	) {
-		super(route, router, location, i18n, dialog, sessionService, imageRecognitionService);
+		super(route, router, i18n, dialog, sessionService, imageRecognitionService);
 	}
 
 	ngAfterViewInit() {
@@ -182,10 +164,9 @@ export class CapturePageComponent
 			if (loadingPopUp) {
 				loadingPopUp.close();
 			}
-			// this.router.navigateByUrl(AppRoutes.ImageSource, {
-			// 	replaceUrl: true,
-			// });
-			this.location.replaceState(AppRoutes.ImageSource);
+			this.router.navigateByUrl(AppRoutes.ImageSource, {
+				replaceUrl: true,
+			});
 			return;
 		}
 		if (!loadingPopUp) {
@@ -217,10 +198,9 @@ export class CapturePageComponent
 					panelClass: "capture-camera-error",
 				});
 				errorDialog.afterClosed().subscribe({
-					complete: () => this.location.replaceState(AppRoutes.ImageSource)
-						// this.router.navigateByUrl(AppRoutes.ImageSource, {
-						// 	replaceUrl: true,
-						// }),
+					complete: () => this.router.navigateByUrl(AppRoutes.ImageSource, {
+							replaceUrl: true,
+						}),
 				});
 			}
 		);
@@ -294,8 +274,7 @@ export class CapturePageComponent
 	}
 
 	onChangeLanguageClick() {
-		// this.router.navigateByUrl(AppRoutes.ChangeLanguage);
-		this.location.replaceState(AppRoutes.ChangeLanguage);
+		this.router.navigateByUrl(AppRoutes.ChangeLanguage, {replaceUrl: true});
 
 	}
 }
