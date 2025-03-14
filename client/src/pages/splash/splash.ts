@@ -8,7 +8,6 @@ import {
   ViewChild
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { Location } from '@angular/common';
 import { IAnalyticsService, ANALYTICS_SERVICE } from '../../services/analytics';
 import { IProfileService, PROFILE_SERVICE } from '../../services/profile';
 import { AppRoutes } from '../../app/routes';
@@ -45,7 +44,6 @@ export class SplashPageComponent implements AfterViewInit, OnDestroy {
 
   constructor(@Inject(SPLASH_PAGE_CONFIG) private config: SplashPageConfig,
 	private router: Router,
-	private location: Location,
     @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
     @Inject(PROFILE_SERVICE) private profileService: IProfileService) {
   }
@@ -129,23 +127,20 @@ export class SplashPageComponent implements AfterViewInit, OnDestroy {
       (profile) => {
         const skipIntro = (environment.pages.termsAndPrivacy.enabled && profile.termsAgreed)
           || (!environment.pages.termsAndPrivacy.enabled && profile.introViewed);
-        if (!skipIntro) {
-			// this.router.navigateByUrl(AppRoutes.Intro);
-			this.location.replaceState(AppRoutes.Intro);
-        } else if (!profile.language || !profile.endangeredLanguage) {
-        //   this.router.navigateByUrl(AppRoutes.ChangeLanguage);
-		  this.location.replaceState(AppRoutes.ChangeLanguage);
-        } else {
+			if (!skipIntro) {
+			this.router.navigateByUrl(AppRoutes.Intro, {replaceUrl: true});
+			} else if (!profile.language || !profile.endangeredLanguage) {
+				console.log("else if")
+          this.router.navigateByUrl(AppRoutes.ChangeLanguage, {replaceUrl: true});
+			} else {
+				console.log('else')
           loadCapturePageURL().then(
-            // url => this.router.navigateByUrl(url),
-			  // () => this.router.navigateByUrl(AppRoutes.CaptureImage)
-			  url => this.location.replaceState(url),
-            () => this.location.replaceState(AppRoutes.CaptureImage)
+            url => this.router.navigateByUrl(url, {replaceUrl: true}),
+			  () => this.router.navigateByUrl(AppRoutes.CaptureImage, {replaceUrl: true})
           );
         }
       },
-		//   () => this.router.navigateByUrl(AppRoutes.Intro)
-		() => this.location.replaceState(AppRoutes.Intro)
+		  () => this.router.navigateByUrl(AppRoutes.Intro, {replaceUrl: true})
     );
   }
 
