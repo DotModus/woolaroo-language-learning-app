@@ -136,8 +136,8 @@ export class ChangeLanguagePageComponent implements AfterViewInit {
 
 	onCloseClick() {
 		loadCapturePageURL().then(
-			(url) => this.router.navigateByUrl(url),
-			() => this.router.navigateByUrl(AppRoutes.CaptureImage)
+			(url) => this.router.navigateByUrl(url, {replaceUrl: true}),
+			() => this.router.navigateByUrl(AppRoutes.CaptureImage, {replaceUrl: true})
 		);
 	}
 
@@ -147,10 +147,11 @@ export class ChangeLanguagePageComponent implements AfterViewInit {
 				() => {
 					this.router.navigateByUrl(AppRoutes.Translate, {
 						state: history.state,
+						replaceUrl: true
 					});
 				},
 				(url) => {
-					this.router.navigateByUrl(url);
+					this.router.navigateByUrl(url, {replaceUrl: true});
 				}
 			);
 		});

@@ -192,6 +192,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 				if (ex instanceof WordsNotFoundError) {
 					this.router.navigateByUrl(AppRoutes.CaptionImage, {
 						state: { image },
+						replaceUrl: true
 					});
 				} else {
 					loadCapturePageURL().then(
@@ -340,6 +341,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 		this.router.createUrlTree([], {});
 		this.router.navigateByUrl(AppRoutes.Feedback, {
 			state: { word: this.selectedWord },
+			replaceUrl: true
 		});
 	}
 
@@ -360,6 +362,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 		});
 		this.router.navigateByUrl(AppRoutes.ChangeLanguage, {
 			state: this._persistedHistory,
+			replaceUrl: true
 		});
 	}
 
@@ -489,14 +492,15 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 	onManualEntrySelected() {
 		this.router.navigateByUrl(AppRoutes.CaptionImage, {
 			state: { image: this.backgroundImageData },
+			replaceUrl: true
 		});
 	}
 
 	onAddRecording(word: WordTranslation) {
-		this.router.navigateByUrl(AppRoutes.AddWord, { state: { word } });
+		this.router.navigateByUrl(AppRoutes.AddWord, { state: { word }, replaceUrl: true });
 	}
 
 	onAddTranslation(word: WordTranslation) {
-		this.router.navigateByUrl(AppRoutes.AddWord, { state: { word } });
+		this.router.navigateByUrl(AppRoutes.AddWord, { state: { word }, replaceUrl: true });
 	}
 }
