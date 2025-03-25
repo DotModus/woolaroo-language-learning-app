@@ -1,9 +1,13 @@
 <div class="change-language">
-	@if(imageUrl) {
-	<div class="background" [style.backgroundImage]="imageUrl | styleUrl"></div>
-	} @if(!imageUrl) {
-	<app-camera-preview></app-camera-preview>
-	}
+
+	<app-toolbar>
+		<button class="back" (click)="onBackClick()" slot="start">
+			<app-icon icon="arrow_back"></app-icon>
+		</button>
+		<!-- <button (click)="onSubmitFeedbackClick()" class="submit-feedback" slot="end">
+			<app-icon icon="add_feedback"></app-icon>
+		</button> -->
+	</app-toolbar>
 
 	<div class="ui-language">
 		<span

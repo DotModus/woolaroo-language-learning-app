@@ -8,7 +8,9 @@ import { LogoModule } from "../../components/logo/logo.module";
 import { PaginationIndicatorModule } from "../../components/pagination-indicator/pagination-indicator.module";
 import { IntroAboutPageComponent } from "./about/about";
 import { IntroTermsPageComponent } from "./terms/terms";
+import { AppToolbarModule } from "../../components/app-toolbar/app-toolbar.module";
 import { I18nModule } from "../../i18n/i18n.module";
+import { IconComponentModule } from "../../components/icon/icon.module";
 import { CommonModule } from "@angular/common";
 
 @NgModule({
@@ -23,6 +25,8 @@ import { CommonModule } from "@angular/common";
 		I18nModule,
 		ScrollListModule,
 		LogoModule,
+		AppToolbarModule,
+		IconComponentModule,
 	],
 })
 export class IntroPageModule {}

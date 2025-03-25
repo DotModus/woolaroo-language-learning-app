@@ -1,5 +1,5 @@
 <mat-toolbar>
   <ng-content select="[slot=start]"></ng-content>
-  <app-logo></app-logo>
+  <app-logo *ngIf="showLogo"></app-logo>
   <ng-content select="[slot=end]"></ng-content>
 </mat-toolbar>

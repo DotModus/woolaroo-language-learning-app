@@ -1,6 +1,6 @@
-<div class="translation-container" [class.hidden]="!selectedWordVisible"
-	*ngIf="selectedWord && displayTranslation?.translation; else no_translation">
-	<div class="transliteration" *ngIf="displayTranslation?.transliteration">
+<!-- <div class="translation-container" [class.hidden]="!selectedWordVisible"
+	*ngIf="selectedWord && displayTranslation?.translation; else no_translation"> -->
+	<!-- <div class="transliteration" *ngIf="displayTranslation?.transliteration">
 		<span class="add">
 			<button *ngIf="displayTranslation?.transliteration" (click)="onAddTranslationClick()">
 				<app-icon icon="add" shadow="true"></app-icon>
@@ -13,10 +13,9 @@
 			</button>
 		</span>
 
-	</div>
-	<div class="translation">
-		<div class="regions">
-
+	</div> -->
+	<!-- <div class="translation"> -->
+		<!-- <div class="regions">
 			<app-scroll-list
 				[currentItem]="translationIndex"
 				*ngIf="!showSentence"
@@ -33,16 +32,6 @@
 				<span>{{ selectedWord.translations[0].split_sentence[0] }}&nbsp;</span>
 				<span class="main-word">{{ selectedWord.translations[0].split_sentence[1] }}</span>
 				<span>&nbsp;{{ selectedWord.translations[0].split_sentence[2] }}</span>
-				<!-- <span *ngFor="let parts of selectedWord.translations[0].split_sentence; let i = index">
-					<span *ngFor="let word of selectedWord.translations[0].sentence.split(' '); let i = index">
-						<span
-							[ngClass]="{ 'main-word': word.replace('.','').replace(',','').trim() == selectedWord.translations[0].translated_word.trim()}">{{word.replace('.','')}}</span>
-						<span
-							*ngIf="i < selectedWord.translations[0].sentence.split(' ').length - 1">&nbsp;</span></span>
-
-
-				</span> -->
-
 			</div>
 			<span>
 				<button class='view-word'  *ngIf='showSentence' (click)="toggleShowSentence()">
@@ -52,26 +41,24 @@
 					View word in sentence by Gemini
 				</button>
 			</span>
-		</div>
-
-
-		<span></span>
-		<span class="share">
+		</div> -->
+		<!-- <span></span> -->
+		<!-- <span class="share"> -->
 			<!-- <button *ngIf="!displayTranslation?.transliteration" (click)="onShareClick()">
 				<app-icon icon="share" shadow="true"></app-icon>
 			</button> -->
-		</span>
-	</div>
-	<button class="play-audio" *ngIf="displayTranslation?.soundURL" (click)="onPlayAudioClick()">
+		<!-- </span> -->
+	<!-- </div> -->
+	<!-- <button class="play-audio" *ngIf="displayTranslation?.soundURL" (click)="onPlayAudioClick()">
 		<app-icon icon="play_audio" shadow="true" *ngIf="audioState === audioStateValues.Stopped"></app-icon>
 		<mat-progress-spinner [diameter]="45" mode="indeterminate" class="loading"
 			*ngIf="audioState !== audioStateValues.Stopped"></mat-progress-spinner>
 	</button>
 	<audio #audioPlayer [src]="displayTranslation?.soundURL | gcsUrl" preload="none" (play)="onAudioPlaying()"
-		(ended)="onAudioStopped()" (pause)="onAudioStopped()"></audio>
-</div>
+		(ended)="onAudioStopped()" (pause)="onAudioStopped()"></audio> -->
+<!-- </div> -->
 
-<ng-template #no_translation>
+<!-- <ng-template #no_translation>
     <div class="no-translation-container">
         <div class="no-translation-message">
             <app-icon icon="info" shadow="true"></app-icon>
@@ -86,9 +73,42 @@
 		<app-icon icon="add" shadow="true"></app-icon>
 		<span [innerHTML]="'Add word' | translate:'addWord'"></span>
 	</div>
+</div> -->
+
+<div class="translation-heading">
+	<span>Here's what I see:</span>
 </div>
-<app-selection-line [class.hidden]="!selectedWordVisible" [targetPosition]="lineTargetPosition">
-</app-selection-line>
+
 <app-word-scroll-list [translations]="translations" [defaultSelectedWordIndex]="defaultSelectedWordIndex"
 	(selectedWordChanged)="onSelectedWordChanged($event)" (targetPositionChanged)="onTargetPositionChanged($event)">
 </app-word-scroll-list>
+
+<!-- New section with primary color background -->
+<div class="info-section">
+	<div class="info-heading">
+		<h2>Translated into {{currentLanguage}}</h2>
+	</div>
+	<div class="word-display-section">
+		<div class="icon-placeholder">
+			<app-icon icon="share"></app-icon>
+		</div>
+		<div class="word-container">
+			<span class="selected-word">{{displayTranslation?.translation || 'Select a word'}}</span>
+		</div>
+		<div class="icon-placeholder">
+			<app-icon icon="play_audio"></app-icon>
+		</div>
+	</div>
+	<div class="word-type-section">
+		<span class="word-type">Placeholder</span>
+	</div>
+	<div class="context-toggle-section">
+		<a class="context-toggle" (click)="toggleShowSentence()">
+			<app-icon icon='share'></app-icon>
+			<span>{{showSentence ? 'Show word' : 'Show in context'}}</span>
+		</a>
+	</div>
+	<div class="info-details">
+		<!-- Add any additional details you want to display here -->
+	</div>
+</div>

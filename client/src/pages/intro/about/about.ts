@@ -39,7 +39,11 @@ export class IntroAboutPageComponent implements AfterViewInit {
 		private axl: AxlService,
 		@Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
 		@Inject(PROFILE_SERVICE) private profileService: IProfileService
-	) {}
+	) { }
+
+	onBackClick() {
+		history.back();
+	}
 
 	ngAfterViewInit() {
 		this.analyticsService.logPageView(this.router.url, "Intro - About");
@@ -58,13 +62,13 @@ export class IntroAboutPageComponent implements AfterViewInit {
 	}
 
 	nextPage(profile: Profile | null = null) {
-		if (
-			(!profile || !profile.termsAgreed) &&
-			environment.pages.termsAndPrivacy.enabled
-		) {
-			this.router.navigateByUrl(AppRoutes.IntroTermsAndConditions, {replaceUrl: true});
-		} else {
-			this.router.navigateByUrl(AppRoutes.ChangeLanguage, {replaceUrl: true});
-		}
+		// if (
+		// 	(!profile || !profile.termsAgreed) &&
+		// 	environment.pages.termsAndPrivacy.enabled
+		// ) {
+		// 	this.router.navigateByUrl(AppRoutes.IntroTermsAndConditions, {replaceUrl: true});
+		// } else {
+			this.router.navigateByUrl(AppRoutes.CaptureImage, {replaceUrl: true});
+		// }
 	}
 }

@@ -58,8 +58,8 @@ export class CameraPreviewComponent implements OnDestroy {
       throw new Error('Component not ready');
     }
     const canvas = this.capturedImage.nativeElement as HTMLCanvasElement;
-    const width = canvas.width = window.innerWidth;
-    const height = canvas.height = window.innerHeight;
+    const width = canvas.width = 330;
+    const height = canvas.height = 437;
     const videoWidth = video.videoWidth;
     const videoHeight = video.videoHeight;
     // dimensions need to be relative to video, not the video element, so we need to scale

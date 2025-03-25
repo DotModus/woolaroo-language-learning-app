@@ -16,6 +16,8 @@ mat-toolbar {
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  background: none !important;
+  color: white !important;
 
   app-logo {
     height: 16px;

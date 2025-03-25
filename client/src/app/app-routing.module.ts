@@ -22,7 +22,7 @@ const routes: Routes = [
 	{
 		matcher: languagePrefixMatcher(),
 		children: [
-			{ path: "", redirectTo: AppRoutes.Splash, pathMatch: "full" },
+			{ path: "", redirectTo: AppRoutes.IntroAbout, pathMatch: "full" },
 			{ path: AppRoutes.Splash, component: SplashPageComponent },
 			{
 				path: AppRoutes.Intro,
