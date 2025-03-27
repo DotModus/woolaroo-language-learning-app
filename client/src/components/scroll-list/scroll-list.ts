@@ -406,7 +406,7 @@ export class ScrollListComponent implements AfterViewInit, OnDestroy {
 	}
 
 	private getItemSnapPosition(index: number): number {
-		if (!this.scrollContent) {
+		if (!this.scrollContent || !this.items || this.items.length === 0 || index < 0 || index >= this.items.length) {
 			return 0;
 		}
 		const scrollContainer = this.hostElement.nativeElement;
@@ -543,6 +543,10 @@ export class ScrollListComponent implements AfterViewInit, OnDestroy {
 		snapItemIndex: number,
 		updateCurrentItem: boolean
 	) {
+		if (!this.snappingEnabled || !this.scrollContent || !this.items || this.items.length === 0) {
+			return;
+		}
+
 		let velocity = lastProperties.velocity;
 		if (lastProperties.position < this.minScrollPosition && velocity < 0) {
 			velocity = 0;

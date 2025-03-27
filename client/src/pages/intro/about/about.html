@@ -1,53 +1,65 @@
+<mat-sidenav-container>
+  <mat-sidenav (openedStart)="onSidenavOpenStart()" (closed)="onSidenavClosed()" mode="over" [opened]="sidenavOpen">
+    <app-sidenav></app-sidenav>
+  </mat-sidenav>
+  <mat-sidenav-content>
 <app-toolbar>
-    <button class="back" (click)="onBackClick()" slot="start">
-		<app-icon icon="arrow_back"></app-icon>
-	</button>
+    <button (click)="onOpenMenuClick()" class="open-menu" aria-label="Open Menu" slot="start">
+        <app-icon icon="menu"></app-icon>
+      </button>
     <!-- <button (click)="onSubmitFeedbackClick()" class="submit-feedback" slot="end">
 		<app-icon icon="add_feedback"></app-icon>
 	</button> -->
 </app-toolbar>
-<app-logo attributionEnabled="true"></app-logo>
-<div class="intro">
-	<p
-		class="mat-body-1"
-		[innerHTML]="'Woolaroo provides a new way to explore indigenous languages.' | translate: 'intro1'"
-	></p>
-	<p
-		class="mat-body-1"
-		[innerHTML]="'Using machine learning, it recognises objects from your camera and translates them.' | translate: 'intro2'"
-	></p>
+
+<div class="content-container">
+    <div class="section top-section">
+        <app-logo attributionEnabled="true"></app-logo>
+    </div>
+
+    <div class="section main-section">
+        <div class="intro">
+            <p
+                class="mat-body-1"
+                [innerHTML]="'Explore endangered languages using AI. <br/> Let your camera translate the world around you' | translate: 'intro'"
+            ></p>
+        </div>
+    </div>
+
+    <div class="section bottom-section">
+        <!-- Desktop-only feature box -->
+        <div class="feature-box desktop-only" (click)="onNextClick()" [class.disabled]="!tAndC">
+            <div class="feature-box-content">
+                <div class="feature-icon-container">
+                    <app-icon icon="photo_library_black" class="feature-icon"></app-icon>
+                </div>
+                <p class="feature-text">Upload a picture to discover new words</p>
+            </div>
+        </div>
+
+        <!-- Checkbox container with different ordering on mobile vs desktop -->
+        <div class="custom-checkbox-container">
+            <input type="checkbox" id="terms-checkbox" [(ngModel)]="tAndC" class="custom-checkbox-input">
+            <label class="custom-checkbox-label" (click)="onViewTermsClick()">Accept terms & conditions</label>
+        </div>
+
+        <!-- Mobile-only button -->
+        <button
+            mat-flat-button
+            color="primary"
+            (click)="onNextClick()"
+            class="next mobile-only"
+            [disabled]="!tAndC"
+        >
+            <span [innerHTML]="'Let\`s get started' | translate:'getStarted'"></span>
+        </button>
+
+        <p
+            class="mat-body-1 feedback"
+            [innerHTML]="'This is an educational experiment and translations have been provided by our partners.' | translate: 'introFeedback'"
+        ></p>
+    </div>
 </div>
-<div class="messages">
-	<p class="unsupported" *ngIf="!deviceSupported">
-		{{ 'This PWA has been designed for mobile devices, please use your
-		mobile for the optimized experience.' | translate: 'unsupportedMessage'
-		}}
-	</p>
-	<p
-		class="ios-version"
-		*ngIf="isOldIOSVersion"
-		[innerHTML]="'For the optimized experience please ensure your device is running the latest operating system.' | translate: 'iosVersionMessage'"
-	></p>
-</div>
-<mat-checkbox [(ngModel)]="tAndC"
-	>{{'Accept T&Cs' | translate: 't_and_c'}}
-</mat-checkbox>
-<div>
-	<button mat-button color="accent" (click)="onViewTermsClick()">
-		{{'Read our Terms and Privacy Policy' |
-		translate:'termsAndPrivacyButton'}}
-	</button>
-</div>
-<button
-	mat-flat-button
-	color="primary"
-	(click)="onNextClick()"
-	class="next"
-	[disabled]="!tAndC"
->
-	<span [innerHTML]="'Let’s get started' | translate:'getStarted'"></span>
-</button>
-<p
-	class="mat-body-1 feedback"
-	[innerHTML]="'This is an educational experiment and translations have been provided by our partners.' | translate: 'introFeedback'"
-></p>
+
+ </mat-sidenav-content>
+</mat-sidenav-container>

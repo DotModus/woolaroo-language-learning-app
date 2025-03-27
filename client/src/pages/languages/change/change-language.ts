@@ -27,7 +27,8 @@ const logger = getLogger("ChangeLanguagePageComponent");
 	styleUrls: ["./change-language.scss"],
 })
 export class ChangeLanguagePageComponent implements AfterViewInit {
-	showResults = true;
+	showResults = false;
+	selectedRegion = '';
 	private allLanguages: EndangeredLanguage[] = [];
 	private _persistedHistory: PersistHistory = {} as PersistHistory;
 
@@ -117,7 +118,10 @@ export class ChangeLanguagePageComponent implements AfterViewInit {
 	onUILanguageChanged(index: number) {
 		this._currentUILanguageIndex = index;
 		this.i18nService.setLanguage(this.i18nService.languages[index]?.code);
-		this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: `select primary language - ${this.i18nService.languages[index]?.code}` });
+		this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, {
+			action: `select primary language`,
+			label: `${this.i18nService.languages[index]?.name}`
+		});
 	}
 
 	onEndangeredLanguageChanged(index: number) {
@@ -131,6 +135,8 @@ export class ChangeLanguagePageComponent implements AfterViewInit {
 		this.endangeredLanguageService.setLanguage(
 			this.endangeredLanguageService.languages[_index]?.code
 		);
+
+		this.onNextClick()
 
 	}
 
@@ -189,6 +195,7 @@ export class ChangeLanguagePageComponent implements AfterViewInit {
 
 		if (e.region === "all" && e.language === null) {
 			_endangeredLanguages = this.allLanguages;
+			this.selectedRegion = 'All Regions';
 			this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: `choose region - all` });
 		} else if (
 			e.region !== "none" &&
@@ -198,6 +205,7 @@ export class ChangeLanguagePageComponent implements AfterViewInit {
 			_endangeredLanguages = this.allLanguages.filter(
 				(lan) => (typeof lan.region === 'string' ? lan.region.toLowerCase() : lan.region) === e.region.toLowerCase()
 			);
+			this.selectedRegion = this.allRegions.find(r => r.code === e.region)?.name || e.region;
 			this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: `choose region - ${e.region.toLowerCase()}` });
 		} else if (
 			e.language !== "none" &&
@@ -215,19 +223,21 @@ export class ChangeLanguagePageComponent implements AfterViewInit {
 
 		this.endangeredLanguageService.setLanguages(_endangeredLanguages);
 
-		this.showResults = !this.showResults;
+		this.showResults = true;
 	}
 
 	onSubmitFeedbackClick() {
 		this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: "click share feedback button" });
 		this.router.createUrlTree([], {});
-		// this.router.navigateByUrl(AppRoutes.Feedback, {
-		// 	state: { word: this.selectedWord },
-		// 	replaceUrl: true
-		// });
 	}
 
 	onBackClick() {
-		history.back();
+		if (this.showResults) {
+			this.showResults = false;
+		} else {
+			this.router.navigateByUrl(AppRoutes.CaptureImage, {
+				replaceUrl: true
+			});
+		}
 	}
 }

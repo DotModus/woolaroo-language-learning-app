@@ -4,72 +4,42 @@
 		<button class="back" (click)="onBackClick()" slot="start">
 			<app-icon icon="arrow_back"></app-icon>
 		</button>
-		<!-- <button (click)="onSubmitFeedbackClick()" class="submit-feedback" slot="end">
-			<app-icon icon="add_feedback"></app-icon>
-		</button> -->
 	</app-toolbar>
-
-	<div class="ui-language">
-		<span
-			class="label"
-			[innerHTML]="'I speak' | translate:'uiLanguageLabel'"
-		></span>
-		<app-scroll-list
-			[currentItem]="currentUILanguageIndex"
-			(currentItemChanged)="onUILanguageChanged($event)"
-			dir="ltr"
-		>
-			<ng-container *ngFor="let lang of uiLanguages">
-				<button *appScrollListItem>{{ lang.name }}</button>
-			</ng-container>
-		</app-scroll-list>
-	</div>
 
 	@if(!showResults){
 	<div class="language-filter">
-		<span
-			class="label"
-			[innerHTML]="'I\'d like to explore a language.' | translate:'language_by_region'"
-		></span>
-		<app-language-filter
-			(onSearchLanguage)="onSearchLanguage($event)"
-			[allRegions]="allRegions"
-		></app-language-filter>
+		<h1 class="main-heading">Discover more endangered languages</h1>
+		<h2 class="sub-heading">Select a region</h2>
+		<ul class="continent-list">
+			<ng-container *ngFor="let region of allRegions; let i = index">
+				<li [ngClass]="{'primary': i % 2 === 0, 'primary-light': i % 2 !== 0}" (click)="onSearchLanguage({region: region.code, language: null})">
+					{{ region.name }}
+				</li>
+			</ng-container>
+			<li [ngClass]="{'primary': allRegions.length % 2 === 0, 'primary-light': allRegions.length % 2 !== 0}" (click)="onSearchLanguage({region: 'all', language: null})">
+				View all
+			</li>
+		</ul>
 	</div>
 	} @if(showResults){
-	<div class="endangered-language">
-		<span
-			class="label"
-			[innerHTML]="'I\'d like to explore the language of' | translate:'endangeredLanguageLabel'"
-		></span>
-		<app-scroll-list
-			[currentItem]="currentEndangeredLanguageIndex"
-			(currentItemChanged)="onEndangeredLanguageChanged($event)"
-			dir="ltr"
-		>
-			<ng-container *ngFor="let lang of endangeredLanguages">
-				<button *appScrollListItem>{{ lang.name }}</button>
+	<div class="language-filter">
+		<h1 class="main-heading">Discover more endangered languages</h1>
+		<div class="region-indicator">
+			<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M2.5 14.375V17.5H5.625L14.8417 8.28334L11.7167 5.15834L2.5 14.375ZM17.2583 5.86667C17.5833 5.54167 17.5833 5.01667 17.2583 4.69167L15.3083 2.74167C14.9833 2.41667 14.4583 2.41667 14.1333 2.74167L12.6083 4.26667L15.7333 7.39167L17.2583 5.86667Z" fill="#452B00"/>
+			</svg>
+			<span>Region: {{selectedRegion}}</span>
+		</div>
+		<ul class="language-list">
+			<ng-container *ngFor="let lang of endangeredLanguages; let i = index">
+				<li [ngClass]="{'primary': i % 2 === 0, 'primary-light': i % 2 !== 0}" (click)="onEndangeredLanguageChanged(i)">
+					<div class="language-content">
+						<div class="language-name">{{ lang.name }}</div>
+						<div class="language-description">{{ 'Description' | translate:lang.code }}</div>
+					</div>
+				</li>
 			</ng-container>
-		</app-scroll-list>
-		<span
-			class="description"
-			[innerHTML]="'Description'|translate:currentEndangeredLanguageCode"
-		></span>
+		</ul>
 	</div>
-	<button mat-flat-button color="accent" (click)="onNextClick()" class="next">
-		<span [innerHTML]="'Go' | translate:'go'"></span>
-	</button>
-	<button
-		mat-flat-button
-		color="warn"
-		(click)="showResults = false"
-		class="next orange"
-	>
-		<span [innerHTML]="'View by region'| translate:'view_by_region'"></span>
-	</button>
-	<button mat-flat-button color="accent" (click)="onCloseClick()" class="close">
-		<span [innerHTML]="'Close' | translate:'close'"></span>
-	</button>
-
 	}
 </div>

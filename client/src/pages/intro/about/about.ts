@@ -33,13 +33,18 @@ export class IntroAboutPageComponent implements AfterViewInit {
 		);
 	}
 
-	tAndC: boolean = true;
+	tAndC: boolean = false;
+
+	public sidenavOpen = false;
+
 	constructor(
 		private router: Router,
 		private axl: AxlService,
 		@Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
 		@Inject(PROFILE_SERVICE) private profileService: IProfileService
-	) { }
+	) {
+		console.log(navigator.language);
+	}
 
 	onBackClick() {
 		history.back();
@@ -55,6 +60,21 @@ export class IntroAboutPageComponent implements AfterViewInit {
 			(profile) => this.nextPage(profile),
 			() => this.nextPage()
 		);
+	}
+
+	onOpenMenuClick() {
+		this.sidenavOpen = true;
+	}
+
+	onSidenavOpenStart() {
+		// HACK: Fix iOS Safari iPhone 7+ hiding sidenav on transition complete
+		(
+			document.getElementsByTagName("mat-sidenav")[0] as HTMLElement
+		).style.transform = "none";
+	}
+
+	onSidenavClosed() {
+		this.sidenavOpen = false;
 	}
 
 	onViewTermsClick() {

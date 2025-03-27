@@ -71,15 +71,11 @@ app-camera-preview {
   transform: translateX(-50%);
   z-index: 1;
 
-
   app-icon {
     width: 80px;
     height: 80px;
     color: mat.get-color-from-palette($app-inverted, '500-contrast');
-
   }
-
-
 }
 
 
