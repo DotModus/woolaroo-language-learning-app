@@ -9,13 +9,15 @@
         <app-icon icon="menu"></app-icon>
       </button>
     </app-toolbar>
+
+    <div class="instruction-text">Take a picture to discover<br>new words</div>
     <div class="camera-frame"></div>
     <button (click)="onCaptureClick()" class="capture" aria-label="Capture Photo"><app-icon icon="capture_photo"></app-icon></button>
     <button class="load-photo" [attr.aria-label]="'Pick photo' | translate:'pickPhoto'" (appFileUpload)="onImageUploaded($event)" accept="image/*">
       <app-icon icon="photo_library"></app-icon>
     </button>
-    <button class="language" [attr.aria-label]="'Change language' | translate:'changeLanguage'" (click)="onChangeLanguageClick()">
+    <!-- <button class="language" [attr.aria-label]="'Change language' | translate:'changeLanguage'" (click)="onChangeLanguageClick()">
       <app-icon icon="language"></app-icon>
-    </button>
+    </button> -->
   </mat-sidenav-content>
 </mat-sidenav-container>

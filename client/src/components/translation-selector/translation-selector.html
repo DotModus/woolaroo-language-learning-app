@@ -1,6 +1,6 @@
-<div class="translation-container" [class.hidden]="!selectedWordVisible"
-	*ngIf="selectedWord && displayTranslation?.translation; else no_translation">
-	<div class="transliteration" *ngIf="displayTranslation?.transliteration">
+<!-- <div class="translation-container" [class.hidden]="!selectedWordVisible"
+	*ngIf="selectedWord && displayTranslation?.translation; else no_translation"> -->
+	<!-- <div class="transliteration" *ngIf="displayTranslation?.transliteration">
 		<span class="add">
 			<button *ngIf="displayTranslation?.transliteration" (click)="onAddTranslationClick()">
 				<app-icon icon="add" shadow="true"></app-icon>
@@ -13,10 +13,9 @@
 			</button>
 		</span>
 
-	</div>
-	<div class="translation">
-		<div class="regions">
-
+	</div> -->
+	<!-- <div class="translation"> -->
+		<!-- <div class="regions">
 			<app-scroll-list
 				[currentItem]="translationIndex"
 				*ngIf="!showSentence"
@@ -33,16 +32,6 @@
 				<span>{{ selectedWord.translations[0].split_sentence[0] }}&nbsp;</span>
 				<span class="main-word">{{ selectedWord.translations[0].split_sentence[1] }}</span>
 				<span>&nbsp;{{ selectedWord.translations[0].split_sentence[2] }}</span>
-				<!-- <span *ngFor="let parts of selectedWord.translations[0].split_sentence; let i = index">
-					<span *ngFor="let word of selectedWord.translations[0].sentence.split(' '); let i = index">
-						<span
-							[ngClass]="{ 'main-word': word.replace('.','').replace(',','').trim() == selectedWord.translations[0].translated_word.trim()}">{{word.replace('.','')}}</span>
-						<span
-							*ngIf="i < selectedWord.translations[0].sentence.split(' ').length - 1">&nbsp;</span></span>
-
-
-				</span> -->
-
 			</div>
 			<span>
 				<button class='view-word'  *ngIf='showSentence' (click)="toggleShowSentence()">
@@ -52,26 +41,24 @@
 					View word in sentence by Gemini
 				</button>
 			</span>
-		</div>
-
-
-		<span></span>
-		<span class="share">
+		</div> -->
+		<!-- <span></span> -->
+		<!-- <span class="share"> -->
 			<!-- <button *ngIf="!displayTranslation?.transliteration" (click)="onShareClick()">
 				<app-icon icon="share" shadow="true"></app-icon>
 			</button> -->
-		</span>
-	</div>
-	<button class="play-audio" *ngIf="displayTranslation?.soundURL" (click)="onPlayAudioClick()">
+		<!-- </span> -->
+	<!-- </div> -->
+	<!-- <button class="play-audio" *ngIf="displayTranslation?.soundURL" (click)="onPlayAudioClick()">
 		<app-icon icon="play_audio" shadow="true" *ngIf="audioState === audioStateValues.Stopped"></app-icon>
 		<mat-progress-spinner [diameter]="45" mode="indeterminate" class="loading"
 			*ngIf="audioState !== audioStateValues.Stopped"></mat-progress-spinner>
 	</button>
 	<audio #audioPlayer [src]="displayTranslation?.soundURL | gcsUrl" preload="none" (play)="onAudioPlaying()"
-		(ended)="onAudioStopped()" (pause)="onAudioStopped()"></audio>
-</div>
+		(ended)="onAudioStopped()" (pause)="onAudioStopped()"></audio> -->
+<!-- </div> -->
 
-<ng-template #no_translation>
+<!-- <ng-template #no_translation>
     <div class="no-translation-container">
         <div class="no-translation-message">
             <app-icon icon="info" shadow="true"></app-icon>
@@ -86,9 +73,73 @@
 		<app-icon icon="add" shadow="true"></app-icon>
 		<span [innerHTML]="'Add word' | translate:'addWord'"></span>
 	</div>
+</div> -->
+
+<!-- Translation heading above word list -->
+<div class="translation-heading">
+	<span>Here's what I see:</span>
 </div>
-<app-selection-line [class.hidden]="!selectedWordVisible" [targetPosition]="lineTargetPosition">
-</app-selection-line>
+
+<!-- Word scroll list component -->
 <app-word-scroll-list [translations]="translations" [defaultSelectedWordIndex]="defaultSelectedWordIndex"
 	(selectedWordChanged)="onSelectedWordChanged($event)" (targetPositionChanged)="onTargetPositionChanged($event)">
 </app-word-scroll-list>
+
+<!-- The main info section with fixed dimensions -->
+<div class="info-section">
+	<!-- Fixed height heading -->
+	<div class="info-heading">
+		<h2 *ngIf="!showSentence">Translated into {{currentLanguage}}</h2>
+		<h2 *ngIf="showSentence">Gemini generate sentence</h2>
+	</div>
+
+	<!-- Audio element hidden -->
+	<audio #audioPlayer [src]="displayTranslation?.soundURL | gcsUrl" preload="none" (play)="onAudioPlaying()"
+		(ended)="onAudioStopped()" (pause)="onAudioStopped()"></audio>
+
+	<!-- Fixed height word display -->
+	<div class="word-display-section">
+		<div class="icon-placeholder" *ngIf="!showSentence">
+			<app-icon icon="share_black"></app-icon>
+		</div>
+		<div class="word-container">
+			<span class="selected-word" *ngIf="!showSentence">{{displayTranslation?.translation || 'Select a word'}}</span>
+			<span class="selected-word sentence" *ngIf="showSentence">
+				<span>{{ displayTranslation?.split_sentence[0] }}</span>
+				<span>{{ displayTranslation?.split_sentence[1] }}</span>
+				<span>{{ displayTranslation?.split_sentence[2] }}</span>
+			</span>
+		</div>
+		<div class="icon-placeholder" *ngIf="!showSentence" (click)="onPlayAudioClick()">
+			<app-icon icon="audio_black"></app-icon>
+		</div>
+	</div>
+
+	<!-- Fixed height word type -->
+	<div class="word-type-section">
+		<span class="word-type">{{ displayTranslation?.transliteration}}</span>
+	</div>
+
+	<!-- Fixed height details with context toggle inside -->
+	<div class="info-details">
+		<!-- Context toggle section moved inside info-details -->
+		<div class="context-toggle-section">
+			<a class="context-toggle" (click)="toggleShowSentence()">
+				<svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<g clip-path="url(#clip0_52_631)">
+						<path d="M8.5 16.25L7.4375 15.1875L8.72917 13.8958C6.90972 13.7014 5.41667 13.2361 4.25 12.5C3.08333 11.7639 2.5 10.9306 2.5 10C2.5 8.88889 3.27778 7.94444 4.83333 7.16667C6.38889 6.38889 8.27778 6 10.5 6C12.7222 6 14.6111 6.38889 16.1667 7.16667C17.7222 7.94444 18.5 8.88889 18.5 10C18.5 10.8333 18.0417 11.5903 17.125 12.2708C16.2222 12.9375 15.0139 13.4167 13.5 13.7083V12.1667C14.5 11.9306 15.3333 11.6111 16 11.2083C16.6667 10.7917 17 10.3889 17 10C17 9.36111 16.3264 8.78472 14.9792 8.27083C13.6319 7.75694 12.1389 7.5 10.5 7.5C8.875 7.5 7.38194 7.76389 6.02083 8.29167C4.67361 8.80556 4 9.375 4 10C4 10.4722 4.44444 10.9444 5.33333 11.4167C6.23611 11.8889 7.28472 12.2014 8.47917 12.3542L7.4375 11.3125L8.5 10.25L11.5 13.25L8.5 16.25Z" fill="#835500"/>
+					</g>
+					<defs>
+						<clipPath id="clip0_52_631">
+							<rect width="20" height="20" fill="white" transform="translate(0.5)"/>
+						</clipPath>
+					</defs>
+				</svg>
+				<span>{{showSentence ? 'Show word' : 'Show in context'}}</span>
+			</a>
+		</div>
+
+		<!-- Adding empty div with minimum height to prevent collapse -->
+		<div class="details-spacer"></div>
+	</div>
+</div>

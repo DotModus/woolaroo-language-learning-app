@@ -2,7 +2,7 @@
 @import "../../style/palette";
 :host {
     display: block;
-    height: 32px;
+    height: 56px;
     position: relative;
     cursor: pointer;
     overflow: hidden;
@@ -20,37 +20,68 @@ ul {
     list-style-type: none;
     white-space: nowrap;
     li {
-        margin: 0 10px;
+        margin: 0 16px;
         padding: 0;
         color: mat.get-color-from-palette($app-inverted, "500-contrast");
-        font-size: 1.2rem;
-        text-transform: lowercase;
+        font-size: 0.875rem;
+        font-weight: normal;
+        text-transform: capitalize;
         display: inline-block;
         position: relative;
         vertical-align: middle;
+        height: 56px;
+
         >* {
             vertical-align: middle;
         }
-        &.selected,
-        .selected-spacer {
-            font-size: 1.9rem;
-            letter-spacing: 0.1rem;
+
+        &.selected {
+            font-size: 0.875rem;
+            letter-spacing: normal;
+
+            .word {
+                background-color: mat.get-color-from-palette($app-primary, 500);
+                color: black;
+                border-radius: 8px;
+                padding: 0 12px;
+                border: 1px solid mat.get-color-from-palette($app-primary, 500);
+                text-shadow: none;
+                height: 44px;
+                line-height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
         }
-        /* Spacer is used to set the dimensions of the element to selected size,
-       so layout is unaffected when selecting/deselecting words */
+
+        &:not(.selected) .word {
+            background-color: transparent;
+            color: mat.get-color-from-palette($app-primary, 500);
+            border: 1px solid mat.get-color-from-palette($app-primary, 500);
+            border-radius: 8px;
+            padding: 6px 12px;
+            height: 44px;
+            line-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         .selected-spacer {
             visibility: hidden;
+            font-size: 0.875rem;
+            height: 56px;
         }
+
         .word {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            transition: font-size 0.2s ease-in-out;
-            padding-bottom: 15px;
-            padding-left: 10px;
-            padding-right: 10px;
-            padding-top: 5px;
+            transition: all 0.2s ease-in-out;
+            min-width: 30px;
+            width: auto;
+            box-sizing: border-box;
         }
     }
 }
@@ -62,6 +93,10 @@ ul {
     }
 }
 
-.strong-shadow {
+li:not(.selected) .strong-shadow {
     text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+li.selected .strong-shadow {
+    text-shadow: none;
 }

@@ -1,49 +1,58 @@
 <div class="language" *ngIf="language">
-	<div class="banner">
-		<button class="back" (click)="onBackClick($event)">
-			<app-icon icon="back"></app-icon>
-		</button>
-		<img [src]="languageImage" [alt]="'Tree' | translate:'tree':{}" />
-		<span
-			class="translation"
-			[innerHTML]="language ? language.sampleWordTranslation : ''"
-		></span>
-		<span
-			class="original"
-			[innerHTML]="'Tree' | translate:'tree':{}"
-		></span>
+	<div class="language-header">
+		<h1 class="language-title">{{ language ? language.name : '' }}</h1>
+		<div class="region-name">
+			<span class="label" [innerHTML]="'Region'|translate:'region'">
+			</span>: {{ getRegionName(language.region) }}
+		</div>
+
+		<a *ngIf="language.organizationURL" (click)="onExploreLanguageClick(language.organizationURL)" class="external-link">
+			<app-icon icon="partner_link"></app-icon>
+			<span>{{language.organizationName}}</span>
+		</a>
+
+		<div class="language-description" [innerHTML]="'Language description'|translate:'description_' + (language ? language.code : '')"></div>
+
+		<h3 class="example-heading">Example</h3>
+		<div class="sample-word-container">
+			<div class="sample-word-content">
+				<div class="sample-image-wrapper">
+					<img [src]="languageImage" [alt]="'Tree' | translate:'tree':{}" class="sample-image" />
+				</div>
+				<div class="translation-content">
+					<span class="original" [innerHTML]="'Tree' | translate:'tree':{}"></span>
+					<span class="translation" [innerHTML]="language ? language.sampleWordTranslation : ''"></span>
+				</div>
+			</div>
+		</div>
 	</div>
-	<div class="title">
-		<h1>{{ language ? language.name : '' }}</h1>
-		<button
-			class="explore"
-			(click)="onExploreLanguageClick()"
-			*ngIf="language.organizationURL"
-		>
-			{{language.organizationName}}
-		</button>
+
+	<div class="same-region-section">
+		<h3 class="section-heading">In the same region</h3>
+		<div class="horizontal-scroll-container">
+			<ul class="same-region-list">
+				<li *ngFor="let lang of getSameRegionLanguages()" class="region-language-item" (click)="onLanguageClick(lang.code)">
+					<h4 class="language-name">{{ lang.name }}</h4>
+					<p class="language-description" [innerHTML]="'Language description'|translate:'description_' + lang.code"></p>
+				</li>
+			</ul>
+		</div>
 	</div>
+	<!--
 	<div class="details">
 		<div class="field">
-			<span
-				class="label"
-				[innerHTML]="'Region'|translate:'region'"
-			></span>
 			<span
 				class="value"
 				[innerHTML]="'Region name'|translate:'region_' + (language ? language.code : '')"
 			></span>
 		</div>
 	</div>
-	<div
-		class="description"
-		[innerHTML]="'Language description'|translate:'description_' + (language ? language.code : '')"
-	></div>
+	 -->
 </div>
 <div class="other-languages">
 	<h2 [innerHTML]="'Other languages'|translate:'otherLanguages'"></h2>
 	<app-scroll-list
-		[currentItem]="otherLanguages.length / 2"
+		[currentItem]="otherLanguages && otherLanguages.length ? 0 : 0"
 		[snappingEnabled]="false"
 		itemAlignment="start"
 	>

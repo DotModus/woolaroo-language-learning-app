@@ -13,6 +13,7 @@ import { PipesModule } from "../../pipes/pipes.module";
 import { I18nModule } from "../../i18n/i18n.module";
 import { environment } from "../../environments/environment";
 import { AppToolbarModule } from "../../components/app-toolbar/app-toolbar.module";
+import { ImageDisplayModule } from '../../components/image-display/image-display.module';
 
 @NgModule({
 	declarations: [TranslatePageComponent, DownnloadDialog],
@@ -25,6 +26,7 @@ import { AppToolbarModule } from "../../components/app-toolbar/app-toolbar.modul
 		I18nModule,
 		AppToolbarModule,
 		MatDialogModule,
+		ImageDisplayModule
 	],
 	providers: [
 		{

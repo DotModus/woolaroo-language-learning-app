@@ -30,6 +30,23 @@ app-camera-preview {
   display: block;
 }
 
+.instruction-text {
+  position: absolute;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: 22px;
+  font-weight: 300;
+  line-height: 1.5;
+  color: #EAE1D9;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  z-index: 1;
+  width: 80%;
+  max-width: 400px;
+  margin-bottom: 20px;
+}
+
 .camera-frame {
   position: absolute;
   width: 60vw;
@@ -71,15 +88,14 @@ app-camera-preview {
   transform: translateX(-50%);
   z-index: 1;
 
-
   app-icon {
     width: 80px;
     height: 80px;
-    color: mat.get-color-from-palette($app-inverted, '500-contrast');
 
+    ::ng-deep svg {
+      fill: mat.get-color-from-palette($app-primary, 500) !important;
+    }
   }
-
-
 }
 
 
@@ -87,24 +103,27 @@ app-camera-preview {
 .language {
   @include icon-button;
   position: absolute;
-  bottom: 10px;
+  bottom: 35px;
   width: 60px;
   height: 60px;
   padding: 15px;
   box-sizing: border-box;
-  color: mat.get-color-from-palette($app-inverted, '500-contrast');
 
-
+  app-icon {
+    ::ng-deep svg {
+      fill: mat.get-color-from-palette($app-primary, 200) !important;
+    }
+  }
 }
 
 .load-photo {
-  left: 20px;
-  bottom: 10px;
+  left: 50%;
+  transform: translateX(-130px);
 }
 
 .language {
-  right: 20px;
-  bottom: 10px;
+  right: 50%;
+  transform: translateX(130px);
 }
 
 :host-context([dir=rtl]) {
@@ -114,12 +133,14 @@ app-camera-preview {
   }
 
   .load-photo {
+    right: 50%;
     left: auto;
-    right: 35px;
+    transform: translateX(-130px);
   }
 
   .language {
+    left: 50%;
     right: auto;
-    left: 20px;
+    transform: translateX(130px);
   }
 }

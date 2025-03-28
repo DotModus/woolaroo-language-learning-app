@@ -14,7 +14,7 @@ import { IconComponentModule } from "../../../components/icon/icon.module";
 		CommonModule,
 		I18nModule,
 		ScrollListModule,
-		IconComponentModule,
+		IconComponentModule
 	],
 })
 export class ViewLanguageModule {}

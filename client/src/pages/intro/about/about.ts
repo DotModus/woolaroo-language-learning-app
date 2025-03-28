@@ -33,13 +33,22 @@ export class IntroAboutPageComponent implements AfterViewInit {
 		);
 	}
 
-	tAndC: boolean = true;
+	tAndC: boolean = false;
+
+	public sidenavOpen = false;
+
 	constructor(
 		private router: Router,
 		private axl: AxlService,
 		@Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
 		@Inject(PROFILE_SERVICE) private profileService: IProfileService
-	) {}
+	) {
+		console.log(navigator.language);
+	}
+
+	onBackClick() {
+		history.back();
+	}
 
 	ngAfterViewInit() {
 		this.analyticsService.logPageView(this.router.url, "Intro - About");
@@ -53,18 +62,33 @@ export class IntroAboutPageComponent implements AfterViewInit {
 		);
 	}
 
+	onOpenMenuClick() {
+		this.sidenavOpen = true;
+	}
+
+	onSidenavOpenStart() {
+		// HACK: Fix iOS Safari iPhone 7+ hiding sidenav on transition complete
+		(
+			document.getElementsByTagName("mat-sidenav")[0] as HTMLElement
+		).style.transform = "none";
+	}
+
+	onSidenavClosed() {
+		this.sidenavOpen = false;
+	}
+
 	onViewTermsClick() {
 		this.router.navigateByUrl(AppRoutes.TermsAndConditions, {replaceUrl: true});
 	}
 
 	nextPage(profile: Profile | null = null) {
-		if (
-			(!profile || !profile.termsAgreed) &&
-			environment.pages.termsAndPrivacy.enabled
-		) {
-			this.router.navigateByUrl(AppRoutes.IntroTermsAndConditions, {replaceUrl: true});
-		} else {
-			this.router.navigateByUrl(AppRoutes.ChangeLanguage, {replaceUrl: true});
-		}
+		// if (
+		// 	(!profile || !profile.termsAgreed) &&
+		// 	environment.pages.termsAndPrivacy.enabled
+		// ) {
+		// 	this.router.navigateByUrl(AppRoutes.IntroTermsAndConditions, {replaceUrl: true});
+		// } else {
+			this.router.navigateByUrl(AppRoutes.CaptureImage, {replaceUrl: true});
+		// }
 	}
 }

@@ -8,6 +8,11 @@
 	width: 100%;
 	text-shadow: 1px 1px 2px
 		mat.get-color-from-palette(map.get($app-theme, shadow), "500");
+
+	@media only screen and (max-width: 480px) {
+		height: auto;
+		min-height: calc(100vh - 200px);
+	}
 }
 
 .translation-container {
@@ -245,8 +250,8 @@ app-selection-line {
 }
 
 app-word-scroll-list {
+	margin-top: 0;
 	flex: 0 0 auto;
-	margin-top: 15px;
 }
 
 :host-context([dir="rtl"]) {
@@ -320,4 +325,222 @@ app-word-scroll-list {
             -webkit-text-fill-color: transparent;
         }
     }
+}
+
+.translation-heading {
+  text-align: center;
+  width: 100%;
+  margin-bottom: 8px;
+
+  span {
+    font-size: 0.8rem;
+    color: mat.get-color-from-palette($app-primary, 100);
+    font-weight: 300;
+    text-shadow: none;
+  }
+}
+
+.info-section {
+  width: 420px;
+  height: 280px; /* Fixed height */
+  background-color: mat.get-color-from-palette($app-primary, 500);
+  border-radius: 16px;
+  margin: 20px auto 0;
+  position: relative; /* For absolute positioning of children */
+  overflow: hidden;
+  box-sizing: border-box;
+
+  @media only screen and (max-width: 480px) {
+    width: calc(100% - 32px);
+    margin: 20px 16px 0;
+    height: 280px; /* Same fixed height on mobile */
+  }
+
+  /* Hide audio element */
+  audio {
+    position: absolute;
+    visibility: hidden;
+    height: 0;
+    width: 0;
+  }
+
+  /* Heading section - fixed position at top */
+  .info-heading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 48px; /* Fixed height */
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-sizing: border-box;
+
+    h2 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 500;
+      color: rgba(69, 43, 0, 1);
+      text-shadow: none;
+      width: 100%;
+    }
+  }
+
+  /* Word display section - fixed position below heading */
+  .word-display-section {
+    position: absolute;
+    top: 48px; /* Position right after heading */
+    left: 0;
+    width: 100%;
+    height: 56px; /* Fixed height */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px;
+    box-sizing: border-box;
+
+    .icon-placeholder {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(69, 43, 0, 1) !important;
+      cursor: pointer;
+
+      app-icon {
+        width: 100%;
+        height: 100%;
+
+        ::ng-deep svg {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+
+    .word-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .selected-word {
+        font-size: 32px;
+        color: rgba(69, 43, 0, 1);
+        text-align: center;
+        font-weight: 500;
+        text-shadow: none;
+
+        &.sentence {
+          font-size: 24px;
+          display: flex;
+          gap: 4px;
+          flex-wrap: wrap;
+          justify-content: center;
+          line-height: 1.3;
+
+          .highlight {
+            background-color: rgb(255, 162, 0);
+            padding: 0 4px;
+            border-radius: 4px;
+          }
+        }
+      }
+    }
+  }
+
+  /* Word type section - fixed position below word display */
+  .word-type-section {
+    position: absolute;
+    top: 104px; /* 48px + 56px */
+    left: 0;
+    width: 100%;
+    height: 24px; /* Fixed height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 16px;
+    box-sizing: border-box;
+
+    .word-type {
+      font-size: 14px;
+      color: rgba(69, 43, 0, 1);
+      text-align: center;
+      font-weight: 400;
+      text-shadow: none;
+    }
+  }
+
+  /* Details section - fixed position below word type, with increased height */
+  .info-details {
+    position: absolute;
+    top: 128px; /* 48px + 56px + 24px */
+    left: 0;
+    width: 100%;
+    height: 152px; /* 280px - 128px = 152px (increased from previous 128px) */
+    padding: 16px;
+    color: rgba(69, 43, 0, 1);
+    font-size: 14px;
+    line-height: 1.5;
+    overflow-y: auto;
+    text-shadow: none;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+
+    /* Context toggle section - now inside info-details */
+    .context-toggle-section {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 16px; /* Space after the toggle */
+
+      .context-toggle {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: rgba(131, 85, 0, 1);
+        text-decoration: none;
+        font-size: 12px;
+        cursor: pointer;
+        text-shadow: none;
+
+        svg {
+          width: 20px;
+          height: 20px;
+        }
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    /* Empty spacer to prevent collapse - takes remaining space */
+    .details-spacer {
+      flex: 1;
+      min-height: 1px;
+    }
+  }
+}
+
+.language-controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  width: 420px;
+  margin: 0 auto;
+  padding: 16px;
+  box-sizing: border-box;
+
+  @media only screen and (max-width: 480px) {
+    width: calc(100% - 32px);
+    margin: 0 16px;
+  }
+
+  // Rest of language-controls styles...
 }

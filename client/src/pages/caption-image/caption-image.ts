@@ -114,13 +114,13 @@ export class CaptionImagePageComponent implements OnInit {
       this.router.navigateByUrl(AppRoutes.Translate, {
         state: {
           image: this.image, imageURL: this.backgroundImageURL, words: [this.form.value.caption]
-        }
+        }, replaceUrl: true
       });
     });
   }
 
   onAddFeedbackClick() {
-    this.router.navigateByUrl(AppRoutes.Feedback);
+    this.router.navigateByUrl(AppRoutes.Feedback, {replaceUrl: true});
   }
 
   onBackClick() {

@@ -75,6 +75,8 @@ export class TranslationSelectorComponent {
 	public selectedWord: WordTranslation | null = null;
 	@Input()
 	public defaultSelectedWordIndex = -1;
+	@Input()
+	public currentLanguage: string = '';
 
 	public get displayTranslation(): Translation | null {
 		if (!this.translations || !this.selectedWord) {
