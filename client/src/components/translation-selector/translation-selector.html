@@ -75,22 +75,29 @@
 	</div>
 </div> -->
 
+<!-- Translation heading above word list -->
 <div class="translation-heading">
 	<span>Here's what I see:</span>
 </div>
 
+<!-- Word scroll list component -->
 <app-word-scroll-list [translations]="translations" [defaultSelectedWordIndex]="defaultSelectedWordIndex"
 	(selectedWordChanged)="onSelectedWordChanged($event)" (targetPositionChanged)="onTargetPositionChanged($event)">
 </app-word-scroll-list>
 
-<!-- New section with primary color background -->
+<!-- The main info section with fixed dimensions -->
 <div class="info-section">
+	<!-- Fixed height heading -->
 	<div class="info-heading">
 		<h2 *ngIf="!showSentence">Translated into {{currentLanguage}}</h2>
 		<h2 *ngIf="showSentence">Gemini generate sentence</h2>
 	</div>
+
+	<!-- Audio element hidden -->
 	<audio #audioPlayer [src]="displayTranslation?.soundURL | gcsUrl" preload="none" (play)="onAudioPlaying()"
 		(ended)="onAudioStopped()" (pause)="onAudioStopped()"></audio>
+
+	<!-- Fixed height word display -->
 	<div class="word-display-section">
 		<div class="icon-placeholder" *ngIf="!showSentence">
 			<app-icon icon="share_black"></app-icon>
@@ -107,10 +114,15 @@
 			<app-icon icon="audio_black"></app-icon>
 		</div>
 	</div>
+
+	<!-- Fixed height word type -->
+	<div class="word-type-section">
+		<span class="word-type">{{ displayTranslation?.transliteration}}</span>
+	</div>
+
+	<!-- Fixed height details with context toggle inside -->
 	<div class="info-details">
-		<div class="word-type-section">
-			<span class="word-type">{{ displayTranslation?.transliteration}}</span>
-		</div>
+		<!-- Context toggle section moved inside info-details -->
 		<div class="context-toggle-section">
 			<a class="context-toggle" (click)="toggleShowSentence()">
 				<svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -126,5 +138,8 @@
 				<span>{{showSentence ? 'Show word' : 'Show in context'}}</span>
 			</a>
 		</div>
+
+		<!-- Adding empty div with minimum height to prevent collapse -->
+		<div class="details-spacer"></div>
 	</div>
 </div>

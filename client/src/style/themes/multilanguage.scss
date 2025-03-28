@@ -1,13 +1,42 @@
 @use "@angular/material" as mat;
 @use "sass:map";
-$_primary-palette: (
-	800: #ea564c,
-	contrast: map.get(mat.$red-palette, contrast),
+
+// Custom primary palette based on #FFB956
+$custom-primary: (
+	50: #fff8e1,
+	100: #ffecb3,
+	200: #ffe082,
+	300: #ffd54f,
+	400: #ffc825,
+	500: #FFB956, // Main primary color
+	600: #ffb300,
+	700: #ffa000,
+	800: #ff8f00,
+	900: #ff6f00,
+	A100: #ffe57f,
+	A200: #ffd740,
+	A400: #ffc400,
+	A700: #ffab00,
+	contrast: (
+		50: rgba(0, 0, 0, 0.87),
+		100: rgba(0, 0, 0, 0.87),
+		200: rgba(0, 0, 0, 0.87),
+		300: rgba(0, 0, 0, 0.87),
+		400: rgba(0, 0, 0, 0.87),
+		500: rgba(0, 0, 0, 0.87),
+		600: rgba(0, 0, 0, 0.87),
+		700: rgba(0, 0, 0, 0.87),
+		800: rgba(0, 0, 0, 0.87),
+		900: rgba(0, 0, 0, 0.87),
+		A100: rgba(0, 0, 0, 0.87),
+		A200: rgba(0, 0, 0, 0.87),
+		A400: rgba(0, 0, 0, 0.87),
+		A700: rgba(0, 0, 0, 0.87),
+	)
 );
-$app-primary: mat.define-palette(
-	map.merge(mat.$red-palette, $_primary-palette),
-	800
-);
+
+// Define Angular Material palettes
+$app-primary: mat.define-palette($custom-primary);
 $_secondary-palette: (
 	100: #fdeec3,
 	800: #f49131,

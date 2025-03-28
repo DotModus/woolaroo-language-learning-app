@@ -48,32 +48,3 @@ $app-theme: map.merge(
 		),
 	)
 );
-$app-primary: mat.define-palette(mat.$orange-palette, 500);
-$custom-orange: (
-	50: lighten(#FFB956, 30%),
-	100: lighten(#FFB956, 25%),
-	200: lighten(#FFB956, 20%),
-	300: lighten(#FFB956, 15%),
-	400: lighten(#FFB956, 7%),
-	500: #FFB956,
-	600: darken(#FFB956, 7%),
-	700: darken(#FFB956, 15%),
-	800: darken(#FFB956, 20%),
-	900: darken(#FFB956, 25%),
-	contrast: (
-		50: rgba(black, 0.87),
-		100: rgba(black, 0.87),
-		200: rgba(black, 0.87),
-		300: rgba(black, 0.87),
-		400: rgba(black, 0.87),
-		500: white,
-		600: white,
-		700: white,
-		800: white,
-		900: white,
-	)
-);
-$app-primary: mat.define-palette($custom-orange);
-
-// Custom colors
-$light-text-color: #EAE1D9;

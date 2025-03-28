@@ -180,7 +180,7 @@
 			}
 
 			&.primary-light {
-				background-color: mat.get-color-from-palette($app-primary, 300);
+				background-color:#DEC2A2;
 			}
 		}
 
@@ -208,7 +208,7 @@
 
 		.region-indicator {
 			flex: 0 0 auto;
-			background-color: mat.get-color-from-palette($app-primary, 300);
+			background-color: #DEC2A2;
 			border-radius: 24px;
 			padding: 8px 32px;
 			margin-bottom: 24px;
