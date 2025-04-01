@@ -3,6 +3,7 @@
 
 :host {
   display: block;
+  position: relative;
 }
 
 .image-container {
@@ -19,10 +20,31 @@
     height: 100%;
     object-fit: cover;
   }
+}
 
-  // Desktop dimensions
-  @media only screen and (min-width: 1024px) {
+.icon-overlay {
+  position: absolute;
+  bottom: -16px;
+  right: -16px;
+  z-index: 5;
+  pointer-events: auto;
+}
+
+.capture-icon {
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+}
+
+// Desktop dimensions
+@media only screen and (min-width: 1024px) {
+  .image-container {
     width: 290px;
     height: 290px;
+  }
+
+  .capture-icon {
+    width: 42px;
+    height: 42px;
   }
 }

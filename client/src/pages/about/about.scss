@@ -4,16 +4,119 @@
   @include toolbar-page;
 }
 
+// Override page-header styles for the about page
+:host ::ng-deep app-page-header {
+  mat-toolbar {
+    background-color: transparent;
+
+    // Back button
+    button.close {
+      color: #EAE1D9;
+
+      app-icon {
+        color: #EAE1D9;
+      }
+    }
+
+    // Title text
+    span:first-of-type {
+      color: rgba(234, 225, 217, 0.7); // #EAE1D9 with opacity
+      opacity: 1;
+    }
+
+    span:last-of-type {
+      color: #ffffff;
+      font-weight: 500;
+    }
+  }
+}
+
 .content {
-  padding-top: 63px;
+  padding-top: 50px;
+  padding-left: 24px;
+  padding-right: 24px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding-bottom: 40px;
 
   .mat-body-1 {
-    letter-spacing: -0.025rem;
-    line-height: 2.15rem;
-    font-size: 1.32rem;
+    letter-spacing: 0;
+    line-height: 1.6;
+    font-size: 16px;
+    margin-bottom: 24px;
+    color: #EAE1D9;
+    font-weight: 400;
 
     &:first-child {
       margin-top: 20px;
+    }
+
+    a {
+      color: #DEC2A2;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(222, 194, 162, 0.3);
+
+      &:hover {
+        border-bottom-color: #DEC2A2;
+      }
+    }
+  }
+
+  .intro {
+    font-size: 18px;
+    margin-bottom: 32px;
+    font-weight: 500;
+    color: #fff;
+  }
+
+  // Mobile adjustments
+  @media (max-width: 480px) {
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 30px;
+
+    .mat-body-1 {
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .intro {
+      font-size: 17px;
+      margin-bottom: 24px;
+    }
+  }
+
+  // Tablet adjustments
+  @media (min-width: 481px) and (max-width: 767px) {
+    padding-left: 24px;
+    padding-right: 24px;
+
+    .mat-body-1 {
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .intro {
+      font-size: 18px;
+    }
+  }
+
+  // Desktop adjustments
+  @media (min-width: 768px) {
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 60px;
+
+    .mat-body-1 {
+      font-size: 18px;
+      line-height: 1.8;
+      margin-bottom: 28px;
+    }
+
+    .intro {
+      font-size: 20px;
+      margin-bottom: 36px;
     }
   }
 }

@@ -4,20 +4,27 @@ mat-toolbar {
   display: grid;
   grid-template-columns: 0fr 1fr;
   height: 100px;
-  background-color: black;
+  background-color: transparent;
 
   button {
     grid-row: 1 / span 2;
     grid-column: 1;
     padding: 8px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.8;
+    }
   }
 
   span:first-of-type {
     grid-row: 1;
     grid-column: 2;
     font-size: 18px;
-    color: #303438;
-    opacity: 0.5;
+    color: #EAE1D9;
+    opacity: 0.7;
     align-self: flex-end;
   }
 
@@ -25,7 +32,7 @@ mat-toolbar {
     grid-row: 2;
     grid-column: 2;
     font-size: 20px;
-    color: #303438;
+    color: #FFFFFF;
     font-weight: bold;
     align-self: flex-start;
   }

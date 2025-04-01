@@ -14,6 +14,7 @@ import { SidenavModule } from "../../components/sidenav/sidenav.module";
 import { I18nModule } from "../../i18n/i18n.module";
 import { IconComponentModule } from "../../components/icon/icon.module";
 import { CommonModule } from "@angular/common";
+import { DirectivesModule } from "../../directives/directives.module";
 
 @NgModule({
 	declarations: [IntroAboutPageComponent, IntroTermsPageComponent],
@@ -30,7 +31,8 @@ import { CommonModule } from "@angular/common";
 		LogoModule,
 		AppToolbarModule,
 		IconComponentModule,
-		SidenavModule
+		SidenavModule,
+		DirectivesModule
 	],
 })
 export class IntroPageModule {}

@@ -134,6 +134,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 	public translations: WordTranslation[] | null = null;
 	private _persistedHistory: PersistHistory = {} as PersistHistory;
 	private _downloadData: DialogData = {} as DialogData;
+	public sidenavOpen = false;
 
 	public get currentLanguage(): string {
 		return this.endangeredLanguageService.currentLanguage.name;
@@ -502,5 +503,20 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 
 	onAddTranslation(word: WordTranslation) {
 		this.router.navigateByUrl(AppRoutes.AddWord, { state: { word }, replaceUrl: true });
+	}
+
+	onOpenMenuClick() {
+		this.sidenavOpen = true;
+	}
+
+	onSidenavOpenStart() {
+		// HACK: Fix iOS Safari iPhone 7+ hiding sidenav on transition complete
+		(
+			document.getElementsByTagName("mat-sidenav")[0] as HTMLElement
+		).style.transform = "none";
+	}
+
+	onSidenavClosed() {
+		this.sidenavOpen = false;
 	}
 }

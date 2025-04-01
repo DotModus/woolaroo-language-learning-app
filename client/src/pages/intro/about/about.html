@@ -28,7 +28,7 @@
 
     <div class="section bottom-section">
         <!-- Desktop-only feature box -->
-        <div class="feature-box desktop-only" (click)="onNextClick()" [class.disabled]="!tAndC">
+        <div class="feature-box desktop-only" (appFileUpload)="onImageUploaded($event)" [class.disabled]="!tAndC" accept="image/*">
             <div class="feature-box-content">
                 <div class="feature-icon-container">
                     <app-icon icon="photo_library_black" class="feature-icon"></app-icon>

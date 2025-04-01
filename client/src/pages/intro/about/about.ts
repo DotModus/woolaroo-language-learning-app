@@ -1,32 +1,32 @@
-import { AfterViewInit, Component, HostBinding, Inject } from "@angular/core";
+import { AfterViewInit, Component, Inject } from "@angular/core";
 import { Router } from "@angular/router";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { AppRoutes } from "../../../app/routes";
-import {
-	IAnalyticsService,
-	ANALYTICS_SERVICE,
-} from "../../../services/analytics";
-import { environment } from "../../../environments/environment";
+import { AxlService } from "../../../services/axl.service";
+import { ANALYTICS_SERVICE, IAnalyticsService } from "../../../services/analytics";
 import { IProfileService, PROFILE_SERVICE } from "../../../services/profile";
 import { Profile } from "../../../services/entities/profile";
 import {
 	getOperatingSystem,
-	isMobileDevice,
 	OperatingSystem,
+	isMobileDevice
 } from "../../../util/platform";
 import { cameraStreamIsAvailable } from "../../../util/camera";
-import { AxlService } from "../../../services/axl.service";
-import AxL from '../../../external/axl';
+import { LoadingPopUpComponent } from "../../../components/loading-popup/loading-popup";
+import { ErrorPopUpComponent } from "../../../components/error-popup/error-popup";
+import { I18nService } from "../../../i18n/i18n.service";
+import { IImageRecognitionService, IMAGE_RECOGNITION_SERVICE } from "../../../services/image-recognition";
+import { SessionService } from "../../../services/session";
+import AxL from "../../../external/axl";
+import { addOpenedListener } from "../../../util/dialog";
 
 @Component({
 	selector: "app-page-intro-about",
-	templateUrl: "./about.html",
+	templateUrl: "about.html",
 	styleUrls: ["./about.scss"],
 })
 export class IntroAboutPageComponent implements AfterViewInit {
-	public get deviceSupported(): boolean {
-		return isMobileDevice();
-	}
-	public get isOldIOSVersion(): boolean {
+	get iOS(): boolean {
 		return (
 			getOperatingSystem() === OperatingSystem.iOS &&
 			!cameraStreamIsAvailable()
@@ -41,7 +41,11 @@ export class IntroAboutPageComponent implements AfterViewInit {
 		private router: Router,
 		private axl: AxlService,
 		@Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
-		@Inject(PROFILE_SERVICE) private profileService: IProfileService
+		@Inject(PROFILE_SERVICE) private profileService: IProfileService,
+		private dialog: MatDialog,
+		private i18n: I18nService,
+		@Inject(IMAGE_RECOGNITION_SERVICE) private imageRecognitionService: IImageRecognitionService,
+		private sessionService: SessionService
 	) {
 		console.log(navigator.language);
 	}
@@ -52,6 +56,90 @@ export class IntroAboutPageComponent implements AfterViewInit {
 
 	ngAfterViewInit() {
 		this.analyticsService.logPageView(this.router.url, "Intro - About");
+	}
+
+	onImageUploaded(image: Blob) {
+		// Only process when terms are accepted
+		if (!this.tAndC) {
+			return;
+		}
+
+		const loadingPopUp = this.dialog.open(LoadingPopUpComponent, {
+			closeOnNavigation: false,
+			disableClose: true,
+			panelClass: "loading-popup",
+		});
+
+		// Track the modal in the session service
+		this.sessionService.currentSession.currentModal = loadingPopUp;
+		loadingPopUp.beforeClosed().subscribe({
+			complete: () => (this.sessionService.currentSession.currentModal = null),
+		});
+
+		// Log the action
+		this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: "upload picture" });
+
+		// Process image using the opened listener
+		addOpenedListener(loadingPopUp, () => this.processUploadedImage(image, loadingPopUp));
+	}
+
+	private processUploadedImage(image: Blob, loadingPopUp: MatDialogRef<any>) {
+		const imageUrl = URL.createObjectURL(image);
+
+		this.imageRecognitionService.loadDescriptions(image).then(
+			(descriptions) => {
+				if (descriptions.length > 0) {
+					const targetLanguage = null; // We don't have a route snapshot to check for target_lang
+
+					let url = AppRoutes.Translate;
+
+					this.router
+						.navigateByUrl(url, {
+							state: {
+								image,
+								imageURL: imageUrl,
+								words: descriptions.map((d) => d.description),
+							},
+							replaceUrl: true
+						})
+						.then(
+							(success) => {
+								if (!success) {
+									loadingPopUp.close();
+								}
+							},
+							() => loadingPopUp.close()
+						);
+
+				} else {
+					this.router
+						.navigateByUrl(AppRoutes.CaptionImage, {
+							state: {
+								image,
+								imageURL: imageUrl,
+							},
+							replaceUrl: true
+						})
+						.finally(() => loadingPopUp.close());
+				}
+			},
+			(err) => {
+				loadingPopUp.close();
+				const errorTitle =
+					this.i18n.getTranslation("imageRecognitionErrorTitle") ||
+					"Unable to connect";
+				const errorMessage =
+					this.i18n.getTranslation("imageRecognitionErrorMessage") ||
+					"Please check network connection";
+				this.dialog.open(ErrorPopUpComponent, {
+					data: { message: errorMessage, title: errorTitle },
+				});
+				this.router.navigateByUrl(AppRoutes.CaptionImage, {
+					state: { image, imageURL: imageUrl },
+					replaceUrl: true
+				});
+			}
+		);
 	}
 
 	onNextClick() {
@@ -82,13 +170,6 @@ export class IntroAboutPageComponent implements AfterViewInit {
 	}
 
 	nextPage(profile: Profile | null = null) {
-		// if (
-		// 	(!profile || !profile.termsAgreed) &&
-		// 	environment.pages.termsAndPrivacy.enabled
-		// ) {
-		// 	this.router.navigateByUrl(AppRoutes.IntroTermsAndConditions, {replaceUrl: true});
-		// } else {
-			this.router.navigateByUrl(AppRoutes.CaptureImage, {replaceUrl: true});
-		// }
+		this.router.navigateByUrl(AppRoutes.CaptureImage, {replaceUrl: true});
 	}
 }

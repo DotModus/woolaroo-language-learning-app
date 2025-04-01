@@ -4,6 +4,9 @@
 :host {
   display: block;
   box-sizing: border-box;
+  background-color: #4F4539;
+  height: 100%;
+  color: #EAE1D9;
 }
 
 .brand-logo {
@@ -24,17 +27,19 @@ ul {
     padding: 0;
     margin: 0;
     font-size: 18px;
-    color: rgba(map.get(map.get($app-theme, "foreground"), "text"), 0.5);
+    color: rgba(255, 255, 255, 0.7);
 
     li {
-      font-weight: bold;
-      color: map.get(map.get($app-theme, "foreground"), "text");
+      font-weight: 400;
+      color: #EAE1D9;
     }
 
     a {
       text-decoration: none;
       display: block;
       padding: 10px 0;
+      color: #EAE1D9;
+      cursor: pointer;
     }
   }
 }
@@ -47,8 +52,41 @@ button.home-screen {
   padding: 0 24px;
   border-radius: 0;
   margin-bottom: 20px;
+  color: #EAE1D9;
 
   span {
     margin: 0 30px;
+  }
+}
+
+/* Language Switcher Styles */
+.language-switcher {
+  margin: 30px 30px 20px;
+
+  .language-label {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 10px;
+  }
+
+  .language-select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #EAE1D9;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    cursor: pointer;
+
+    option {
+      background-color: #4F4539;
+      color: #EAE1D9;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: rgba(255, 255, 255, 0.5);
+    }
   }
 }

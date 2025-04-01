@@ -3,6 +3,53 @@
 @import '../../style/components';
 @import '../../style/palette';
 
+// Direct styling for white inputs and labels
+:host ::ng-deep {
+  // Make all input text white
+  .mat-input-element {
+    color: white !important;
+    caret-color: white !important;
+  }
+
+  // Make all form field outlines white
+  .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: white !important;
+  }
+
+  .mat-form-field-appearance-outline .mat-form-field-outline-thick {
+    color: white !important;
+  }
+
+  // Make all labels white
+  .mat-form-field-label {
+    color: white !important;
+  }
+
+  // Make hint text white
+  .mat-hint {
+    color: rgb(255, 255, 255) !important;
+  }
+
+  // Make placeholder text white
+  input::placeholder {
+    color: rgba(255, 255, 255, 0.7) !important;
+    opacity: 1 !important;
+  }
+
+  input::-webkit-input-placeholder {
+    color: rgba(255, 255, 255, 0.7) !important;
+  }
+
+  input::-moz-placeholder {
+    color: rgba(255, 255, 255, 0.7) !important;
+    opacity: 1 !important;
+  }
+
+  input:-ms-input-placeholder {
+    color: rgba(255, 255, 255, 0.7) !important;
+  }
+}
+
 mat-form-field.text {
   margin-bottom: 30px;
 }
@@ -12,6 +59,7 @@ mat-form-field.text {
   flex-direction: row;
   align-items: center;
   margin-bottom: 40px;
+  color: white;
 
   > * {
     flex: 0 0 auto;
@@ -30,6 +78,7 @@ mat-form-field.text {
     app-icon {
       width: 36px;
       height: 36px;
+      color: white;
     }
 
     app-progress-border {
@@ -57,10 +106,22 @@ mat-form-field.text {
       position: absolute;
       width: 100%;
       text-align: center;
+      color: white;
     }
   }
 }
 
 .special-chars {
   font-size: 0.97rem;
+  color: rgba(255, 255, 255, 0.7);
+
+  a {
+    color: #DEC2A2;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(222, 194, 162, 0.3);
+
+    &:hover {
+      border-bottom-color: #DEC2A2;
+    }
+  }
 }

@@ -10,6 +10,30 @@
   }
 }
 
+:host ::ng-deep app-page-header {
+  mat-toolbar {
+    background-color: transparent;
+
+    button.close {
+      color: #EAE1D9;
+
+      app-icon {
+        color: #EAE1D9;
+      }
+    }
+
+    span:first-of-type {
+      color: rgba(234, 225, 217, 0.7);
+      opacity: 1;
+    }
+
+    span:last-of-type {
+      color: #ffffff;
+      font-weight: 500;
+    }
+  }
+}
+
 .content app-scroll-list ::ng-deep {
   margin: 0 0 50px 0;
 
@@ -127,5 +151,5 @@ app-pagination-indicator {
 .instructions {
   text-align: center;
   font-size: 18px;
-  color: #767777;
+  color: #EAE1D9;
 }

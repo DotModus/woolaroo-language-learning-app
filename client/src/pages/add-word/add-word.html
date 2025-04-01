@@ -1,7 +1,8 @@
 <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
   <mat-toolbar>
     <button class="close" (click)="onCloseClick($event)"><app-icon icon="close"></app-icon></button>
-    <span [innerHTML]="'Add word' | translate: 'sendFeedback'">Add word</span>
+    <span class="title" [innerHTML]="'Add word' | translate: 'sendFeedback'">Add word</span>
+    <div class="spacer"></div>
     <button mat-button color="primary" class="submit" type="submit">
       <span [innerHTML]="'Add' | translate: 'add'"></span>
     </button>

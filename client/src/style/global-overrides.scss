@@ -1,0 +1,85 @@
+// Global overrides to force white text and borders for inputs on dark backgrounds
+
+// Force all form field elements to use white text and borders
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  color: white !important;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline-thick {
+  color: white !important;
+}
+
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  color: white !important;
+}
+
+// Force all labels to be white
+.mat-form-field-label {
+  color: white !important;
+}
+
+// Force all input text to be white
+.mat-input-element {
+  color: white !important;
+  caret-color: white !important;
+}
+
+// Force white placeholder text
+input::placeholder,
+textarea::placeholder {
+  color: rgba(255, 255, 255, 0.7) !important;
+  opacity: 1 !important;
+}
+
+// Cross-browser placeholder support
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+input::-moz-placeholder,
+textarea::-moz-placeholder {
+  color: rgba(255, 255, 255, 0.7) !important;
+  opacity: 1 !important;
+}
+
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+// Force hint text to be white
+.mat-hint {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+// Special class for dark background forms
+.dark-background-form {
+  .mat-form-field-label,
+  .mat-input-element,
+  .mat-hint {
+    color: white !important;
+  }
+
+  .mat-form-field-outline {
+    color: white !important;
+  }
+}
+
+// Custom class
+.white-text-input {
+  color: white !important;
+}
+
+// Custom field styling
+.custom-field {
+  --mat-form-field-label-color: white !important;
+
+  .mat-form-field-outline {
+    color: white !important;
+  }
+
+  .mat-form-field-label {
+    color: white !important;
+  }
+}

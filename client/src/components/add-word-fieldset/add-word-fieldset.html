@@ -1,43 +1,43 @@
-<div [formGroup]="formGroup" >
+<div [formGroup]="formGroup" style="color: white;">
   <div style="display: flex; flex-direction: column;">
+
     <div style="display: flex; flex-direction: column;" *ngIf="!suggested">
-      <mat-form-field class="text" appearance="outline">
-        <mat-label [innerHTML]="'Current Word' | translate:'wordInNativeScript'"></mat-label>
-        <input type="text" required matInput name="nativeWord" formControlName="nativeWord" maxlength="100" />
+
+      <mat-form-field class="text custom-field" appearance="outline" style="--mat-form-field-label-color: white;">
+        <input style="color: white !important;" type="text" required matInput class="white-text-input" name="nativeWord" formControlName="nativeWord" maxlength="100" placeholder="Enter current word" />
       </mat-form-field>
-      <mat-form-field class="text" appearance="outline">
-        <mat-label [innerHTML]="'Current Transliteration'| translate:'transliteration'"></mat-label>
-      <input type="text" required matInput name="transliteration" formControlName="transliteration" />
+
+      <mat-form-field class="text custom-field" appearance="outline" style="--mat-form-field-label-color: white;">
+      <input style="color: white !important;" type="text" required matInput class="white-text-input" name="transliteration" formControlName="transliteration" placeholder="Enter current transliteration" />
       </mat-form-field>
-      <mat-form-field class="text" appearance="outline" [hideRequiredMarker]="true"
-        [hintLabel]="'e.g. مرحبا' | translate:'nativeScriptHint'">
-        <mat-label [innerHTML]="'Suggested Word in native script (optional)' | translate:'suggestedWordOptional'"></mat-label>
-      <input type="text" matInput name="suggestedTranslation" formControlName="suggestedTranslation" maxlength="100" />
+
+      <mat-form-field class="text custom-field" appearance="outline" [hideRequiredMarker]="true"
+        [hintLabel]="'e.g. مرحبا' | translate:'nativeScriptHint'" style="--mat-form-field-label-color: white;">
+      <input style="color: white !important;" type="text" matInput class="white-text-input" name="suggestedTranslation" formControlName="suggestedTranslation" maxlength="100" placeholder="Enter suggested word" />
       </mat-form-field>
+
     </div>
+
     <div style="display: flex; flex-direction: column;" *ngIf="suggested">
-      <mat-form-field class="text" appearance="outline"
-        [hintLabel]="'e.g. مرحبا' | translate:'nativeScriptHint'">
-      <mat-label [innerHTML]="'Suggested Word in native script'| translate:'suggestedWord'"></mat-label>
-      <input type="text" required matInput name="suggestedTranslation" formControlName="suggestedTranslation" maxlength="100" />
+      <mat-form-field class="text custom-field" appearance="outline"
+        [hintLabel]="'e.g. مرحبا' | translate:'nativeScriptHint'" style="--mat-form-field-label-color: white;">
+      <input style="color: white !important;" type="text" required matInput class="white-text-input" name="suggestedTranslation" formControlName="suggestedTranslation" maxlength="100" placeholder="Enter suggested word" />
       </mat-form-field>
     </div>
-    <mat-form-field class="text" appearance="outline" [hideRequiredMarker]="true"
-    [hintLabel]="'Word in Latin alphabet (e.g. \'marhaba\')' | translate:'transliterationHint'">
-    <mat-label [innerHTML]="'Suggested Transliteration (optional)' | translate:'suggestedTransliterationOptional'"></mat-label>
-      <input type="text" matInput name="suggestedTransliteration" formControlName="suggestedTransliteration" />
+
+    <mat-form-field class="text custom-field" appearance="outline" [hideRequiredMarker]="true"
+    [hintLabel]="'Word in Latin alphabet (e.g. \'marhaba\')' | translate:'transliterationHint'" style="--mat-form-field-label-color: white;">
+      <input style="color: white !important;" type="text" matInput class="white-text-input" name="suggestedTransliteration" formControlName="suggestedTransliteration" placeholder="Enter suggested transliteration" />
       </mat-form-field>
-    <mat-form-field class="text" appearance="outline"
-                    [hintLabel]="'e.g. \'hello\'' | translate:'englishWordHint'">
-      <mat-label [innerHTML]="'Word in English' | translate:'wordInEnglish'"></mat-label>
-      <input type="text" required matInput name="englishWord" formControlName="englishWord" maxlength="100" />
+    <mat-form-field class="text custom-field" appearance="outline"
+                    [hintLabel]="'e.g. \'hello\'' | translate:'englishWordHint'" style="--mat-form-field-label-color: white;">
+      <input style="color: white !important;" type="text" required matInput class="white-text-input" name="englishWord" formControlName="englishWord" maxlength="100" placeholder="Enter word in English" />
     </mat-form-field>
-    <mat-form-field *ngIf="primaryLanguageWordAvailable" class="text" appearance="outline"
-                    [hintLabel]="'e.g. \'hello\'' | translate:'wordInPrimaryLanguageHint'">
-      <mat-label [innerHTML]="'Word in English' | translate:'wordInPrimaryLanguage'"></mat-label>
-      <input type="text" required matInput name="word" formControlName="word" maxlength="100" />
+    <mat-form-field *ngIf="primaryLanguageWordAvailable" class="text custom-field" appearance="outline"
+                    [hintLabel]="'e.g. \'hello\'' | translate:'wordInPrimaryLanguageHint'" style="--mat-form-field-label-color: white;">
+      <input style="color: white !important;" type="text" required matInput class="white-text-input" name="word" formControlName="word" maxlength="100" placeholder="Enter word in your language" />
     </mat-form-field>
-    <div class="special-chars">
+    <div class="special-chars" style="color: rgba(255, 255, 255, 0.8);">
       <span *ngIf="operatingSystem === operatingSystemValues.Android || operatingSystem === operatingSystemValues.iOS"
             [innerHTML]="'Want to type special characters? Try <a href=\'${gboardUrl}\'>GBoard</a> or <a href=\'${keymanUrl}\'>Keyman</a>' | translate:'specialCharsInstructions'"></span>
     </div>

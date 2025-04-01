@@ -119,6 +119,12 @@ app-camera-preview {
 .load-photo {
   left: 50%;
   transform: translateX(-130px);
+
+  app-icon {
+    ::ng-deep svg {
+      fill: #DEC2A2 !important;
+    }
+  }
 }
 
 .language {

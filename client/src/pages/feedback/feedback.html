@@ -1,7 +1,8 @@
 <form [formGroup]="feedbackForm" (ngSubmit)="onFormSubmit()">
   <mat-toolbar>
     <button class="close" (click)="onCloseClick($event)"><app-icon icon="close"></app-icon></button>
-    <span [innerHTML]="'Feedback' | translate:'feedbackTitle'"></span>
+    <span class="title" [innerHTML]="'Feedback' | translate:'feedbackTitle'"></span>
+    <div class="spacer"></div>
     <button mat-button color="primary" class="submit" type="submit">
       <span [innerHTML]="'Submit' | translate:'submit'"></span>
     </button>
@@ -9,9 +10,9 @@
   <div class="content">
     <p class="mat-body-1 instructions" [innerHTML]="'Help us improve Woolaroo\'s translations by sharing your feedback with us:' | translate:'feedbackInstructions'"></p>
     <app-add-word-fieldset [formGroup]="feedbackForm" [includeRecording]="false" [suggested]="false"></app-add-word-fieldset>
-    <mat-form-field class="textarea" appearance="outline" style="display: block;">
-      <mat-label [innerHTML]="'Enter feedback' | translate:'enterFeedback'"></mat-label>
-      <textarea matInput name="content" required formControlName="content"></textarea>
+    <mat-form-field class="textarea custom-field" appearance="outline" style="display: block;">
+      <mat-label style="color: white !important;" [innerHTML]="'Enter feedback' | translate:'enterFeedback'"></mat-label>
+      <textarea matInput name="content" required formControlName="content" class="white-text-input" style="color: white !important;" placeholder="Enter your feedback here"></textarea>
       <mat-error *ngIf="feedbackForm.controls['content'].hasError('required')" [innerHTML]="'Feedback required' | translate:'feedbackRequired'"></mat-error>
     </mat-form-field>
   </div>

@@ -15,6 +15,7 @@ import { I18nService } from "../../i18n/i18n.service";
 import { EndangeredLanguageService } from "../../services/endangered-language";
 import { Feedback } from "../../services/entities/feedback";
 import { getLogger } from "../../util/logging";
+import { AppRoutes } from "../../app/routes";
 
 const logger = getLogger("AddWordPageComponent");
 
@@ -152,6 +153,9 @@ export class AddWordPageComponent implements AfterViewInit {
 	onCloseClick(ev: Event) {
 		ev.preventDefault();
 		ev.stopPropagation();
-		this.router.navigate([".."], {relativeTo: this.route})
+		// Navigate to capture page without adding to browser history
+		this.router.navigateByUrl(AppRoutes.CaptureImage, {
+			replaceUrl: true
+		});
 	}
 }

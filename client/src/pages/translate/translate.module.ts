@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatDialogModule } from "@angular/material/dialog";
+import { MatSidenavModule } from "@angular/material/sidenav";
 import {
 	TranslatePageComponent,
 	TRANSLATE_PAGE_CONFIG,
@@ -14,11 +15,13 @@ import { I18nModule } from "../../i18n/i18n.module";
 import { environment } from "../../environments/environment";
 import { AppToolbarModule } from "../../components/app-toolbar/app-toolbar.module";
 import { ImageDisplayModule } from '../../components/image-display/image-display.module';
+import { SidenavModule } from "../../components/sidenav/sidenav.module";
 
 @NgModule({
 	declarations: [TranslatePageComponent, DownnloadDialog],
 	imports: [
 		MatButtonModule,
+		MatSidenavModule,
 		IconComponentModule,
 		PipesModule,
 		TranslationSelectorModule,
@@ -26,7 +29,8 @@ import { ImageDisplayModule } from '../../components/image-display/image-display
 		I18nModule,
 		AppToolbarModule,
 		MatDialogModule,
-		ImageDisplayModule
+		ImageDisplayModule,
+		SidenavModule
 	],
 	providers: [
 		{

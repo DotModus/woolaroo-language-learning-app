@@ -1,28 +1,32 @@
-<app-image-display [imageUrl]="backgroundImageURL" [altText]="'Captured image'"></app-image-display>
+<mat-sidenav-container>
+  <mat-sidenav (openedStart)="onSidenavOpenStart()" (closed)="onSidenavClosed()" mode="over" [opened]="sidenavOpen">
+    <app-sidenav></app-sidenav>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <app-image-display [imageUrl]="backgroundImageURL" [altText]="'Captured image'"></app-image-display>
 
-<app-toolbar>
-    <button class="back" (click)="onBackClick()" slot="start">
-		<app-icon icon="arrow_back"></app-icon>
-	</button>
-    <!-- <button (click)="onSubmitFeedbackClick()" class="submit-feedback" slot="end">
-		<app-icon icon="add_feedback"></app-icon>
-	</button> -->
-</app-toolbar>
-<app-translation-selector
-	[translations]="translations"
-	[defaultSelectedWordIndex]="defaultSelectedWordIndex"
-	[currentLanguage]="currentLanguage"
-	(addRecording)="onAddRecording($event)"
-	(addTranslation)="onAddTranslation($event)"
-	(wordShared)="onWordShared($event)"
-	(selectedWordChanged)="onSelectedWordChanged($event)"
-	(manualEntrySelected)="onManualEntrySelected()">
-</app-translation-selector>
-<div class="language-controls">
-	<button class="language-button" (click)="onSwitchLanguageClick()">
-		<span [innerHTML]="'Change language'|translate:'switchLanguage'"></span>
-	</button>
-	<button class="language-button" (click)="onViewLanguageClick()">
-		<span>About {{currentLanguage}}</span>
-	</button>
-</div>
+    <app-toolbar>
+        <button (click)="onOpenMenuClick()" class="open-menu" aria-label="Open Menu" slot="start">
+            <app-icon icon="menu"></app-icon>
+        </button>
+    </app-toolbar>
+    <app-translation-selector
+        [translations]="translations"
+        [defaultSelectedWordIndex]="defaultSelectedWordIndex"
+        [currentLanguage]="currentLanguage"
+        (addRecording)="onAddRecording($event)"
+        (addTranslation)="onAddTranslation($event)"
+        (wordShared)="onWordShared($event)"
+        (selectedWordChanged)="onSelectedWordChanged($event)"
+        (manualEntrySelected)="onManualEntrySelected()">
+    </app-translation-selector>
+    <div class="language-controls">
+        <button class="language-button" (click)="onSwitchLanguageClick()">
+            <span [innerHTML]="'Change language'|translate:'switchLanguage'"></span>
+        </button>
+        <button class="language-button" (click)="onViewLanguageClick()">
+            <span>About {{currentLanguage}}</span>
+        </button>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

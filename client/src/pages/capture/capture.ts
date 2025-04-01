@@ -63,8 +63,12 @@ export class ImageLoaderPageBase {
 
 	protected loadImageDescriptions(
 		image: Blob,
-		loadingPopUp: MatDialogRef<CapturePopUpComponent>
+		loadingPopUp: MatDialogRef<any>,
+		existingImageUrl?: string
 	) {
+		// Use the image URL that was already created in onCaptureClick if available
+		const imageUrl = existingImageUrl || URL.createObjectURL(image);
+
 		this.imageRecognitionService.loadDescriptions(image).then(
 			(descriptions) => {
 				if (descriptions.length > 0) {
@@ -76,7 +80,7 @@ export class ImageLoaderPageBase {
 						.navigateByUrl(url, {
 							state: {
 								image,
-								imageURL: URL.createObjectURL(image),
+								imageURL: imageUrl,
 								words: descriptions.map((d) => d.description),
 							},
 							replaceUrl: true
@@ -95,7 +99,7 @@ export class ImageLoaderPageBase {
 						.navigateByUrl(AppRoutes.CaptionImage, {
 							state: {
 								image,
-								imageURL: URL.createObjectURL(image),
+								imageURL: imageUrl,
 							},
 							replaceUrl: true
 						})
@@ -103,7 +107,6 @@ export class ImageLoaderPageBase {
 				}
 			},
 			(err) => {
-				logger.warn("Error loading image descriptions", err);
 				loadingPopUp.close();
 				const errorTitle =
 					this.i18n.getTranslation("imageRecognitionErrorTitle") ||
@@ -115,10 +118,9 @@ export class ImageLoaderPageBase {
 					data: { message: errorMessage, title: errorTitle },
 				});
 				this.router.navigateByUrl(AppRoutes.CaptionImage, {
-					state: { image, imageURL: URL.createObjectURL(image) },
+					state: { image, imageURL: imageUrl },
 					replaceUrl: true
 				});
-
 			}
 		);
 	}
@@ -156,11 +158,26 @@ export class CapturePageComponent
 	}
 
 	ngAfterViewInit() {
-		let loadingPopUp: MatDialogRef<any> | undefined =
-			this.sessionService.currentSession.currentModal;
+		// Initialize loading popup
+		let loadingPopUp: MatDialogRef<any>;
+
+		// Create loading popup while camera initializes
+		loadingPopUp = this.dialog.open(LoadingPopUpComponent, {
+			disableClose: true,
+			panelClass: ["loading-popup", "custom-dialog", "fullscreen-dialog"],
+			maxWidth: '100vw',
+			width: '100%',
+			height: '100%',
+			backdropClass: 'dark-backdrop',
+			position: { top: '0', left: '0', right: '0', bottom: '0' }
+		});
+
+		// Store reference in session for cleanup if needed
+		this.sessionService.currentSession.currentModal = loadingPopUp;
+
 		this.analyticsService.logPageView(this.router.url, "Capture");
 		if (!this.cameraPreview) {
-			logger.error("Camera preview not found");
+			// Close the loading popup since camera failed
 			if (loadingPopUp) {
 				loadingPopUp.close();
 			}
@@ -169,24 +186,20 @@ export class CapturePageComponent
 			});
 			return;
 		}
-		if (!loadingPopUp) {
-			loadingPopUp = this.dialog.open(LoadingPopUpComponent, {
-				disableClose: true,
-				panelClass: "loading-popup",
-			});
-		}
+
 		loadingPopUp.afterClosed().subscribe({
 			next: () => (this.modalIsForCameraStartup = false),
 		});
+
 		this.cameraPreview.start().then(
 			() => {
-				logger.log("Camera started");
+				// Close the loading popup once camera is ready
 				if (loadingPopUp) {
 					loadingPopUp.close();
 				}
 			},
 			(err) => {
-				logger.warn("Error starting camera", err);
+				// Close the loading popup since camera failed
 				if (loadingPopUp) {
 					loadingPopUp.close();
 				}
@@ -215,7 +228,6 @@ export class CapturePageComponent
 	}
 
 	onCaptureClick() {
-
 		const lang = this.endangeredLanguageService.currentLanguage;
 
 		this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: `take picture`, label: lang?.name, value: lang?.code });
@@ -227,35 +239,118 @@ export class CapturePageComponent
 		}
 		const preview = this.cameraPreview;
 		this.captureInProgress = true;
-		const loadingPopUp = this.dialog.open(CapturePopUpComponent, {
-			closeOnNavigation: false,
-			disableClose: true,
-			panelClass: "loading-popup",
-		});
-		this.sessionService.currentSession.currentModal = loadingPopUp;
-		loadingPopUp.beforeClosed().subscribe({
-			complete: () =>
-				(this.sessionService.currentSession.currentModal = null),
-		});
-		addOpenedListener(loadingPopUp, () => {
-			preview.capture().then(
-				(image) => {
-					logger.log("Image captured");
-					this.loadImageDescriptions(image, loadingPopUp);
-				},
-				(err) => {
-					logger.warn("Failed to capture image", err);
-					this.captureInProgress = false;
-					loadingPopUp.close();
-					const errorMessage =
-						this.i18n.getTranslation("captureImageError") ||
-						"Unable to capture image";
-					this.dialog.open(ErrorPopUpComponent, {
-						data: { message: errorMessage },
+
+		// First capture the image
+		preview.capture().then(
+			(image) => {
+				// Create image URL
+				const imageUrl = URL.createObjectURL(image);
+
+				// Test loading the image before opening dialog
+				const testImg = new Image();
+				testImg.onload = () => {
+					// Create dialog data with verified image URL
+					const dialogData = { capturedImage: imageUrl };
+
+					// Show loading popup with the captured image
+					const loadingPopUp = this.dialog.open(LoadingPopUpComponent, {
+						closeOnNavigation: false,
+						disableClose: true,
+						panelClass: ["loading-popup", "custom-dialog", "fullscreen-dialog"],
+						maxWidth: '100vw',
+						width: '100%',
+						height: '100%',
+						backdropClass: 'dark-backdrop',
+						position: { top: '0', left: '0', right: '0', bottom: '0' },
+						data: dialogData
 					});
-				}
-			);
-		});
+
+					// DIRECT DOM APPROACH: Manually inject the image into the specific container
+					setTimeout(() => {
+						try {
+							// Find the image container
+							const imageContainer = document.getElementById('imageContainerForDirectInjection');
+							if (imageContainer) {
+								// Clear the container
+								imageContainer.innerHTML = '';
+
+								// Determine if we're on desktop or mobile
+								const isDesktop = window.innerWidth >= 768;
+
+								// Create a direct image element
+								const img = document.createElement('img');
+								img.src = imageUrl;
+								img.alt = 'Captured Image';
+								img.style.width = '100%';
+								img.style.height = '100%';
+								img.style.objectFit = 'cover';
+								img.style.display = 'block';
+								img.style.margin = '0 auto';
+								img.style.borderRadius = '16px';
+
+								// Set up onload handler to make container visible when image loads
+								img.onload = () => {
+									// Make the container visible once image is loaded
+									imageContainer.style.display = 'flex';
+								};
+
+								img.onerror = () => {
+									// Keep container hidden if image fails to load
+									imageContainer.style.display = 'none';
+								};
+
+								// Add the image to the container
+								imageContainer.appendChild(img);
+							}
+						} catch (err) {
+							// Error handling
+						}
+					}, 300); // Wait for the dialog to fully render
+
+					this.sessionService.currentSession.currentModal = loadingPopUp;
+					loadingPopUp.beforeClosed().subscribe({
+						complete: () => (this.sessionService.currentSession.currentModal = null),
+					});
+
+					// Process the image
+					this.loadImageDescriptions(image, loadingPopUp, imageUrl);
+				};
+
+				testImg.onerror = () => {
+					// Still open dialog but without image
+					const loadingPopUp = this.dialog.open(LoadingPopUpComponent, {
+						closeOnNavigation: false,
+						disableClose: true,
+						panelClass: ["loading-popup", "custom-dialog", "fullscreen-dialog"],
+						maxWidth: '100vw',
+						width: '100%',
+						height: '100%',
+						backdropClass: 'dark-backdrop',
+						position: { top: '0', left: '0', right: '0', bottom: '0' }
+					});
+
+					this.sessionService.currentSession.currentModal = loadingPopUp;
+					loadingPopUp.beforeClosed().subscribe({
+						complete: () => (this.sessionService.currentSession.currentModal = null),
+					});
+
+					// Process the image
+					this.loadImageDescriptions(image, loadingPopUp);
+				};
+
+				// Start loading test
+				testImg.src = imageUrl;
+			},
+			(err) => {
+				this.captureInProgress = false;
+				const errorMessage =
+					this.i18n.getTranslation("captureImageError") ||
+					"Unable to capture image";
+				this.dialog.open(ErrorPopUpComponent, {
+					data: { message: errorMessage },
+				});
+			}
+		);
 	}
 
 	onSidenavOpenStart() {

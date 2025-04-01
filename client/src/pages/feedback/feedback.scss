@@ -1,13 +1,147 @@
 @use '@angular/material' as mat;
 @import '../../style/components';
 @import '../../style/palette';
+@import '../../style/global-overrides';
 
 :host {
-  @include form-page;
+  @include toolbar-page;
+  background-color: #1F1B16;
+
+  // Force text color for all form fields within this component
+  ::ng-deep {
+    // White labels with high specificity
+    .mat-form-field-label,
+    .mat-form-field-label.mat-accent,
+    .mat-form-field-label.mat-focused,
+    .mat-form-field .mat-form-field-label {
+      color: white !important;
+    }
+
+    // White input text with high specificity
+    input.mat-input-element,
+    textarea.mat-input-element,
+    .mat-input-element {
+      color: white !important;
+      caret-color: white !important;
+    }
+
+    // White outlines with high specificity
+    .mat-form-field-appearance-outline .mat-form-field-outline,
+    .mat-form-field-appearance-outline .mat-form-field-outline-thick,
+    .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+      color: white !important;
+    }
+
+    // White placeholder text
+    ::placeholder,
+    ::-webkit-input-placeholder,
+    ::-moz-placeholder,
+    :-ms-input-placeholder,
+    ::-ms-input-placeholder {
+      color: rgba(255, 255, 255, 0.7) !important;
+      opacity: 1 !important;
+    }
+
+    // White hint text
+    .mat-hint {
+      color: rgba(255, 255, 255, 0.8) !important;
+    }
+  }
 }
 
-.instructions {
-  margin-bottom: 35px;
+// Override toolbar styles for consistency
+mat-toolbar {
+  background-color: transparent;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 8px;
+
+  // Close button
+  button.close {
+    color: #EAE1D9;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    flex: 0 0 auto;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    app-icon {
+      color: #EAE1D9;
+    }
+  }
+
+  // Title text
+  .title {
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 20px;
+    text-align: left;
+    margin-left: 8px;
+    flex: 1 1 auto;
+  }
+
+  // Spacer to push elements to edges
+  .spacer {
+    flex: 1 1 auto;
+  }
+
+  // Submit button
+  button.submit {
+    color: #ffffff;
+    margin-left: auto;
+    flex: 0 0 auto;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+}
+
+.content {
+  padding-top: 30px;
+  padding-left: 24px;
+  padding-right: 24px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding-bottom: 40px;
+  color: #EAE1D9;
+
+  .mat-body-1 {
+    letter-spacing: 0;
+    line-height: 1.6;
+    font-size: 16px;
+    margin-bottom: 24px;
+    color: #EAE1D9;
+    font-weight: 400;
+  }
+
+  .instructions {
+    margin-bottom: 32px;
+  }
+
+  // Mobile adjustments
+  @media (max-width: 480px) {
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 20px;
+
+    .mat-body-1 {
+      font-size: 15px;
+      line-height: 1.6;
+    }
+  }
+
+  // Desktop adjustments
+  @media (min-width: 768px) {
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 40px;
+  }
 }
 
 .feedback-types {
@@ -17,11 +151,13 @@
     list-style-type: none;
     margin: 0 0 0 3px;
     padding: 0;
+    color: #EAE1D9;
   }
 
   li {
     display: block;
     margin-bottom: 20px;
+    color: #EAE1D9;
 
     &:last-child {
       margin-bottom: 0;
@@ -37,13 +173,49 @@
 mat-form-field.textarea {
   textarea {
     height: 167px;
+    color: white !important;
+  }
+
+  ::ng-deep .mat-form-field-outline {
+    color: white !important;
+  }
+
+  ::ng-deep .mat-form-field-label {
+    color: white !important;
   }
 }
 
 .legal {
   padding: 0 30px 30px 30px;
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 800px;
+  margin: 0 auto;
+
+  p {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
 
   ::ng-deep a {
-    color: mat.get-color-from-palette($app-primary, '500');
+    color: #DEC2A2;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(222, 194, 162, 0.3);
+
+    &:hover {
+      border-bottom-color: #DEC2A2;
+    }
+  }
+
+  // Mobile adjustments
+  @media (max-width: 480px) {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  // Desktop adjustments
+  @media (min-width: 768px) {
+    padding-left: 40px;
+    padding-right: 40px;
   }
 }

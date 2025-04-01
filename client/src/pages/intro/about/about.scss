@@ -271,7 +271,7 @@ mat-checkbox {
   &:hover:not(.disabled) {
     transform: translateY(-3px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    background-color: mat.get-color-from-palette($app-primary, 400);
+    background-color: #DEC2A2;
   }
 
   &:active:not(.disabled) {
@@ -282,6 +282,7 @@ mat-checkbox {
   &.disabled {
     opacity: 0.7;
     cursor: not-allowed;
+    pointer-events: none;
 
     &::after {
       content: '';

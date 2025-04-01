@@ -16,6 +16,7 @@ import { DEFAULT_LOCALE } from '../../util/locale';
 import { getLogger } from '../../util/logging';
 import AxL from '../../external/axl';
 import { AxlService } from '../../services/axl.service';
+import { AppRoutes } from '../../app/routes';
 
 const logger = getLogger('FeedbackPageComponent');
 
@@ -108,8 +109,9 @@ export class FeedbackPageComponent implements AfterViewInit {
   onCloseClick(ev: Event) {
     ev.stopPropagation();
     ev.preventDefault();
-    this.router.navigate([".."], {relativeTo: this.route})
+    // Navigate to capture page without adding to browser history
+    this.router.navigateByUrl(AppRoutes.CaptureImage, {
+      replaceUrl: true // Replace current URL to prevent adding to browser history
+    });
   }
-
-
 }

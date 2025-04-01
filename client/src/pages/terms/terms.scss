@@ -3,3 +3,84 @@
 :host {
   @include toolbar-page;
 }
+
+// Override toolbar styles for consistency
+mat-toolbar {
+  background-color: transparent;
+
+  // Close button
+  button.close {
+    color: #EAE1D9;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    app-icon {
+      color: #EAE1D9;
+    }
+  }
+
+  // Title text
+  span {
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 20px;
+  }
+}
+
+.content {
+  padding-top: 50px;
+  padding-left: 24px;
+  padding-right: 24px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding-bottom: 40px;
+
+  .mat-body-1 {
+    letter-spacing: 0;
+    line-height: 1.6;
+    font-size: 16px;
+    margin-bottom: 24px;
+    color: #EAE1D9;
+    font-weight: 400;
+
+    a {
+      color: #DEC2A2;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(222, 194, 162, 0.3);
+
+      &:hover {
+        border-bottom-color: #DEC2A2;
+      }
+    }
+  }
+
+  // Mobile adjustments
+  @media (max-width: 480px) {
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 30px;
+
+    .mat-body-1 {
+      font-size: 15px;
+      line-height: 1.6;
+    }
+  }
+
+  // Desktop adjustments
+  @media (min-width: 768px) {
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 60px;
+
+    .mat-body-1 {
+      font-size: 18px;
+      line-height: 1.8;
+    }
+  }
+}

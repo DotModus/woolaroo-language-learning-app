@@ -1,3 +1,44 @@
-<mat-dialog-content>
-  <app-busy-spinner></app-busy-spinner>
-</mat-dialog-content>
+<div style="width: 100vw; height: 100vh; background-color: #4F4539; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px;">
+  <!-- Image Container - Responsive with media query -->
+  <style>
+    #imageContainerForDirectInjection {
+      padding: 0;
+      margin: 0 auto 20px;
+      width: 216px;
+      height: 286px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    @media (min-width: 768px) {
+      #imageContainerForDirectInjection {
+        width: 290px;
+        height: 290px;
+      }
+    }
+  </style>
+
+  <div id="imageContainerForDirectInjection">
+    <!-- Image will be injected here by direct DOM manipulation -->
+  </div>
+
+  <!-- Status and information text -->
+  <div style="text-align: center; width: 100%; max-width: 350px; margin-bottom: 20px;">
+    <h2 style="font-size: 20px; font-weight: 600; margin-bottom: 24px; color: #EAE1D9;">Checking your picture...</h2>
+
+    <p style="font-size: 16px; line-height: 1.5; margin-bottom: 20px; color: rgba(234, 225, 217, 0.9);">Did you know that at least 40% of the 7,000 languages estimated to be spoken in the world are endangered?</p>
+
+    <p style="font-size: 16px; line-height: 1.5; font-style: italic; color: rgba(234, 225, 217, 0.8);">
+      Here's an endangered<br>
+      language in your region
+    </p>
+  </div>
+
+  <!-- Spinner -->
+  <div style="margin: 12px 0;">
+    <app-busy-spinner></app-busy-spinner>
+  </div>
+</div>
