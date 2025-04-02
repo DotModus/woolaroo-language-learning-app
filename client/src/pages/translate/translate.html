@@ -3,13 +3,15 @@
     <app-sidenav></app-sidenav>
   </mat-sidenav>
   <mat-sidenav-content>
-    <app-image-display [imageUrl]="backgroundImageURL" [altText]="'Captured image'"></app-image-display>
+
 
     <app-toolbar>
         <button (click)="onOpenMenuClick()" class="open-menu" aria-label="Open Menu" slot="start">
             <app-icon icon="menu"></app-icon>
         </button>
     </app-toolbar>
+	 <app-image-display [imageUrl]="backgroundImageURL" [altText]="'Captured image'">
+	 </app-image-display>
     <app-translation-selector
         [translations]="translations"
         [defaultSelectedWordIndex]="defaultSelectedWordIndex"

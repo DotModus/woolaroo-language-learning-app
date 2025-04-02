@@ -78,6 +78,9 @@ export class TranslationSelectorComponent {
 	@Input()
 	public currentLanguage: string = '';
 
+	// Toast notification property
+	public showShareToast = false;
+
 	public get displayTranslation(): Translation | null {
 		if (!this.translations || !this.selectedWord) {
 			return null;
@@ -198,21 +201,38 @@ export class TranslationSelectorComponent {
 
 	onShareClick() {
 		this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: "click share button" });
+
+		// Only proceed if there's a selected word and translation
+		if (!this.selectedWordVisible || !this.selectedWord || !this.displayTranslation?.translation) {
+			logger.warn("Cannot share - no word selected");
+			return;
+		}
+
+		// Build a meaningful share message
+		const englishWord = this.selectedWord.english;
+		const translationToShare = this.displayTranslation.translation;
+		const languageToShare = this.currentLanguage || "indigenous language";
+
+		// Send share message through the AxL service
 		this.axl.sendAxlMessage(AxL.ChildToHost.SHARE, {
-			title: 'Check out this thing.',
-			text: 'I found this interesting thing.',
-			image: 'https://url/of/an/image/thumbnail'
+			title: `Learn ${languageToShare} with Woolaroo`,
+			text: `I just learned that "${englishWord}" means "${translationToShare}" in ${languageToShare}!`,
+			url: window.location.href
 		});
-		// if (
-		// 	this.selectedWordVisible &&
-		// 	this.selectedWord &&
-		// 	this.selectedTranslation
-		// ) {
-		// 	this.wordShared.emit({
-		// 		word: this.selectedWord,
-		// 		translation: this.selectedTranslation,
-		// 	});
-		// }
+
+		// Also emit the event for parent components
+		this.wordShared.emit({
+			word: this.selectedWord,
+			translation: this.displayTranslation.translation
+		});
+
+		// Show share success toast and hide after timeout
+		this.showShareToast = true;
+		setTimeout(() => {
+			this.showShareToast = false;
+		}, 3000);
+
+		logger.log(`Shared word: ${englishWord} (${translationToShare})`);
 	}
 
 	toggleShowSentence() {
