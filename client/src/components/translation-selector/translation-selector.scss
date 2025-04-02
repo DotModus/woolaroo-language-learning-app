@@ -411,37 +411,6 @@ app-word-scroll-list {
       position: relative; /* Always have position relative */
       z-index: 2; /* Ensure it's above other elements */
 
-      // Show tooltip for share icon
-      &:first-child:not(.disabled):hover::after {
-        content: "Share this word";
-        position: absolute;
-        left: 50%;
-        top: -40px;
-        transform: translateX(-50%);
-        background-color: #DEC2A2;
-        color: #452B00;
-        padding: 5px 8px;
-        border-radius: 4px;
-        font-size: 12px;
-        white-space: nowrap;
-        z-index: 100;
-        pointer-events: none;
-        opacity: 0.9;
-      }
-
-      &:first-child:not(.disabled):hover::before {
-        content: "";
-        position: absolute;
-        top: -12px;
-        left: 50%;
-        transform: translateX(-50%);
-        border-width: 5px;
-        border-style: solid;
-        border-color: #DEC2A2 transparent transparent transparent;
-        z-index: 101;
-        pointer-events: none;
-      }
-
       &.disabled {
         cursor: not-allowed;
         opacity: 0.5;
