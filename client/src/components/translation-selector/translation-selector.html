@@ -99,18 +99,23 @@
 
 	<!-- Fixed height word display -->
 	<div class="word-display-section">
-		<div class="icon-placeholder" *ngIf="!showSentence">
+		<div class="icon-placeholder" *ngIf="!showSentence"
+			 (click)="onShareClick()"
+			 [class.disabled]="!displayTranslation?.translation">
 			<app-icon icon="share_black"></app-icon>
 		</div>
 		<div class="word-container">
 			<span class="selected-word" *ngIf="!showSentence">{{displayTranslation?.translation || 'Select a word'}}</span>
-			<span class="selected-word sentence" *ngIf="showSentence">
+			<div class="selected-word sentence" *ngIf="showSentence">
 				<span>{{ displayTranslation?.split_sentence[0] }}</span>
-				<span>{{ displayTranslation?.split_sentence[1] }}</span>
+				<span class="highlight">{{ displayTranslation?.split_sentence[1] }}</span>
 				<span>{{ displayTranslation?.split_sentence[2] }}</span>
-			</span>
+			</div>
 		</div>
-		<div class="icon-placeholder" *ngIf="!showSentence" (click)="onPlayAudioClick()">
+		<div class="icon-placeholder" *ngIf="!showSentence"
+		     (click)="onPlayAudioClick()"
+		     [class.disabled]="!displayTranslation?.soundURL"
+		     [ngClass]="{'no-audio': !displayTranslation?.soundURL}">
 			<app-icon icon="audio_black"></app-icon>
 		</div>
 	</div>
@@ -138,8 +143,13 @@
 				<span>{{showSentence ? 'Show word' : 'Show in context'}}</span>
 			</a>
 		</div>
-
-		<!-- Adding empty div with minimum height to prevent collapse -->
-		<div class="details-spacer"></div>
 	</div>
+</div>
+
+<!-- Toast notification for successful sharing -->
+<div class="share-toast" [class.visible]="showShareToast">
+  <div class="toast-content">
+    <app-icon icon="check_circle"></app-icon>
+    <span>Word shared successfully!</span>
+  </div>
 </div>

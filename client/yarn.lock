@@ -7739,7 +7739,7 @@ webpack-merge@5.10.0:
     flat "^5.0.2"
     wildcard "^2.0.0"
 
-webpack-sources@^3.0.0, webpack-sources@^3.2.3:
+webpack-sources@3.2.3, webpack-sources@^3.0.0, webpack-sources@^3.2.3:
   version "3.2.3"
   resolved "https://registry.npmjs.org/webpack-sources/-/webpack-sources-3.2.3.tgz"
   integrity sha512-/DyMEOrDgLKKIG0fmvtz+4dUX/3Ghozwgm6iPp8KRhvn+eQf9+Q7GWxVNMk3+uCPWfdXYC4ExGBckIXdFEfH1w==

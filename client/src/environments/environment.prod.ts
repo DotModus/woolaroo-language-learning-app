@@ -213,15 +213,13 @@ export const environment = {
 				line: { width: 1, height: 80, marginBottom: 20 },
 				banner: {
 					backgroundColor: "white",
-					height: 50,
-					logoY: 8,
-					logoHeight: 20,
-					logoURL: params.assetsBaseUrl + "assets/img/logo.png",
-					attributionHeight: 20,
-					attributionURL:
-						params.assetsBaseUrl +
-						"assets/img/google_arts_culture_logo.png",
-					spacing: 0,
+					height: 80,
+					logoY: 15,
+					logoHeight: 25,
+					logoURL: "/assets/img/logo.png",
+					attributionHeight: 25,
+					attributionURL: "/assets/img/google_arts_culture_logo.png",
+					spacing: 10,
 				},
 				padding: 20,
 			},

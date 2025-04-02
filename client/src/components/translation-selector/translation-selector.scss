@@ -342,18 +342,20 @@ app-word-scroll-list {
 
 .info-section {
   width: 420px;
-  height: 280px; /* Fixed height */
+  min-height: 220px; /* Reduced min-height since we removed the spacer */
   background-color: mat.get-color-from-palette($app-primary, 500);
   border-radius: 16px;
   margin: 20px auto 0;
-  position: relative; /* For absolute positioning of children */
-  overflow: hidden;
+  overflow: visible; /* Changed from hidden to visible to show tooltips outside */
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  position: relative; /* Ensure position context for absolute children */
 
   @media only screen and (max-width: 480px) {
     width: calc(100% - 32px);
     margin: 20px 16px 0;
-    height: 280px; /* Same fixed height on mobile */
+    min-height: 220px; /* Reduced min-height since we removed the spacer */
   }
 
   /* Hide audio element */
@@ -364,19 +366,17 @@ app-word-scroll-list {
     width: 0;
   }
 
-  /* Heading section - fixed position at top */
+  /* Heading section */
   .info-heading {
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
-    height: 48px; /* Fixed height */
-    padding: 0 16px;
+    min-height: 48px; /* Changed from fixed height to min-height */
+    padding: 12px 16px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     box-sizing: border-box;
+    flex-shrink: 0; /* Prevent from shrinking */
 
     h2 {
       margin: 0;
@@ -388,18 +388,16 @@ app-word-scroll-list {
     }
   }
 
-  /* Word display section - fixed position below heading */
+  /* Word display section - flexible height based on content */
   .word-display-section {
-    position: absolute;
-    top: 48px; /* Position right after heading */
-    left: 0;
     width: 100%;
-    height: 56px; /* Fixed height */
+    min-height: 56px; /* Minimum height */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 16px;
+    padding: 12px 16px; /* Added padding for better spacing */
     box-sizing: border-box;
+    flex-shrink: 0; /* Prevent from shrinking */
 
     .icon-placeholder {
       width: 48px;
@@ -409,6 +407,80 @@ app-word-scroll-list {
       justify-content: center;
       color: rgba(69, 43, 0, 1) !important;
       cursor: pointer;
+      flex-shrink: 0; /* Prevent icons from shrinking */
+      position: relative; /* Always have position relative */
+      z-index: 2; /* Ensure it's above other elements */
+
+      &.disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+
+        &:hover::after {
+          content: "No word selected";
+          position: absolute;
+          left: 50%;
+          top: -40px;
+          transform: translateX(-50%);
+          background-color: #DEC2A2;
+          color: #452B00;
+          padding: 5px 8px;
+          border-radius: 4px;
+          font-size: 12px;
+          white-space: nowrap;
+          z-index: 100;
+          pointer-events: none;
+          opacity: 0.9;
+        }
+
+        &:hover::before {
+          content: "";
+          position: absolute;
+          top: -12px;
+          left: 50%;
+          transform: translateX(-50%);
+          border-width: 5px;
+          border-style: solid;
+          border-color: #DEC2A2 transparent transparent transparent;
+          z-index: 101;
+          pointer-events: none;
+        }
+      }
+
+      &.no-audio {
+        opacity: 1;
+        position: relative;
+        cursor: not-allowed;
+		opacity: 0.5;
+
+        &:hover::after {
+          content: "No audio available";
+          position: absolute;
+          left: 50%;
+          top: -20px;
+          transform: translateX(-50%);
+          background-color: #DEC2A2;
+          color: #452B00;
+          padding: 5px 8px;
+          border-radius: 4px;
+          font-size: 12px;
+          white-space: nowrap;
+          z-index: 100;
+          pointer-events: none;
+        }
+
+        &:hover::before {
+          content: "";
+          position: absolute;
+          top: -12px;
+          left: 50%;
+          transform: translateX(-50%);
+          border-width: 5px;
+          border-style: solid;
+          border-color: #DEC2A2 transparent transparent transparent;
+          z-index: 101;
+          pointer-events: none;
+        }
+      }
 
       app-icon {
         width: 100%;
@@ -426,6 +498,7 @@ app-word-scroll-list {
       display: flex;
       justify-content: center;
       align-items: center;
+      padding: 8px 0; /* Add padding for better spacing */
 
       .selected-word {
         font-size: 32px;
@@ -433,6 +506,8 @@ app-word-scroll-list {
         text-align: center;
         font-weight: 500;
         text-shadow: none;
+        word-break: break-word; /* Allow breaking long words */
+        hyphens: auto; /* Enable hyphenation */
 
         &.sentence {
           font-size: 24px;
@@ -441,28 +516,21 @@ app-word-scroll-list {
           flex-wrap: wrap;
           justify-content: center;
           line-height: 1.3;
-
-          .highlight {
-            background-color: rgb(255, 162, 0);
-            padding: 0 4px;
-            border-radius: 4px;
-          }
         }
       }
     }
   }
 
-  /* Word type section - fixed position below word display */
+  /* Word type section - position dynamically */
   .word-type-section {
-    position: absolute;
-    top: 104px; /* 48px + 56px */
-    left: 0;
+    position: relative; /* Changed from absolute to relative */
     width: 100%;
-    height: 24px; /* Fixed height */
+    min-height: 24px; /* Changed from fixed height to min-height */
+    height: auto; /* Allow height to adjust to content */
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0 16px;
+    padding: 4px 16px 8px; /* Added more bottom padding */
     box-sizing: border-box;
 
     .word-type {
@@ -474,18 +542,14 @@ app-word-scroll-list {
     }
   }
 
-  /* Details section - fixed position below word type, with increased height */
+  /* Details section - position dynamically */
   .info-details {
-    position: absolute;
-    top: 128px; /* 48px + 56px + 24px */
-    left: 0;
+    position: relative;
     width: 100%;
-    height: 152px; /* 280px - 128px = 152px (increased from previous 128px) */
     padding: 16px;
     color: rgba(69, 43, 0, 1);
     font-size: 14px;
     line-height: 1.5;
-    overflow-y: auto;
     text-shadow: none;
     box-sizing: border-box;
     display: flex;
@@ -497,7 +561,6 @@ app-word-scroll-list {
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-bottom: 16px; /* Space after the toggle */
 
       .context-toggle {
         display: flex;
@@ -519,12 +582,6 @@ app-word-scroll-list {
         }
       }
     }
-
-    /* Empty spacer to prevent collapse - takes remaining space */
-    .details-spacer {
-      flex: 1;
-      min-height: 1px;
-    }
   }
 }
 
@@ -543,4 +600,41 @@ app-word-scroll-list {
   }
 
   // Rest of language-controls styles...
+}
+
+.share-toast {
+  position: fixed;
+  bottom: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #4F4539;
+  color: white;
+  padding: 12px 16px;
+  border-radius: 8px;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: bottom 0.3s ease-in-out;
+  opacity: 0.95;
+
+  &.visible {
+    bottom: 30px;
+  }
+
+  .toast-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    app-icon {
+      color: #DEC2A2;
+      width: 24px;
+      height: 24px;
+    }
+
+    span {
+      font-size: 14px;
+      font-weight: 500;
+      text-shadow: none;
+    }
+  }
 }
