@@ -177,6 +177,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 				closeOnNavigation: false,
 				disableClose: true,
 				panelClass: "loading-popup",
+				data: { showDetailedInfo: false }
 			});
 			this.sessionService.currentSession.currentModal = loadingPopUp;
 			loadingPopUp.beforeClosed().subscribe({

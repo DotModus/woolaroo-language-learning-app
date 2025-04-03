@@ -76,6 +76,12 @@ export class ViewLanguagePageComponent {
 		ev.stopPropagation();
 		this.router.navigate([".."], {relativeTo: this.route})
 	}
+
+	navigateToCapture(ev: MouseEvent) {
+		ev.stopPropagation();
+		this.router.navigate([`/${AppRoutes.CaptureImage}`]);
+	}
+
 	prefixImageUrl(sampleWordImageURL: string): string {
 		return `${this.endangeredLanguageService.imageAssetsURL}${sampleWordImageURL}`;
 	}

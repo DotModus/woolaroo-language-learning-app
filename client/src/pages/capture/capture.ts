@@ -46,18 +46,65 @@ export class ImageLoaderPageBase {
 	) {}
 
 	onImageUploaded(image: Blob) {
+		// Create image URL for preview
+		const imageUrl = URL.createObjectURL(image);
+
 		const loadingPopUp = this.dialog.open(LoadingPopUpComponent, {
 			closeOnNavigation: false,
 			disableClose: true,
 			panelClass: "loading-popup",
+			data: {
+				capturedImage: imageUrl
+				// No need to set showDetailedInfo, it will be determined by capturedImage
+			}
 		});
+
 		this.sessionService.currentSession.currentModal = loadingPopUp;
 		loadingPopUp.beforeClosed().subscribe({
-			complete: () =>
-				(this.sessionService.currentSession.currentModal = null),
+			complete: () => (this.sessionService.currentSession.currentModal = null),
 		});
+
+		// Similar to onCaptureClick, use setTimeout to inject image into container
+		setTimeout(() => {
+			try {
+				// Find the image container
+				const imageContainer = document.getElementById('imageContainerForDirectInjection');
+				if (imageContainer) {
+					// Clear the container
+					imageContainer.innerHTML = '';
+
+					// Create a direct image element
+					const img = document.createElement('img');
+					img.src = imageUrl;
+					img.alt = 'Uploaded Image';
+					img.style.width = '100%';
+					img.style.height = '100%';
+					img.style.objectFit = 'cover';
+					img.style.display = 'block';
+					img.style.margin = '0 auto';
+					img.style.borderRadius = '16px';
+
+					// Set up onload handler to make container visible when image loads
+					img.onload = () => {
+						// Make the container visible once image is loaded
+						imageContainer.style.display = 'flex';
+					};
+
+					img.onerror = () => {
+						// Keep container hidden if image fails to load
+						imageContainer.style.display = 'none';
+					};
+
+					// Add the image to the container
+					imageContainer.appendChild(img);
+				}
+			} catch (err) {
+				// Error handling
+			}
+		}, 300); // Wait for the dialog to fully render
+
 		addOpenedListener(loadingPopUp, () =>
-			this.loadImageDescriptions(image, loadingPopUp)
+			this.loadImageDescriptions(image, loadingPopUp, imageUrl)
 		);
 	}
 
@@ -66,7 +113,7 @@ export class ImageLoaderPageBase {
 		loadingPopUp: MatDialogRef<any>,
 		existingImageUrl?: string
 	) {
-		// Use the image URL that was already created in onCaptureClick if available
+		// Use the image URL that was already created or create a new one
 		const imageUrl = existingImageUrl || URL.createObjectURL(image);
 
 		this.imageRecognitionService.loadDescriptions(image).then(
@@ -170,6 +217,7 @@ export class CapturePageComponent
 			height: '100%',
 			backdropClass: 'dark-backdrop',
 			position: { top: '0', left: '0', right: '0', bottom: '0' }
+			// No capturedImage, so no detailed info will be shown
 		});
 
 		// Store reference in session for cleanup if needed
@@ -250,7 +298,10 @@ export class CapturePageComponent
 				const testImg = new Image();
 				testImg.onload = () => {
 					// Create dialog data with verified image URL
-					const dialogData = { capturedImage: imageUrl };
+					const dialogData = {
+						capturedImage: imageUrl
+						// No need to set showDetailedInfo, it will be determined by capturedImage
+					};
 
 					// Show loading popup with the captured image
 					const loadingPopUp = this.dialog.open(LoadingPopUpComponent, {
@@ -327,6 +378,7 @@ export class CapturePageComponent
 						height: '100%',
 						backdropClass: 'dark-backdrop',
 						position: { top: '0', left: '0', right: '0', bottom: '0' }
+						// No data passed, so no capturedImage, which means no detailed info
 					});
 
 					this.sessionService.currentSession.currentModal = loadingPopUp;

@@ -47,7 +47,12 @@ export class PhotoSourcePageComponent extends ImageLoaderPageBase implements Aft
         } else {
           // language chosen - show loading popup then navigate to capture image
           const loadingPopUp = this.dialog.open(LoadingPopUpComponent,
-            { closeOnNavigation: false, disableClose: true, panelClass: 'loading-popup' });
+            {
+              closeOnNavigation: false,
+              disableClose: true,
+              panelClass: 'loading-popup',
+              data: { showDetailedInfo: false } // Not showing detailed info - just navigation
+            });
           this.sessionService.currentSession.currentModal = loadingPopUp;
           loadingPopUp.beforeClosed().subscribe({
             complete: () => this.sessionService.currentSession.currentModal = null

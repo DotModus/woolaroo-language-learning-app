@@ -1,8 +1,11 @@
-<app-page-header>
-  <span [innerHTML]="'The App' | translate:'theApp'"></span>
-</app-page-header>
+<app-toolbar>
+  <button class="back" (click)="onBackClick($event)" slot="start">
+    <app-icon icon="arrow_back"></app-icon>
+  </button>
+</app-toolbar>
 
 <div class="content">
+  <h1 class="page-heading" [innerHTML]="'The App' | translate:'theApp'"></h1>
   <p class="mat-body-1 intro" [innerHTML]="'aboutContent1' | translate"></p>
 
   <p class="mat-body-1" [innerHTML]="'aboutContent2' | translate"></p>

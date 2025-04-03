@@ -105,7 +105,12 @@ export class CaptionImagePageComponent implements OnInit {
       return;
     }
     const loadingPopUp = this.dialog.open(LoadingPopUpComponent,
-      { closeOnNavigation: false, disableClose: true, panelClass: 'loading-popup' });
+      {
+        closeOnNavigation: false,
+        disableClose: true,
+        panelClass: 'loading-popup',
+        data: { showDetailedInfo: false }
+      });
     this.sessionService.currentSession.currentModal = loadingPopUp;
     loadingPopUp.beforeClosed().subscribe({
       next: () => this.sessionService.currentSession.currentModal = null

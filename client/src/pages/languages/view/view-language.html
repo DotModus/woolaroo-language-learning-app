@@ -1,3 +1,9 @@
+<app-toolbar>
+	<button class="back" (click)="navigateToCapture($event)" slot="start">
+		<app-icon icon="arrow_back"></app-icon>
+	</button>
+</app-toolbar>
+
 <div class="language" *ngIf="language">
 	<div class="language-header">
 		<h1 class="language-title">{{ language ? language.name : '' }}</h1>
@@ -38,16 +44,6 @@
 			</ul>
 		</div>
 	</div>
-	<!--
-	<div class="details">
-		<div class="field">
-			<span
-				class="value"
-				[innerHTML]="'Region name'|translate:'region_' + (language ? language.code : '')"
-			></span>
-		</div>
-	</div>
-	 -->
 </div>
 <div class="other-languages">
 	<h2 [innerHTML]="'Other languages'|translate:'otherLanguages'"></h2>

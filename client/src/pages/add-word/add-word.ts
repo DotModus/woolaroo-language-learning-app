@@ -95,6 +95,7 @@ export class AddWordPageComponent implements AfterViewInit {
 		this.submittingForm = true;
 		const loadingPopup = this.dialog.open(LoadingPopUpComponent, {
 			panelClass: "loading-popup",
+			data: { showDetailedInfo: false }
 		});
 		const feedback: Feedback = this.form.value;
 		if (

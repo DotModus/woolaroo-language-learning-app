@@ -1,5 +1,12 @@
 <div style="width: 100vw; height: 100vh; background-color: #4F4539; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px;">
-  <!-- Image Container - Responsive with media query -->
+  <!-- Hidden debug info (only visible in dev when needed) -->
+  <div style="position: absolute; bottom: 0; left: 0; font-size: 10px; color: rgba(255,255,255,0.2); padding: 5px; display: none;">
+    showDetailedInfo: {{showDetailedInfo}} |
+    isCapturePage: {{isCapturePage}} |
+    hasImage: {{!!capturedImage}}
+  </div>
+
+  <!-- Image Container - Only shown when processing an image -->
   <style>
     #imageContainerForDirectInjection {
       padding: 0;
@@ -21,12 +28,13 @@
     }
   </style>
 
-  <div id="imageContainerForDirectInjection">
+  <!-- Image container - always present in DOM for direct manipulation -->
+  <div id="imageContainerForDirectInjection" style="display: none;">
     <!-- Image will be injected here by direct DOM manipulation -->
   </div>
 
-  <!-- Status and information text -->
-  <div style="text-align: center; width: 100%; max-width: 350px; margin-bottom: 20px;">
+  <!-- Detailed information section - only shown when there's a captured image -->
+  <div [style.display]="capturedImage ? 'block' : 'none'" style="text-align: center; width: 100%; max-width: 350px; margin-bottom: 20px;">
     <h2 style="font-size: 20px; font-weight: 600; margin-bottom: 24px; color: #EAE1D9;">Checking your picture...</h2>
 
     <p style="font-size: 16px; line-height: 1.5; margin-bottom: 20px; color: rgba(234, 225, 217, 0.9);">Did you know that at least 40% of the 7,000 languages estimated to be spoken in the world are endangered?</p>
@@ -37,7 +45,12 @@
     </p>
   </div>
 
-  <!-- Spinner -->
+  <!-- Simple loading indicator - shown when there's no captured image -->
+  <div [style.display]="!capturedImage ? 'block' : 'none'" style="text-align: center; margin-bottom: 20px;">
+    <h2 style="font-size: 20px; font-weight: 600; color: #EAE1D9;">Loading...</h2>
+  </div>
+
+  <!-- Spinner - always shown -->
   <div style="margin: 12px 0;">
     <app-busy-spinner></app-busy-spinner>
   </div>

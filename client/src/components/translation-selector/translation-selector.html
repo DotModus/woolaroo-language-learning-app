@@ -1,19 +1,5 @@
 <!-- <div class="translation-container" [class.hidden]="!selectedWordVisible"
 	*ngIf="selectedWord && displayTranslation?.translation; else no_translation"> -->
-	<!-- <div class="transliteration" *ngIf="displayTranslation?.transliteration">
-		<span class="add">
-			<button *ngIf="displayTranslation?.transliteration" (click)="onAddTranslationClick()">
-				<app-icon icon="add" shadow="true"></app-icon>
-			</button>
-		</span>
-		<span class="word">{{ displayTranslation?.transliteration }}</span>
-		<span class="share">
-			<button *ngIf="displayTranslation?.transliteration" (click)="onShareClick()">
-				<app-icon icon="share" shadow="true"></app-icon>
-			</button>
-		</span>
-
-	</div> -->
 	<!-- <div class="translation"> -->
 		<!-- <div class="regions">
 			<app-scroll-list
@@ -27,27 +13,7 @@
 				}
 			</app-scroll-list>
 
-			<div class="sentence"
-				*ngIf="selectedWord.translations[0].sentence.toLowerCase() !== selectedWord.translations[0].transliteration.toLowerCase() && selectedWord.translations[0].sentence !=null && showSentence">
-				<span>{{ selectedWord.translations[0].split_sentence[0] }}&nbsp;</span>
-				<span class="main-word">{{ selectedWord.translations[0].split_sentence[1] }}</span>
-				<span>&nbsp;{{ selectedWord.translations[0].split_sentence[2] }}</span>
-			</div>
-			<span>
-				<button class='view-word'  *ngIf='showSentence' (click)="toggleShowSentence()">
-					Show word
-				</button>
-				<button class='view-word'  *ngIf='!showSentence' (click)="toggleShowSentence()">
-					View word in sentence by Gemini
-				</button>
-			</span>
 		</div> -->
-		<!-- <span></span> -->
-		<!-- <span class="share"> -->
-			<!-- <button *ngIf="!displayTranslation?.transliteration" (click)="onShareClick()">
-				<app-icon icon="share" shadow="true"></app-icon>
-			</button> -->
-		<!-- </span> -->
 	<!-- </div> -->
 	<!-- <button class="play-audio" *ngIf="displayTranslation?.soundURL" (click)="onPlayAudioClick()">
 		<app-icon icon="play_audio" shadow="true" *ngIf="audioState === audioStateValues.Stopped"></app-icon>
