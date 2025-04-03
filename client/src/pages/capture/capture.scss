@@ -2,6 +2,14 @@
 @import '../../style/components';
 @import '../../style/palette';
 
+// Apply black background to the entire host component
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+}
+
 // center error popup within camera frame
 ::ng-deep .capture-camera-error .mat-dialog-container {
   position: relative;
@@ -14,7 +22,7 @@
 }
 
 .mat-drawer-container {
-  background-color: mat.get-color-from-palette($app-inverted, '100');
+  background-color: #000 !important; // Use !important to override Angular Material's styles
   height: 100%;
 
   .mat-sidenav {
@@ -23,38 +31,179 @@
   }
 }
 
+mat-sidenav-content {
+  background-color: #000;
+}
+
+// Main layout structure
+.capture-layout {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 56px); // Subtract toolbar height
+  width: 100%;
+  position: relative;
+  padding-top: 56px;
+  background-color: #000;
+}
+
+.capture-section {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// Top section with instructions
+.top-section {
+  flex: 0 0 auto;
+  height: 15vh;
+  min-height: 80px;
+  max-height: 120px;
+  z-index: 2;
+  margin-top: 40px;
+  background-color: transparent;
+
+  @media only screen and (max-width: 480px) {
+    height: 12vh;
+    min-height: 70px;
+    margin-top: 30px;
+  }
+
+  @media only screen and (min-width: 768px) {
+    margin-top: 50px;
+  }
+}
+
+// Middle section with camera preview
+.middle-section {
+  flex: 1 1 auto;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  margin-top: 10px;
+  background-color: transparent;
+
+  @media only screen and (max-width: 480px) {
+    margin-top: 5px;
+  }
+
+  @media only screen and (min-width: 768px) {
+    margin-top: 15px;
+  }
+}
+
+// Bottom section with buttons
+.bottom-section {
+  flex: 0 0 auto;
+  height: 15vh;
+  min-height: 100px;
+  max-height: 150px;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  z-index: 2;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  background-color: transparent;
+
+  @media only screen and (max-width: 480px) {
+    height: 12vh;
+    min-height: 90px;
+    margin-bottom: 15px;
+  }
+
+  @media only screen and (min-width: 768px) {
+    margin-bottom: 30px;
+  }
+}
+
+// Camera preview container
+.camera-preview-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #000;
+  padding: 0;
+}
+
+// Add a class for the camera viewport to control the visible area
+.camera-viewport {
+  position: absolute;
+  top: 0;
+  left: 16px;
+  right: 16px;
+  bottom: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+
+  @media only screen and (min-width: 768px) {
+    left: 24px;
+    right: 24px;
+  }
+
+  @media only screen and (min-width: 1024px) {
+    left: 32px;
+    right: 32px;
+  }
+}
 
 app-camera-preview {
   width: 100%;
   height: 100%;
   display: block;
+  position: relative;
+
+  ::ng-deep video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    height: auto;
+    min-width: 100%;
+    min-height: 100%;
+    max-width: none;
+    max-height: none;
+    object-fit: cover;
+  }
+
+  ::ng-deep .captured-image {
+    display: none;
+  }
 }
 
 .instruction-text {
-  position: absolute;
-  top: 80px;
-  left: 50%;
-  transform: translateX(-50%);
   text-align: center;
-  font-size: 22px;
+  font-size: 1.375rem; // 22px
   font-weight: 300;
   line-height: 1.5;
   color: #EAE1D9;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-  z-index: 1;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
   width: 80%;
   max-width: 400px;
-  margin-bottom: 20px;
+
+  @media only screen and (max-width: 480px) {
+    font-size: 1.25rem; // 20px
+  }
+
+  @media only screen and (min-width: 481px) and (max-width: 1023px) {
+    font-size: 1.5rem; // 24px
+  }
 }
 
 .camera-frame {
   position: absolute;
-  width: 60vw;
-  height: 60vw;
-  max-width: 207px;
-  max-height: 207px;
+  width: calc(60vw - 32px);
+  height: calc(60vw - 32px);
+  max-width: 280px;
+  max-height: 280px;
   left: 50%;
-  top: 40%;
+  top: 50%;
   transform: translate(-50%, -50%);
   background: url(../../assets/img/camera-frame.svg) no-repeat center center;
   background-size: contain;
@@ -62,35 +211,66 @@ app-camera-preview {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
 
-  .instructions {
-    text-align: center;
-    font-size: 20px;
-    line-height: 138.2%;
-    color: mat.get-color-from-palette($app-inverted, '500');
-    width: 180px;
-    transition: opacity 0.5s ease-in-out;
-    pointer-events: none;
+  @media only screen and (max-width: 480px) {
+    width: calc(70vw - 32px);
+    height: calc(70vw - 32px);
+    max-width: 200px;
+    max-height: 200px;
+  }
 
-    &.hidden {
-      opacity: 0;
-    }
+  @media only screen and (min-width: 481px) and (max-width: 768px) {
+    width: calc(50vw - 48px);
+    height: calc(50vw - 48px);
+    max-width: 230px;
+    max-height: 230px;
+  }
+
+  @media only screen and (min-width: 769px) and (max-width: 1023px) {
+    width: calc(45vw - 48px);
+    height: calc(45vw - 48px);
+    max-width: 260px;
+    max-height: 260px;
   }
 }
 
+// Button styles
 .capture {
   @include icon-button;
-  position: absolute;
-  bottom: 15px;
-  width: 100px;
-  height: 100px;
-  left: 50%;
-  transform: translateX(-50%);
+  width: 90px;
+  height: 90px;
+  margin: 0 10px;
   z-index: 1;
 
-  app-icon {
+  @media only screen and (max-width: 480px) {
     width: 80px;
     height: 80px;
+  }
+
+  @media only screen and (min-width: 481px) and (max-width: 768px) {
+    width: 85px;
+    height: 85px;
+  }
+
+  @media only screen and (min-width: 1024px) {
+    width: 100px;
+    height: 100px;
+  }
+
+  app-icon {
+    width: 75px;
+    height: 75px;
+
+    @media only screen and (max-width: 480px) {
+      width: 65px;
+      height: 65px;
+    }
+
+    @media only screen and (min-width: 1024px) {
+      width: 80px;
+      height: 80px;
+    }
 
     ::ng-deep svg {
       fill: mat.get-color-from-palette($app-primary, 500) !important;
@@ -98,27 +278,25 @@ app-camera-preview {
   }
 }
 
-
-.load-photo,
-.language {
-  @include icon-button;
-  position: absolute;
-  bottom: 35px;
-  width: 60px;
-  height: 60px;
-  padding: 15px;
-  box-sizing: border-box;
-
-  app-icon {
-    ::ng-deep svg {
-      fill: mat.get-color-from-palette($app-primary, 200) !important;
-    }
-  }
-}
-
 .load-photo {
-  left: 50%;
-  transform: translateX(-130px);
+  @include icon-button;
+  width: 50px;
+  height: 50px;
+  padding: 12px;
+  box-sizing: border-box;
+  margin: 0 10px;
+
+  @media only screen and (min-width: 768px) {
+    width: 60px;
+    height: 60px;
+    padding: 15px;
+  }
+
+  @media only screen and (max-width: 360px) {
+    width: 45px;
+    height: 45px;
+    padding: 10px;
+  }
 
   app-icon {
     ::ng-deep svg {
@@ -127,26 +305,60 @@ app-camera-preview {
   }
 }
 
-.language {
-  right: 50%;
-  transform: translateX(130px);
+// Placeholder button for layout symmetry
+.placeholder-button {
+  @include icon-button;
+  width: 50px;
+  height: 50px;
+  padding: 12px;
+  box-sizing: border-box;
+  margin: 0 10px;
+  opacity: 0;
+  pointer-events: none;
+
+  @media only screen and (min-width: 768px) {
+    width: 60px;
+    height: 60px;
+    padding: 15px;
+  }
+
+  @media only screen and (max-width: 360px) {
+    width: 45px;
+    height: 45px;
+    padding: 10px;
+  }
 }
 
+// RTL support
 :host-context([dir=rtl]) {
   .open-menu {
     left: auto;
     right: 8px;
   }
 
-  .load-photo {
-    right: 50%;
-    left: auto;
-    transform: translateX(-130px);
+  .bottom-section {
+    flex-direction: row-reverse;
+  }
+}
+
+app-toolbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.8) !important;
+}
+
+// Force black background on Angular Material components
+::ng-deep {
+  .mat-drawer-container,
+  .mat-drawer-content,
+  .mat-sidenav-content {
+    background-color: #000 !important;
   }
 
-  .language {
-    left: 50%;
-    right: auto;
-    transform: translateX(130px);
+  .mat-toolbar {
+    background-color: rgba(0, 0, 0, 0.8) !important;
   }
 }

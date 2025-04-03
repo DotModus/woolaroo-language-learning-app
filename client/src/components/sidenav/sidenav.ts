@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, EventEmitter, Output } from "@angular/core";
 import { Router } from "@angular/router";
 import { SessionService } from "../../services/session";
 import { environment } from "../../environments/environment";
@@ -10,6 +10,9 @@ import { I18nService, Language } from "../../i18n/i18n.service";
 	styleUrls: ["./sidenav.scss"],
 })
 export class SidenavComponent {
+	// Add output event to emit when menu should close
+	@Output() menuClosed = new EventEmitter<void>();
+
 	get addToHomeScreenEnabled(): boolean {
 		return !!this.sessionService.currentSession.installPrompt;
 	}
@@ -33,6 +36,11 @@ export class SidenavComponent {
 		this.sessionService.currentSession.installPrompt.userChoice.then(() => {
 			this.sessionService.currentSession.installPrompt = null;
 		});
+	}
+
+	// Method to handle closing the sidenav menu
+	onCloseMenu(): void {
+		this.menuClosed.emit();
 	}
 
 	// Method to handle language changes

@@ -1,20 +1,40 @@
 <mat-sidenav-container>
   <mat-sidenav (openedStart)="onSidenavOpenStart()" (closed)="onSidenavClosed()" mode="over" [opened]="sidenavOpen">
-    <app-sidenav></app-sidenav>
+    <app-sidenav (menuClosed)="onSidenavClosed()"></app-sidenav>
   </mat-sidenav>
   <mat-sidenav-content>
-    <app-camera-preview></app-camera-preview>
     <app-toolbar>
       <button (click)="onOpenMenuClick()" class="open-menu" aria-label="Open Menu" slot="start">
         <app-icon icon="menu"></app-icon>
       </button>
     </app-toolbar>
 
-    <div class="instruction-text">Take a picture to discover<br>new words</div>
-    <div class="camera-frame"></div>
-    <button (click)="onCaptureClick()" class="capture" aria-label="Capture Photo"><app-icon icon="capture_photo"></app-icon></button>
-    <button class="load-photo" [attr.aria-label]="'Pick photo' | translate:'pickPhoto'" (appFileUpload)="onImageUploaded($event)" accept="image/*">
-      <app-icon icon="photo_library"></app-icon>
-    </button>
+    <div class="capture-layout">
+      <!-- Top section: Instructions -->
+      <div class="capture-section top-section">
+        <div class="instruction-text">Take a picture to discover<br>new words</div>
+      </div>
+
+      <!-- Middle section: Camera Preview -->
+      <div class="capture-section middle-section">
+        <div class="camera-preview-container">
+          <div class="camera-viewport">
+            <app-camera-preview></app-camera-preview>
+          </div>
+        </div>
+        <div class="camera-frame"></div>
+      </div>
+
+      <!-- Bottom section: Action Buttons -->
+      <div class="capture-section bottom-section">
+        <button class="load-photo" [attr.aria-label]="'Pick photo' | translate:'pickPhoto'" (appFileUpload)="onImageUploaded($event)" accept="image/*">
+          <app-icon icon="photo_library"></app-icon>
+        </button>
+        <button (click)="onCaptureClick()" class="capture" aria-label="Capture Photo">
+          <app-icon icon="capture_photo"></app-icon>
+        </button>
+        <div class="placeholder-button"></div><!-- Empty placeholder for symmetry -->
+      </div>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

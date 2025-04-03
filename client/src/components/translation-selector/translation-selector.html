@@ -43,12 +43,17 @@
 
 <!-- Translation heading above word list -->
 <div class="translation-heading">
-	<span>Here's what I see:</span>
+	<span *ngIf="translations && translations.length > 0" [innerHTML]="'Here\'s what I see:' | translate:'hereWhatISee'"></span>
+	<span *ngIf="!translations || translations.length === 0" [innerHTML]="'Couldn\'t find translations, please try another picture' | translate:'noTranslationsFound'"></span>
 </div>
 
-<!-- Word scroll list component -->
-<app-word-scroll-list [translations]="translations" [defaultSelectedWordIndex]="defaultSelectedWordIndex"
-	(selectedWordChanged)="onSelectedWordChanged($event)" (targetPositionChanged)="onTargetPositionChanged($event)">
+<!-- Word scroll list component - only show when translations exist -->
+<app-word-scroll-list
+	*ngIf="translations && translations.length > 0"
+	[translations]="translations"
+	[defaultSelectedWordIndex]="defaultSelectedWordIndex"
+	(selectedWordChanged)="onSelectedWordChanged($event)"
+	(targetPositionChanged)="onTargetPositionChanged($event)">
 </app-word-scroll-list>
 
 <!-- The main info section with fixed dimensions -->

@@ -7,6 +7,34 @@
   background-color: #4F4539;
   height: 100%;
   color: #EAE1D9;
+  position: relative;
+}
+
+/* Close menu button styles */
+.close-menu-button {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 10;
+  margin-bottom: 10px;
+
+  img {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) saturate(100%) invert(92%) sepia(8%) saturate(489%) hue-rotate(357deg) brightness(96%) contrast(94%);
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:focus {
+    outline: none;
+  }
 }
 
 .brand-logo {

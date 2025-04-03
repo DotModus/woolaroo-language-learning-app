@@ -51,26 +51,62 @@ mat-sidenav-container {
 
 app-image-display {
 	position: absolute;
-	top: 100px;
+	top: 75px;
 	left: 50%;
 	transform: translateX(-50%);
 	z-index: 0;
+	width: 100%;
+	max-width: 540px;
+	margin: 0 auto;
 
 	// Desktop position
 	@media only screen and (min-width: 1024px) {
 		top: 96px;
 	}
+
+	// Tablet position
+	@media only screen and (min-width: 481px) and (max-width: 1023px) {
+		top: 84px;
+	}
+
+	// Small mobile adjustment
+	@media only screen and (max-width: 480px) {
+		top: 70px;
+	}
 }
 
 app-translation-selector {
 	flex: 1 1 auto;
-	min-height: 220px;
-	margin-top: 420px;
-	margin-bottom: 20px;
+	min-height: 200px;
+	margin-top: 380px;
+	margin-bottom: 12px;
 
 	// Adjust positioning for desktop
 	@media only screen and (min-width: 1024px) {
 		margin-top: 400px;
+	}
+
+	// Tablet positioning (portrait)
+	@media only screen and (min-width: 481px) and (max-width: 768px) {
+		margin-top: 340px;
+		min-height: 190px;
+	}
+
+	// Tablet positioning (landscape)
+	@media only screen and (min-width: 769px) and (max-width: 1023px) {
+		margin-top: 370px;
+		min-height: 190px;
+	}
+
+	// Adjust for smaller devices
+	@media only screen and (max-width: 480px) {
+		margin-top: 300px;
+		min-height: 180px;
+	}
+
+	// Even smaller devices
+	@media only screen and (max-width: 360px) {
+		margin-top: 270px;
 	}
 }
 
@@ -80,7 +116,7 @@ app-translation-selector {
 	flex: 0 0 auto;
 	margin-bottom: 20px;
 	color: mat.get-color-from-palette($app-inverted, "500-contrast");
-	font-size: 20px;
+	font-size: 1.25rem; // 20px to rem
 	span {
 		vertical-align: middle;
 	}
@@ -124,7 +160,7 @@ mat-toolbar {
 	color: #fff;
 	height: 40px;
 	border-radius: 3px;
-	font-size: 16px;
+	font-size: 1rem; // 16px to rem
 	:hover {
 		cursor: pointer;
 	}
@@ -157,7 +193,7 @@ mat-toolbar {
 		);
 	}
 	p {
-		font-size: 12px;
+		font-size: 0.75rem; // 12px to rem
 		text-decoration: wavy;
 		margin: 0;
 		padding: 0;
@@ -166,18 +202,25 @@ mat-toolbar {
 }
 
 .copied {
-	font-size: 12px;
+	font-size: 0.75rem; // 12px to rem
 	margin-bottom: 15px;
 }
 
 .language-controls {
 	display: flex;
 	justify-content: space-between;
-	gap: 20px;
-	width: 420px;
+	gap: 12px;
+	width: 100%;
+	max-width: 540px;
 	margin: 0 auto;
-	padding: 16px;
+	padding: 8px 16px 16px;
 	box-sizing: border-box;
+
+	// Add more padding on tablets
+	@media only screen and (min-width: 481px) and (max-width: 1023px) {
+		padding: 8px 24px 20px;
+		gap: 16px;
+	}
 
 	.language-button {
 		flex: 1;
@@ -185,24 +228,54 @@ mat-toolbar {
 		background-color:#DEC2A2;
 		border: none;
 		border-radius: 20px;
-		padding: 8px 24px;
-		font-size: 14px;
+		padding: 8px 12px;
+		font-size: 0.875rem; // 14px to rem
 		cursor: pointer;
-		color: inherit;
-		transition: opacity 0.2s ease;
+		color: rgba(0, 0, 0, 0.8);
+		transition: opacity 0.2s ease, transform 0.2s ease;
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		min-width: 0;
+		font-weight: 500;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+		// Tablet-specific sizing
+		@media only screen and (min-width: 481px) and (max-width: 1023px) {
+			height: 44px;
+			font-size: 0.9375rem; // 15px to rem
+			padding: 8px 16px;
+		}
+
+		// Adjust font size for very small screens
+		@media only screen and (max-width: 360px) {
+			font-size: 0.75rem; // 12px to rem
+			padding: 8px 8px;
+			height: 36px;
+		}
 
 		&:hover {
 			opacity: 0.9;
+			transform: translateY(-1px);
+			box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
 		}
 
 		&:active {
 			opacity: 0.8;
+			transform: translateY(1px);
+			box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+		}
+
+		span {
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: block;
+			width: 100%;
+			text-align: center;
 		}
 	}
 }
