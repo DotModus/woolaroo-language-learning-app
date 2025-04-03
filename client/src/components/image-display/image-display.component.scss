@@ -4,43 +4,122 @@
 :host {
   display: block;
   position: relative;
+  width: 100%;
+  max-width: 540px;
+  margin: 0 auto;
 }
 
 .image-container {
   position: relative;
-  width: 216px;
-  height: 286px;
+  width: calc(100% - 32px);
+  max-width: 290px;
+  aspect-ratio: 1 / 1.324;
   margin: 0 auto;
   border-radius: 16px;
-  overflow: hidden;
+  overflow: visible;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 
   .displayed-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 16px;
+    overflow: hidden;
   }
-}
 
-.icon-overlay {
-  position: absolute;
-  bottom: -16px;
-  right: -16px;
-  z-index: 5;
-  pointer-events: auto;
+  .icon-overlay {
+    position: absolute;
+    bottom: -16px;
+    right: -16px;
+    z-index: 5;
+    pointer-events: auto;
+  }
 }
 
 .capture-icon {
   width: 36px;
   height: 36px;
   cursor: pointer;
+  display: block;
+}
+
+// Small mobile dimensions
+@media only screen and (max-width: 480px) {
+  .image-container {
+    max-width: 180px;
+    aspect-ratio: 1 / 1.2;
+
+    .icon-overlay {
+      bottom: -12px;
+      right: -12px;
+    }
+  }
+
+  .capture-icon {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+// Extra small mobile dimensions
+@media only screen and (max-width: 360px) {
+  .image-container {
+    max-width: 160px;
+    aspect-ratio: 1 / 1.1;
+
+    .icon-overlay {
+      bottom: -10px;
+      right: -10px;
+    }
+  }
+}
+
+// Tablet dimensions (portrait)
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+  .image-container {
+    max-width: 240px;
+    aspect-ratio: 1 / 1.2;
+
+    .icon-overlay {
+      bottom: -14px;
+      right: -14px;
+    }
+  }
+
+  .capture-icon {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+// Tablet dimensions (landscape)
+@media only screen and (min-width: 769px) and (max-width: 1023px) {
+  .image-container {
+    max-width: 260px;
+    aspect-ratio: 1 / 1.1;
+
+    .icon-overlay {
+      bottom: -16px;
+      right: -16px;
+    }
+  }
+
+  .capture-icon {
+    width: 36px;
+    height: 36px;
+  }
 }
 
 // Desktop dimensions
 @media only screen and (min-width: 1024px) {
   .image-container {
-    width: 290px;
-    height: 290px;
+    max-width: 290px;
+    aspect-ratio: 1 / 1;
+
+    .icon-overlay {
+      bottom: -18px;
+      right: -18px;
+    }
   }
 
   .capture-icon {

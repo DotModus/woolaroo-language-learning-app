@@ -1,19 +1,5 @@
 <!-- <div class="translation-container" [class.hidden]="!selectedWordVisible"
 	*ngIf="selectedWord && displayTranslation?.translation; else no_translation"> -->
-	<!-- <div class="transliteration" *ngIf="displayTranslation?.transliteration">
-		<span class="add">
-			<button *ngIf="displayTranslation?.transliteration" (click)="onAddTranslationClick()">
-				<app-icon icon="add" shadow="true"></app-icon>
-			</button>
-		</span>
-		<span class="word">{{ displayTranslation?.transliteration }}</span>
-		<span class="share">
-			<button *ngIf="displayTranslation?.transliteration" (click)="onShareClick()">
-				<app-icon icon="share" shadow="true"></app-icon>
-			</button>
-		</span>
-
-	</div> -->
 	<!-- <div class="translation"> -->
 		<!-- <div class="regions">
 			<app-scroll-list
@@ -27,27 +13,7 @@
 				}
 			</app-scroll-list>
 
-			<div class="sentence"
-				*ngIf="selectedWord.translations[0].sentence.toLowerCase() !== selectedWord.translations[0].transliteration.toLowerCase() && selectedWord.translations[0].sentence !=null && showSentence">
-				<span>{{ selectedWord.translations[0].split_sentence[0] }}&nbsp;</span>
-				<span class="main-word">{{ selectedWord.translations[0].split_sentence[1] }}</span>
-				<span>&nbsp;{{ selectedWord.translations[0].split_sentence[2] }}</span>
-			</div>
-			<span>
-				<button class='view-word'  *ngIf='showSentence' (click)="toggleShowSentence()">
-					Show word
-				</button>
-				<button class='view-word'  *ngIf='!showSentence' (click)="toggleShowSentence()">
-					View word in sentence by Gemini
-				</button>
-			</span>
 		</div> -->
-		<!-- <span></span> -->
-		<!-- <span class="share"> -->
-			<!-- <button *ngIf="!displayTranslation?.transliteration" (click)="onShareClick()">
-				<app-icon icon="share" shadow="true"></app-icon>
-			</button> -->
-		<!-- </span> -->
 	<!-- </div> -->
 	<!-- <button class="play-audio" *ngIf="displayTranslation?.soundURL" (click)="onPlayAudioClick()">
 		<app-icon icon="play_audio" shadow="true" *ngIf="audioState === audioStateValues.Stopped"></app-icon>
@@ -77,12 +43,17 @@
 
 <!-- Translation heading above word list -->
 <div class="translation-heading">
-	<span>Here's what I see:</span>
+	<span *ngIf="translations && translations.length > 0" [innerHTML]="'Here\'s what I see:' | translate:'hereWhatISee'"></span>
+	<span *ngIf="!translations || translations.length === 0" [innerHTML]="'Couldn\'t find translations, please try another picture' | translate:'noTranslationsFound'"></span>
 </div>
 
-<!-- Word scroll list component -->
-<app-word-scroll-list [translations]="translations" [defaultSelectedWordIndex]="defaultSelectedWordIndex"
-	(selectedWordChanged)="onSelectedWordChanged($event)" (targetPositionChanged)="onTargetPositionChanged($event)">
+<!-- Word scroll list component - only show when translations exist -->
+<app-word-scroll-list
+	*ngIf="translations && translations.length > 0"
+	[translations]="translations"
+	[defaultSelectedWordIndex]="defaultSelectedWordIndex"
+	(selectedWordChanged)="onSelectedWordChanged($event)"
+	(targetPositionChanged)="onTargetPositionChanged($event)">
 </app-word-scroll-list>
 
 <!-- The main info section with fixed dimensions -->
@@ -90,7 +61,7 @@
 	<!-- Fixed height heading -->
 	<div class="info-heading">
 		<h2 *ngIf="!showSentence">Translated into {{currentLanguage}}</h2>
-		<h2 *ngIf="showSentence">Gemini generate sentence</h2>
+		<h2 *ngIf="showSentence">Gemini generated sentence</h2>
 	</div>
 
 	<!-- Audio element hidden -->

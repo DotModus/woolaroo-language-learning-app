@@ -1,10 +1,8 @@
 <mat-sidenav-container>
   <mat-sidenav (openedStart)="onSidenavOpenStart()" (closed)="onSidenavClosed()" mode="over" [opened]="sidenavOpen">
-    <app-sidenav></app-sidenav>
+    <app-sidenav (menuClosed)="onSidenavClosed()"></app-sidenav>
   </mat-sidenav>
   <mat-sidenav-content>
-
-
     <app-toolbar>
         <button (click)="onOpenMenuClick()" class="open-menu" aria-label="Open Menu" slot="start">
             <app-icon icon="menu"></app-icon>

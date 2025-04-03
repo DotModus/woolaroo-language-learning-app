@@ -5,6 +5,7 @@ import { I18nModule } from "../../../i18n/i18n.module";
 import { ViewLanguagePageComponent } from "./view-language";
 import { ScrollListModule } from "../../../components/scroll-list/scroll-list.module";
 import { IconComponentModule } from "../../../components/icon/icon.module";
+import { AppToolbarModule } from "../../../components/app-toolbar/app-toolbar.module";
 
 @NgModule({
 	declarations: [ViewLanguagePageComponent],
@@ -14,7 +15,8 @@ import { IconComponentModule } from "../../../components/icon/icon.module";
 		CommonModule,
 		I18nModule,
 		ScrollListModule,
-		IconComponentModule
+		IconComponentModule,
+		AppToolbarModule
 	],
 })
 export class ViewLanguageModule {}

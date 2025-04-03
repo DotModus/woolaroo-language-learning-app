@@ -17,6 +17,10 @@ export class AboutPageComponent implements AfterViewInit {
     this.analyticsService.logPageView(this.router.url, 'About');
   }
 
+  onBackClick(ev: MouseEvent) {
+    this.onCloseClick(ev);
+  }
+
   onCloseClick(ev: MouseEvent) {
     ev.stopPropagation();
     this.router.navigate([".."], {relativeTo: this.route})

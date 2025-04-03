@@ -64,10 +64,17 @@ export class IntroAboutPageComponent implements AfterViewInit {
 			return;
 		}
 
+		// Create image URL for preview
+		const imageUrl = URL.createObjectURL(image);
+
 		const loadingPopUp = this.dialog.open(LoadingPopUpComponent, {
 			closeOnNavigation: false,
 			disableClose: true,
 			panelClass: "loading-popup",
+			data: {
+				capturedImage: imageUrl
+				// No need to set showDetailedInfo, it will be determined by capturedImage
+			}
 		});
 
 		// Track the modal in the session service
@@ -79,12 +86,52 @@ export class IntroAboutPageComponent implements AfterViewInit {
 		// Log the action
 		this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: "upload picture" });
 
+		// Similar to capture page, inject image into container
+		setTimeout(() => {
+			try {
+				// Find the image container
+				const imageContainer = document.getElementById('imageContainerForDirectInjection');
+				if (imageContainer) {
+					// Clear the container
+					imageContainer.innerHTML = '';
+
+					// Create a direct image element
+					const img = document.createElement('img');
+					img.src = imageUrl;
+					img.alt = 'Uploaded Image';
+					img.style.width = '100%';
+					img.style.height = '100%';
+					img.style.objectFit = 'cover';
+					img.style.display = 'block';
+					img.style.margin = '0 auto';
+					img.style.borderRadius = '16px';
+
+					// Set up onload handler to make container visible when image loads
+					img.onload = () => {
+						// Make the container visible once image is loaded
+						imageContainer.style.display = 'flex';
+					};
+
+					img.onerror = () => {
+						// Keep container hidden if image fails to load
+						imageContainer.style.display = 'none';
+					};
+
+					// Add the image to the container
+					imageContainer.appendChild(img);
+				}
+			} catch (err) {
+				// Error handling
+			}
+		}, 300); // Wait for the dialog to fully render
+
 		// Process image using the opened listener
-		addOpenedListener(loadingPopUp, () => this.processUploadedImage(image, loadingPopUp));
+		addOpenedListener(loadingPopUp, () => this.processUploadedImage(image, loadingPopUp, imageUrl));
 	}
 
-	private processUploadedImage(image: Blob, loadingPopUp: MatDialogRef<any>) {
-		const imageUrl = URL.createObjectURL(image);
+	private processUploadedImage(image: Blob, loadingPopUp: MatDialogRef<any>, imageUrl?: string) {
+		// Use provided imageUrl or create a new one
+		const imgUrl = imageUrl || URL.createObjectURL(image);
 
 		this.imageRecognitionService.loadDescriptions(image).then(
 			(descriptions) => {
@@ -97,7 +144,7 @@ export class IntroAboutPageComponent implements AfterViewInit {
 						.navigateByUrl(url, {
 							state: {
 								image,
-								imageURL: imageUrl,
+								imageURL: imgUrl,
 								words: descriptions.map((d) => d.description),
 							},
 							replaceUrl: true
@@ -116,7 +163,7 @@ export class IntroAboutPageComponent implements AfterViewInit {
 						.navigateByUrl(AppRoutes.CaptionImage, {
 							state: {
 								image,
-								imageURL: imageUrl,
+								imageURL: imgUrl,
 							},
 							replaceUrl: true
 						})
@@ -135,7 +182,7 @@ export class IntroAboutPageComponent implements AfterViewInit {
 					data: { message: errorMessage, title: errorTitle },
 				});
 				this.router.navigateByUrl(AppRoutes.CaptionImage, {
-					state: { image, imageURL: imageUrl },
+					state: { image, imageURL: imgUrl },
 					replaceUrl: true
 				});
 			}

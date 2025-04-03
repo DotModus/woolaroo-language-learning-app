@@ -73,7 +73,10 @@ export class FeedbackPageComponent implements AfterViewInit {
 	}
 	this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: "share feedback" });
     this.submittingForm = true;
-    const loadingPopup = this.dialog.open(LoadingPopUpComponent, { panelClass: 'loading-popup' });
+    const loadingPopup = this.dialog.open(LoadingPopUpComponent, {
+      panelClass: 'loading-popup',
+      data: { showDetailedInfo: false }
+    });
     const feedback: Feedback = this.feedbackForm.value;
     if (!feedback.word && this.i18n.currentLanguage.code == DEFAULT_LOCALE) {
       feedback.word = feedback.englishWord;

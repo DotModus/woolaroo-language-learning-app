@@ -137,7 +137,11 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 	public sidenavOpen = false;
 
 	public get currentLanguage(): string {
-		return this.endangeredLanguageService.currentLanguage.name;
+		const fullName = this.endangeredLanguageService.currentLanguage.name;
+		if (isMobileDevice() && fullName.length > 10) {
+			return fullName.substring(0, 10) + '...';
+		}
+		return fullName;
 	}
 
 	public get deviceSupported(): boolean {
@@ -177,6 +181,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 				closeOnNavigation: false,
 				disableClose: true,
 				panelClass: "loading-popup",
+				data: { showDetailedInfo: false }
 			});
 			this.sessionService.currentSession.currentModal = loadingPopUp;
 			loadingPopUp.beforeClosed().subscribe({

@@ -1,11 +1,19 @@
 import { NgModule } from "@angular/core";
-import { PageHeaderModule } from "../../components/page-header/page-header.module";
 import { AboutPageComponent } from "./about";
 import { PipesModule } from "../../pipes/pipes.module";
 import { I18nModule } from "../../i18n/i18n.module";
+import { AppToolbarModule } from "../../components/app-toolbar/app-toolbar.module";
+import { IconComponentModule } from "../../components/icon/icon.module";
+import { CommonModule } from "@angular/common";
 
 @NgModule({
 	declarations: [AboutPageComponent],
-	imports: [PipesModule, PageHeaderModule, I18nModule],
+	imports: [
+		CommonModule,
+		PipesModule,
+		AppToolbarModule,
+		I18nModule,
+		IconComponentModule
+	],
 })
 export class AboutPageModule {}

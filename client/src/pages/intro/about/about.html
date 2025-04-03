@@ -1,6 +1,6 @@
 <mat-sidenav-container>
   <mat-sidenav (openedStart)="onSidenavOpenStart()" (closed)="onSidenavClosed()" mode="over" [opened]="sidenavOpen">
-    <app-sidenav></app-sidenav>
+    <app-sidenav (menuClosed)="onSidenavClosed()"></app-sidenav>
   </mat-sidenav>
   <mat-sidenav-content>
 <app-toolbar>
@@ -27,6 +27,12 @@
     </div>
 
     <div class="section bottom-section">
+        <!-- Checkbox container moved above the feature box -->
+        <div class="custom-checkbox-container">
+            <input type="checkbox" id="terms-checkbox" [(ngModel)]="tAndC" class="custom-checkbox-input">
+            <label for="terms-checkbox" class="custom-checkbox-label" (click)="onViewTermsClick()">Accept terms & conditions</label>
+        </div>
+
         <!-- Desktop-only feature box -->
         <div class="feature-box desktop-only" (appFileUpload)="onImageUploaded($event)" [class.disabled]="!tAndC" accept="image/*">
             <div class="feature-box-content">
@@ -35,12 +41,6 @@
                 </div>
                 <p class="feature-text">Upload a picture to discover new words</p>
             </div>
-        </div>
-
-        <!-- Checkbox container with different ordering on mobile vs desktop -->
-        <div class="custom-checkbox-container">
-            <input type="checkbox" id="terms-checkbox" [(ngModel)]="tAndC" class="custom-checkbox-input">
-            <label class="custom-checkbox-label" (click)="onViewTermsClick()">Accept terms & conditions</label>
         </div>
 
         <!-- Mobile-only button -->

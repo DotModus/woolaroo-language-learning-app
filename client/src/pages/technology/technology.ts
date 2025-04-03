@@ -17,6 +17,10 @@ export class TechnologyPageComponent implements AfterViewInit {
     this.analyticsService.logPageView(this.router.url, 'Technology');
   }
 
+  onBackClick(ev: MouseEvent) {
+    this.onCloseClick(ev);
+  }
+
   onCloseClick(ev: MouseEvent) {
     ev.stopPropagation();
     this.router.navigate([".."], {relativeTo: this.route})
