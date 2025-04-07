@@ -9,7 +9,7 @@
 		<h1 class="language-title">{{ language ? language.name : '' }}</h1>
 		<div class="region-name">
 			<span class="label" [innerHTML]="'Region'|translate:'region'">
-			</span>: {{ getRegionName(language.region) }}
+			</span>: {{ getRegionName(language.code) }}
 		</div>
 
 		<a *ngIf="language.organizationURL" (click)="onExploreLanguageClick(language.organizationURL)" class="external-link">
@@ -44,37 +44,4 @@
 			</ul>
 		</div>
 	</div>
-</div>
-<div class="other-languages">
-	<h2 [innerHTML]="'Other languages'|translate:'otherLanguages'"></h2>
-	<app-scroll-list
-		[currentItem]="otherLanguages && otherLanguages.length ? 0 : 0"
-		[snappingEnabled]="false"
-		itemAlignment="start"
-	>
-		<ng-container *ngFor="let lang of otherLanguages">
-			<div
-				class="language"
-				*appScrollListItem
-				(click)="onLanguageClick(lang.code)"
-				(keydown)="null"
-			>
-				<div class="example">
-					<img
-						[src]="prefixImageUrl(lang.sampleWordImageURL)"
-						[alt]="'Tree' | translate:'tree':{}"
-					/>
-					<span
-						class="translation"
-						[innerHTML]="lang.sampleWordTranslation"
-					></span>
-					<span
-						class="original"
-						[innerHTML]="'Tree' | translate:'tree':{}"
-					></span>
-				</div>
-				<div class="name">{{ lang.name }}</div>
-			</div>
-		</ng-container>
-	</app-scroll-list>
 </div>
