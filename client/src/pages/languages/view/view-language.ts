@@ -37,9 +37,12 @@ export class ViewLanguagePageComponent {
 		return this.endangeredLanguageService.displayRegions;
 	}
 
-	public getRegionName(regionCode: string): string {
-		const region = this.allRegions.find(r => r.code === regionCode);
-		return region?.name || regionCode;
+	public getRegionName(langaugeCode: string): string {
+		const i18nCode = this.i18nService.currentLanguage.code || 'en';
+		const language = this.endangeredLanguages.find(l => l.code === langaugeCode);
+
+		console.log("region", language);
+		return language?.displayRegions[i18nCode];
 	}
 
 	public language: EndangeredLanguage | null;
@@ -55,7 +58,7 @@ export class ViewLanguagePageComponent {
 
 			this.language =
 				this.endangeredLanguageService.languages.find(
-					(lang) => lang.code === params.get("id")
+					(lang) => lang.code === params.get("id") || lang.code === "kar"
 				) || null;
 
 		});
@@ -69,7 +72,7 @@ export class ViewLanguagePageComponent {
 
 	onLanguageClick(code: string) {
 		window.scrollTo(0, 0);
-		this.router.navigate([AppRoutes.ListLanguages, code]);
+		this.router.navigate([AppRoutes.ListLanguages, code], {replaceUrl: true});
 	}
 
 	onBackClick(ev: MouseEvent) {
@@ -79,7 +82,7 @@ export class ViewLanguagePageComponent {
 
 	navigateToCapture(ev: MouseEvent) {
 		ev.stopPropagation();
-		this.router.navigate([`/${AppRoutes.CaptureImage}`]);
+		this.router.navigate([`/${AppRoutes.CaptureImage}`], {replaceUrl: true});
 	}
 
 	prefixImageUrl(sampleWordImageURL: string): string {

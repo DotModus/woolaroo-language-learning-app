@@ -17,23 +17,34 @@
 
       <!-- Middle section: Camera Preview -->
       <div class="capture-section middle-section">
-        <div class="camera-preview-container">
-          <div class="camera-viewport">
-            <app-camera-preview></app-camera-preview>
+        <!-- Use CSS grid to stack camera viewport and frame -->
+        <div style="display: grid; place-items: center; width: 100%; height: 100%;">
+          <!-- Camera preview container -->
+          <div class="camera-preview-container" style="grid-area: 1/1;">
+            <div class="camera-viewport">
+              <app-camera-preview></app-camera-preview>
+            </div>
           </div>
+          <!-- Camera frame overlaid using grid -->
+          <div class="camera-frame" style="grid-area: 1/1; z-index: 2;"></div>
         </div>
-        <div class="camera-frame"></div>
       </div>
 
       <!-- Bottom section: Action Buttons -->
       <div class="capture-section bottom-section">
-        <button class="load-photo" [attr.aria-label]="'Pick photo' | translate:'pickPhoto'" (appFileUpload)="onImageUploaded($event)" accept="image/*">
-          <app-icon icon="photo_library"></app-icon>
-        </button>
-        <button (click)="onCaptureClick()" class="capture" aria-label="Capture Photo">
-          <app-icon icon="capture_photo"></app-icon>
-        </button>
-        <div class="placeholder-button"></div><!-- Empty placeholder for symmetry -->
+        <div class="bottom-container">
+          <div class="icon-container">
+            <!-- Hidden file input for image selection -->
+            <input type="file" #fileInput id="fileInput" accept="image/*" style="display: none;" (change)="onFileSelected($event)">
+
+            <button class="load-photo-icon" (click)="fileInput.click()">
+              <app-icon icon="photo_library"></app-icon>
+            </button>
+            <button class="capture-icon" (click)="onCaptureClick()">
+              <app-icon icon="capture_photo"></app-icon>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </mat-sidenav-content>

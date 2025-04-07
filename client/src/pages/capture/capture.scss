@@ -2,6 +2,14 @@
 @import '../../style/components';
 @import '../../style/palette';
 
+// Custom variables for button sizes
+:root {
+  --capture-icon-scale: 3.5;  // Significantly increase this for a larger icon
+  --capture-button-size: min(100px, 25%);  // Reduced from 120px to 100px
+  --capture-button-size-desktop: min(110px, 25%);  // Reduced from 130px to 110px
+  --load-photo-icon-scale: 2;  // Increase the load-photo scale
+}
+
 // Apply black background to the entire host component
 :host {
   display: block;
@@ -10,15 +18,9 @@
   background-color: #000;
 }
 
-// center error popup within camera frame
+// Center error popup within camera frame
 ::ng-deep .capture-camera-error .mat-dialog-container {
-  position: relative;
-  top: -10vh;
-}
-
-:host-context(body) app-root {
-  position: relative;
-  top: -10vh;
+  margin-top: -10vh;
 }
 
 .mat-drawer-container {
@@ -35,140 +37,132 @@ mat-sidenav-content {
   background-color: #000;
 }
 
-// Main layout structure
+// Main layout structure using flexbox
 .capture-layout {
   display: flex;
   flex-direction: column;
   height: calc(100vh - 56px); // Subtract toolbar height
   width: 100%;
-  position: relative;
-  padding-top: 56px;
+  margin-top: 56px; // Top margin instead of padding-top
   background-color: #000;
 }
 
 .capture-section {
-  position: relative;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-// Top section with instructions
+// Top section with instructions - 20% of available height
 .top-section {
-  flex: 0 0 auto;
-  height: 15vh;
-  min-height: 80px;
-  max-height: 120px;
-  z-index: 2;
-  margin-top: 40px;
-  background-color: transparent;
-
-  @media only screen and (max-width: 480px) {
-    height: 12vh;
-    min-height: 70px;
-    margin-top: 30px;
-  }
-
-  @media only screen and (min-width: 768px) {
-    margin-top: 50px;
-  }
-}
-
-// Middle section with camera preview
-.middle-section {
-  flex: 1 1 auto;
-  position: relative;
-  overflow: hidden;
-  z-index: 1;
-  margin-top: 10px;
-  background-color: transparent;
-
-  @media only screen and (max-width: 480px) {
-    margin-top: 5px;
-  }
-
-  @media only screen and (min-width: 768px) {
-    margin-top: 15px;
-  }
-}
-
-// Bottom section with buttons
-.bottom-section {
-  flex: 0 0 auto;
-  height: 15vh;
-  min-height: 100px;
-  max-height: 150px;
-  flex-direction: row;
-  justify-content: space-evenly;
+  flex: 1;
+  height: 20%;
+  display: flex;
+  justify-content: center;
   align-items: center;
   z-index: 2;
-  margin-top: 10px;
-  margin-bottom: 20px;
   background-color: transparent;
+}
+
+// Middle section with camera preview - 60% of available height
+.middle-section {
+  flex: 3;
+  height: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  background-color: transparent;
+  padding: 10px 0;
+}
+
+// Bottom section with bottom container - 20% of available height
+.bottom-section {
+  flex: 1;
+  height: 20%;
+  min-height: 120px; // Reduced to accommodate the 100px height container plus padding
+  display: flex;
+  justify-content: center; // Center horizontally
+  align-items: center; // Center vertically
+  z-index: 2;
+  background-color: transparent;
+  padding: 10px 0;
 
   @media only screen and (max-width: 480px) {
-    height: 12vh;
-    min-height: 90px;
-    margin-bottom: 15px;
+    min-height: 120px;
   }
 
   @media only screen and (min-width: 768px) {
-    margin-bottom: 30px;
+    min-height: 120px;
   }
 }
 
-// Camera preview container
+// Camera preview container - using flexbox instead of absolute positioning
 .camera-preview-container {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   overflow: hidden;
   background-color: #000;
-  padding: 0;
+
+  // Mobile view
+  @media only screen and (max-width: 480px) {
+    max-width: min(330px, 95vw);
+    max-height: min(440px, 60vh);
+  }
+
+  // Desktop view
+  @media only screen and (min-width: 481px) {
+    max-width: 290px;
+    max-height: 290px;
+  }
 }
 
-// Add a class for the camera viewport to control the visible area
+// Add a class for the camera viewport - using flexbox
 .camera-viewport {
-  position: absolute;
-  top: 0;
-  left: 16px;
-  right: 16px;
-  bottom: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   overflow: hidden;
   border-radius: 12px;
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
 
-  @media only screen and (min-width: 768px) {
-    left: 24px;
-    right: 24px;
+  // Mobile dimensions: 330px x 440px with proportional scaling
+  @media only screen and (max-width: 480px) {
+    max-width: min(330px, 95vw);
+    max-height: min(440px, 60vh);
+    width: 95vw;
+    height: calc(95vw * 4/3); // 4:3 aspect ratio (330:440 simplified)
+    aspect-ratio: 3/4; // Match the 330:440 ratio
   }
 
-  @media only screen and (min-width: 1024px) {
-    left: 32px;
-    right: 32px;
+  // Larger screens: 290px x 290px
+  @media only screen and (min-width: 481px) {
+    max-width: 290px;
+    max-height: 290px;
+    width: 290px;
+    height: 290px;
+    aspect-ratio: 1/1; // Square aspect ratio
   }
 }
 
 app-camera-preview {
   width: 100%;
   height: 100%;
-  display: block;
-  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: inherit;
 
   ::ng-deep video {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: auto;
-    height: auto;
-    min-width: 100%;
-    min-height: 100%;
-    max-width: none;
-    max-height: none;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
   }
 
@@ -179,170 +173,53 @@ app-camera-preview {
 
 .instruction-text {
   text-align: center;
-  font-size: 1.375rem; // 22px
+  font-size: clamp(1.125rem, 3vw, 1.5rem); // Responsive font size between 18px and 24px
   font-weight: 300;
   line-height: 1.5;
   color: #EAE1D9;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
-  width: 80%;
+  width: 90%;
   max-width: 400px;
-
-  @media only screen and (max-width: 480px) {
-    font-size: 1.25rem; // 20px
-  }
-
-  @media only screen and (min-width: 481px) and (max-width: 1023px) {
-    font-size: 1.5rem; // 24px
-  }
+  padding: 0 10px;
 }
 
 .camera-frame {
-  position: absolute;
-  width: calc(60vw - 32px);
-  height: calc(60vw - 32px);
-  max-width: 280px;
-  max-height: 280px;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  background: url(../../assets/img/camera-frame.svg) no-repeat center center;
+  width: 100%;
+  height: 100%;
   background-size: contain;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
-
-  @media only screen and (max-width: 480px) {
-    width: calc(70vw - 32px);
-    height: calc(70vw - 32px);
-    max-width: 200px;
-    max-height: 200px;
-  }
-
-  @media only screen and (min-width: 481px) and (max-width: 768px) {
-    width: calc(50vw - 48px);
-    height: calc(50vw - 48px);
-    max-width: 230px;
-    max-height: 230px;
-  }
-
-  @media only screen and (min-width: 769px) and (max-width: 1023px) {
-    width: calc(45vw - 48px);
-    height: calc(45vw - 48px);
-    max-width: 260px;
-    max-height: 260px;
-  }
-}
-
-// Button styles
-.capture {
-  @include icon-button;
-  width: 90px;
-  height: 90px;
-  margin: 0 10px;
-  z-index: 1;
-
-  @media only screen and (max-width: 480px) {
-    width: 80px;
-    height: 80px;
-  }
-
-  @media only screen and (min-width: 481px) and (max-width: 768px) {
-    width: 85px;
-    height: 85px;
-  }
-
-  @media only screen and (min-width: 1024px) {
-    width: 100px;
-    height: 100px;
-  }
-
-  app-icon {
-    width: 75px;
-    height: 75px;
-
-    @media only screen and (max-width: 480px) {
-      width: 65px;
-      height: 65px;
-    }
-
-    @media only screen and (min-width: 1024px) {
-      width: 80px;
-      height: 80px;
-    }
-
-    ::ng-deep svg {
-      fill: mat.get-color-from-palette($app-primary, 500) !important;
-    }
-  }
-}
-
-.load-photo {
-  @include icon-button;
-  width: 50px;
-  height: 50px;
-  padding: 12px;
-  box-sizing: border-box;
-  margin: 0 10px;
-
-  @media only screen and (min-width: 768px) {
-    width: 60px;
-    height: 60px;
-    padding: 15px;
-  }
-
-  @media only screen and (max-width: 360px) {
-    width: 45px;
-    height: 45px;
-    padding: 10px;
-  }
-
-  app-icon {
-    ::ng-deep svg {
-      fill: #DEC2A2 !important;
-    }
-  }
-}
-
-// Placeholder button for layout symmetry
-.placeholder-button {
-  @include icon-button;
-  width: 50px;
-  height: 50px;
-  padding: 12px;
-  box-sizing: border-box;
-  margin: 0 10px;
-  opacity: 0;
   pointer-events: none;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
 
-  @media only screen and (min-width: 768px) {
-    width: 60px;
-    height: 60px;
-    padding: 15px;
+  // Mobile dimensions: 330px x 440px with proportional scaling
+  @media only screen and (max-width: 480px) {
+    max-width: min(330px, 95vw);
+    max-height: min(440px, 60vh);
+    width: 95vw;
+    height: calc(95vw * 4/3); // 4:3 aspect ratio (330:440 simplified)
+    aspect-ratio: 3/4; // Match the 330:440 ratio
   }
 
-  @media only screen and (max-width: 360px) {
-    width: 45px;
-    height: 45px;
-    padding: 10px;
+  // Larger screens: 290px x 290px
+  @media only screen and (min-width: 481px) {
+    max-width: 290px;
+    max-height: 290px;
+    width: 290px;
+    height: 290px;
+    aspect-ratio: 1/1; // Square aspect ratio
   }
 }
 
 // RTL support
 :host-context([dir=rtl]) {
-  .open-menu {
-    left: auto;
-    right: 8px;
-  }
-
   .bottom-section {
     flex-direction: row-reverse;
   }
 }
 
 app-toolbar {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -360,5 +237,105 @@ app-toolbar {
 
   .mat-toolbar {
     background-color: rgba(0, 0, 0, 0.8) !important;
+  }
+}
+
+// Bottom container with dimensions matching camera preview width and fixed 100px height
+.bottom-container {
+  width: 100%;
+  height: 100px;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  // Mobile dimensions: match camera preview width (330px)
+  @media only screen and (max-width: 480px) {
+    max-width: min(330px, 95vw);
+    width: 95vw;
+  }
+
+  // Desktop dimensions: match camera preview width (290px)
+  @media only screen and (min-width: 481px) {
+    max-width: 290px;
+    width: 290px;
+  }
+}
+
+// Container for the icons inside the red div
+.icon-container {
+  display: flex;
+  justify-content: flex-start; // Left-justify the icons
+  align-items: center;
+  gap: 30px; // Increased space between the icons
+  width: 90%; // Set a width to give some padding from the edges
+  padding-left: 20px; // Increased padding on the left
+}
+
+// Icon button base styles
+.load-photo-icon, .capture-icon {
+  background: transparent;
+  border: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.6); // Darker background for better contrast against transparent container
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); // Add shadow for depth
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.8); // Darker on hover
+  }
+
+  app-icon {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center; // Ensure icon is centered horizontally
+    align-items: center; // Ensure icon is centered vertically
+    position: relative; // For precise positioning
+
+    ::ng-deep svg {
+      position: absolute; // Allow for precise centering
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%); // Center the SVG exactly
+    }
+  }
+}
+
+// Load photo icon specific styles
+.load-photo-icon {
+  width: 50px;
+  height: 50px;
+
+  app-icon ::ng-deep svg {
+    width: 24px;
+    height: 24px;
+    fill: #DEC2A2 !important;
+    filter: drop-shadow(0 0 2px rgba(222, 194, 162, 0.3)); // Add subtle glow
+  }
+}
+
+// Capture icon specific styles
+.capture-icon {
+  width: 65px; // Reduced from 80px
+  height: 65px; // Reduced from 80px
+  background-color: rgba(0, 0, 0, 0.7); // Darker background for emphasis
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.9); // Almost black on hover
+  }
+
+  app-icon {
+    ::ng-deep svg {
+      fill: mat.get-color-from-palette($app-primary, 500) !important;
+      width: 40px !important; // Reduced from 50px
+      height: 40px !important; // Reduced from 50px
+      transform: translate(-50%, -50%) scale(1.5); // Reduced scale from 1.7
+      filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.6)); // Enhanced glow for better visibility
+    }
   }
 }

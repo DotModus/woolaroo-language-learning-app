@@ -1,6 +1,7 @@
 import {
 	AfterViewInit,
 	Component,
+	ElementRef,
 	Inject,
 	OnDestroy,
 	ViewChild,
@@ -184,6 +185,8 @@ export class CapturePageComponent
 {
 	@ViewChild(CameraPreviewComponent)
 	private cameraPreview: CameraPreviewComponent | null = null;
+	@ViewChild('fileInput', { static: false })
+	private fileInput: ElementRef | null = null;
 	private modalIsForCameraStartup = true;
 	public captureInProgress = false;
 	public sidenavOpen = false;
@@ -420,8 +423,21 @@ export class CapturePageComponent
 		this.sidenavOpen = false;
 	}
 
+	onFileSelected(event: Event) {
+		const input = event.target as HTMLInputElement;
+
+		if (input.files && input.files.length > 0) {
+			const file = input.files[0];
+
+			// Call the parent class method to handle the uploaded image
+			this.onImageUploaded(file);
+
+			// Reset the input so the same file can be selected again
+			input.value = '';
+		}
+	}
+
 	onChangeLanguageClick() {
 		this.router.navigateByUrl(AppRoutes.ChangeLanguage, {replaceUrl: true});
-
 	}
 }
