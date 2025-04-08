@@ -15,12 +15,18 @@ export class TranslatePipe implements PipeTransform {
 		replacements?: { [index: string]: string },
 		language?: string
 	): string {
+
 		if (text === "Description") {
+			console.log('inside description', id);
+			console.log("currentLanguage", this.endangeredLanguage.languages);
+
 			const language = this.endangeredLanguage.languages.find((lang) => {
 				if (lang.code === id) {
 					return lang.name;
 				}
 			});
+
+			console.log("language", language);
 
 			return (
 				language?.shortDescriptions[
@@ -34,6 +40,9 @@ export class TranslatePipe implements PipeTransform {
 			translateKey,
 			replacements
 		);
+
+		console.log("translation", translation);
+		console.log("translateKey", translateKey);
 		return translation || text;
 	}
 }

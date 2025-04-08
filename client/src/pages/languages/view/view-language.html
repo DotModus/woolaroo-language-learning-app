@@ -35,13 +35,13 @@
 
 	<div class="same-region-section">
 		<h3 class="section-heading">In the same region</h3>
-		<div class="horizontal-scroll-container">
-			<ul class="same-region-list">
-				<li *ngFor="let lang of getSameRegionLanguages()" class="region-language-item" (click)="onLanguageClick(lang.code)">
+		<ul class="same-region-list">
+			<li *ngFor="let lang of getSameRegionLanguages()">
+				<div class="region-language-item" (click)="onLanguageClick(lang.code)">
 					<h4 class="language-name">{{ lang.name }}</h4>
-					<p class="language-description" [innerHTML]="'Language description'|translate:'description_' + lang.code"></p>
-				</li>
-			</ul>
-		</div>
+					<p class="language-description" [innerHTML]="'Description'|translate:lang.code"></p>
+				</div>
+			</li>
+		</ul>
 	</div>
 </div>
