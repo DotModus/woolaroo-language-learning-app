@@ -282,7 +282,7 @@
 				align-items: flex-start;
 
 				.original {
-					font-size: 1.3rem;
+					font-size: 1rem;
 					font-weight: 300;
 					color: #EAE1D9;
 					opacity: 0.75;
@@ -291,7 +291,7 @@
 				}
 
 				.translation {
-					font-size: 0.9rem;
+					font-size: 1rem;
 					font-weight: 400;
 					color: #EAE1D9;
 					opacity: 0.7;
@@ -308,6 +308,9 @@
 
 .same-region-section {
 	margin: 40px;
+	background-color: rgba(0, 0, 0, 0.2);
+	padding: 20px;
+	border-radius: 16px;
 
 	.section-heading {
 		color: #EAE1D9;
@@ -316,43 +319,45 @@
 		margin-bottom: 24px;
 	}
 
-	.horizontal-scroll-container {
-		overflow-x: auto;
-		padding-bottom: 16px; // Space for scrollbar
-
-		&::-webkit-scrollbar {
-			height: 6px;
-		}
-
-		&::-webkit-scrollbar-thumb {
-			background-color: rgba(255, 255, 255, 0.3);
-			border-radius: 3px;
-		}
-	}
-
 	.same-region-list {
-		display: flex;
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-gap: 40px;
 		list-style: none;
 		padding: 0;
 		margin: 0;
-		gap: 16px;
+
+		@media (min-width: 576px) {
+			grid-template-columns: repeat(2, 1fr);
+		}
+
+		@media (min-width: 768px) {
+			grid-template-columns: repeat(3, 1fr);
+		}
+
+		@media (min-width: 992px) {
+			grid-template-columns: repeat(4, 1fr);
+		}
+
+		li {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+			background-color: rgba(0, 0, 0, 0.1);
+			border-radius: 14px;
+		}
 
 		.region-language-item {
-			flex: 0 0 280px;
-			min-width: 280px;
-			height: 200px;
+			width: 100%;
+			height: 100%;
+			min-height: 170px;
 			background-color: mat.get-color-from-palette($app-primary, 500);
-			border-radius: 16px;
-			padding: 20px;
+			border-radius: 12px;
+			padding: 15px;
 			cursor: pointer;
 			display: flex;
 			flex-direction: column;
-			transition: transform 0.2s ease, box-shadow 0.2s ease;
-
-			&:hover {
-				transform: translateY(-4px);
-				box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-			}
+			box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
 
 			.language-name {
 				font-size: 1.2rem;

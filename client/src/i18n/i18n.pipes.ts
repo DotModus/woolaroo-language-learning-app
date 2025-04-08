@@ -15,7 +15,9 @@ export class TranslatePipe implements PipeTransform {
 		replacements?: { [index: string]: string },
 		language?: string
 	): string {
+
 		if (text === "Description") {
+
 			const language = this.endangeredLanguage.languages.find((lang) => {
 				if (lang.code === id) {
 					return lang.name;
