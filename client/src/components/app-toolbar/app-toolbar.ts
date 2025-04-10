@@ -25,7 +25,7 @@ export class AppToolbarComponent implements OnInit {
   }
 
   private updateLogoVisibility(url: string) {
-    // Always show logo on all pages, including about
-    this.showLogo = true;
+    // Hide logo on /intro/about route, show on all other routes
+    this.showLogo = !url.includes('/intro/about');
   }
 }
