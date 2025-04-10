@@ -11,8 +11,8 @@
     <p class="mat-body-1 instructions" [innerHTML]="'Help us improve Woolaroo\'s translations by sharing your feedback with us:' | translate:'feedbackInstructions'"></p>
     <app-add-word-fieldset [formGroup]="feedbackForm" [includeRecording]="false" [suggested]="false"></app-add-word-fieldset>
     <mat-form-field class="textarea custom-field" appearance="outline" style="display: block;">
-      <mat-label style="color: white !important;" [innerHTML]="'Enter feedback' | translate:'enterFeedback'"></mat-label>
-      <textarea matInput name="content" required formControlName="content" class="white-text-input" style="color: white !important;" placeholder="Enter your feedback here"></textarea>
+
+      <textarea matInput name="content" required formControlName="content" class="white-text-input" style="color: white !important;" placeholder="'Enter your feedback here'"></textarea>
       <mat-error *ngIf="feedbackForm.controls['content'].hasError('required')" [innerHTML]="'Feedback required' | translate:'feedbackRequired'"></mat-error>
     </mat-form-field>
   </div>

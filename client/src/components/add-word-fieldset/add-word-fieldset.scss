@@ -11,6 +11,23 @@
     caret-color: white !important;
   }
 
+  // Style the notched outline
+  .mdc-notched-outline, .mdc-text-field {
+    border: 1px solid #DEC2A2 !important;
+  }
+
+  .mdc-notched-outline__leading,
+  .mdc-notched-outline__notch,
+  .mdc-notched-outline__trailing {
+    border-color: #DEC2A2 !important;
+	border-radius: 15px;
+  }
+
+  // Remove border from infix
+  .mat-mdc-form-field-infix {
+    border: none !important;
+  }
+
   // Make all form field outlines white
   .mat-form-field-appearance-outline .mat-form-field-outline {
     color: white !important;

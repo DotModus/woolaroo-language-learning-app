@@ -144,5 +144,22 @@
 	"termsAndPrivacyButton": "Leggi i nostri Termini e l'Informativa sulla privacy",
 	"t_and_c": "Accetta termini e condizioni",
 	"iosVersionMessage": "Per un'esperienza ottimizzata, assicurati che sul tuo dispositivo sia installato il sistema operativo più recente.",
-	"unsupportedMessage": "Questa PWA è stata progettata per dispositivi mobili, utilizza il tuo cellulare per un'esperienza ottimizzata."
+	"unsupportedMessage": "Questa PWA è stata progettata per dispositivi mobili, utilizza il tuo cellulare per un'esperienza ottimizzata.",
+	"exploreEndangeredLanguages": "Esplora le lingue in via di estinzione usando l'intelligenza artificiale. Lascia che la tua fotocamera traduca il mondo che ti circonda.",
+	"uploadPicture": "Carica un'immagine per scoprire nuove parole",
+	"translationHeading": "Ecco cosa vedo:",
+	"translatedInto": "Tradotto in",
+	"geminiSentence": "Frase generata da Gemini",
+	"showInContext": "Mostra nel contesto",
+	"discoverMoreEndangeredLanguages": "Scopri altre lingue in via di estinzione",
+	"selectARegion": "Seleziona una regione",
+	"viewAll": "Visualizza tutto",
+	"takeAPictureToDiscoverNewWords": "Scatta una foto per scoprire nuove parole",
+	"checkingYourPicture": "Controllo della tua immagine...",
+	"didYouKnow": "Sapevi che almeno il 40% delle 7.000 lingue parlate nel mondo sono in pericolo?",
+	"regionInfo": "Esplora una lingua in via di estinzione usando l'ambiente circostante",
+	"termsOfUse": "Termini di utilizzo di Google",
+	"privacyPolicy": "Informativa sulla privacy di Google",
+	"example": "Esempio",
+	"same_region": "Nella stessa regione"
 }

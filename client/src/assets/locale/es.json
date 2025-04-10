@@ -142,7 +142,25 @@
 	"copied": "Copiado",
 	"processing": "Procesamiento de imagen...",
 	"termsAndPrivacyButton": "Lea nuestros Términos y Política de Privacidad",
-	"t_and_c": "Aceptar términos y condiciones",
+	"t_and_c": "Acepta los términos y condiciones",
 	"iosVersionMessage": "Para una experiencia optimizada, asegúrese de que su dispositivo esté ejecutando el último sistema operativo.",
-	"unsupportedMessage": "Esta PWA ha sido diseñada para dispositivos móviles. Utilice su teléfono móvil para disfrutar de una experiencia optimizada."
+	"unsupportedMessage": "Esta PWA ha sido diseñada para dispositivos móviles. Utilice su teléfono móvil para disfrutar de una experiencia optimizada.",
+	"exploreEndangeredLanguages": "Explora lenguas en peligro de extinción con IA. Deja que tu cámara traduzca el mundo que te rodea.",
+	"uploadPicture": "Sube una foto para descubrir nuevas palabras",
+	"translationHeading": "Esto es lo que veo:",
+	"translatedInto": "Traducido a ",
+	"geminiSentence": "Oración generada desde Gemini ",
+	"showInContext": "Mostrar en contexto",
+	"discoverMoreEndangeredLanguages": "Descubre más lenguas en peligro de extinción",
+	"selectARegion": "Selecciona una región",
+	"viewAll": "Ver todo",
+	"takeAPictureToDiscoverNewWords": "Toma una fotografía para descubrir palabras nuevas",
+
+	"checkingYourPicture": "Verificación de tu foto...",
+	"didYouKnow": "¿Sabías que al menos 40% de las 7000 lenguas estimadas que se hablan en el mundo están en peligro de extinción?",
+	"regionInfo": "Explora una lengua en peligro de extinción usando tu entorno",
+	"termsOfUse": "Condiciones de uso de Google",
+	"privacyPolicy": "Política de privacidad de Google",
+	"example": "Ejemplo",
+	"same_region": "En la misma región"
 }

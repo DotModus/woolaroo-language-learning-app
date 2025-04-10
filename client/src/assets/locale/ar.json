@@ -90,7 +90,25 @@
 	"copied": "نسخ",
 	"processing": "معالجة الصورة",
 	"termsAndPrivacyButton": "الاطلاع على الشروط وسياسة الخصوصية",
-	"t_and_c": "قبول الشروط والأحكام",
+	"t_and_c": "اقبل الشروط والأحكام",
 	"iosVersionMessage": "للحصول على تجربة محسنة، يرجى التأكد من أن جهازك يعمل بأحدث نظام تشغيل.",
-	"unsupportedMessage": "لقد تم تصميم PWA للأجهزة المحمولة، يرجى استخدام هاتفك المحمول للحصول على تجربة محسنة"
+	"unsupportedMessage": "لقد تم تصميم PWA للأجهزة المحمولة، يرجى استخدام هاتفك المحمول للحصول على تجربة محسنة",
+	"exploreEndangeredLanguages": "استكشف اللغات المهددة بالانقراض باستخدام الذكاء الاصطناعي. دع كاميرتك تترجم العالم من حولك.",
+	"uploadPicture": "حمّل صورة لاكتشاف كلمات جديدة",
+	"translationHeading": "هذا ما أراه:",
+	"showInContext": "عرض في السياق",
+	"translatedInto": "مترجم إلى",
+	"geminiSentence": "جملة تم توليدها من Gemini",
+	"discoverMoreEndangeredLanguages": "اكتشف المزيد من اللغات المهددة بالانقراض",
+	"selectARegion": "اختر منطقة",
+	"viewAll": "عرض الكل",
+	"takeAPictureToDiscoverNewWords": "التقط صورة لاكتشاف كلمات جديدة",
+
+	"checkingYourPicture": "التحقق من صورتك...",
+	"didYouKnow": "هل تعلم أن ما لا يقل عن 40% من اللغات السبعة آلاف المُتحدث بها في العالم مُهددة بالانقراض؟",
+	"regionInfo": "استكشف لغة مهددة بالانقراض باستخدام محيطك",
+	"termsOfUse": "شروط استخدام جوجل",
+	"privacyPolicy": "سياسة خصوصية جوجل",
+	"example": "مثال",
+	"same_region": "في نفس المنطقة"
 }

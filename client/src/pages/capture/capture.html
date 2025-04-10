@@ -12,7 +12,7 @@
     <div class="capture-layout">
       <!-- Top section: Instructions -->
       <div class="capture-section top-section">
-        <div class="instruction-text">Take a picture to discover<br>new words</div>
+        <div class="instruction-text" [innerHTML]="'Take a picture to discover<br>new words' | translate:'takeAPictureToDiscoverNewWords'"></div>
       </div>
 
       <!-- Middle section: Camera Preview -->

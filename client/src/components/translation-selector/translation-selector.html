@@ -43,7 +43,7 @@
 
 <!-- Translation heading above word list -->
 <div class="translation-heading">
-	<span>Here's what I see:</span>
+	<span [innerHTML]="'Here\'s what I see:' | translate: 'translationHeading'"></span>
 </div>
 
 <!-- Word scroll list component -->
@@ -55,8 +55,8 @@
 <div class="info-section">
 	<!-- Fixed height heading -->
 	<div class="info-heading">
-		<h2 *ngIf="!showSentence">Translated into {{currentLanguage}}</h2>
-		<h2 *ngIf="showSentence">Gemini generated sentence</h2>
+		<h2 *ngIf="!showSentence"><span [innerHTML]="'Translated into' | translate:'translatedInto'"></span> {{currentLanguage}}</h2>
+		<h2 *ngIf="showSentence" [innerHTML]="'Gemini generated sentence' | translate:'geminiSentence'"></h2>
 	</div>
 
 	<!-- Audio element hidden -->
@@ -106,7 +106,11 @@
 						</clipPath>
 					</defs>
 				</svg>
-				<span>{{showSentence ? 'Show word' : 'Show in context'}}</span>
+				@if (showSentence) {
+					<span [innerHTML]="'Show word' | translate:'showWord'"></span>
+				} @else {
+					<span [innerHTML]="'Show in context' | translate:'showInContext'"></span>
+				}
 			</a>
 		</div>
 	</div>

@@ -25,7 +25,7 @@
             <span [innerHTML]="'Change language'|translate:'switchLanguage'"></span>
         </button>
         <button class="language-button" (click)="onViewLanguageClick()">
-            <span>About {{currentLanguage}}</span>
+           <span [innerHTML]="'About' | translate:'about'"></span>{{currentLanguage}}
         </button>
     </div>
   </mat-sidenav-content>

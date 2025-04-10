@@ -19,7 +19,7 @@
 
 		<div class="language-description" [innerHTML]="'Language description'|translate:'description_' + (language ? language.code : '')"></div>
 
-		<h3 class="example-heading">Example</h3>
+		<h3 class="example-heading" [innerHTML]="'Example'|translate:'example'"></h3>
 		<div class="sample-word-container">
 			<div class="sample-word-content">
 				<div class="sample-image-wrapper">
@@ -34,7 +34,7 @@
 	</div>
 
 	<div class="same-region-section">
-		<h3 class="section-heading">In the same region</h3>
+		<h3 class="section-heading" [innerHTML]="'In the same region'|translate:'same_region'"></h3>
 		<ul class="same-region-list">
 			<li *ngFor="let lang of getSameRegionLanguages()">
 				<div class="region-language-item" (click)="onLanguageClick(lang.code)">

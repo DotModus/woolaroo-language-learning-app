@@ -6,5 +6,9 @@
 
 <div class="content">
 	<h1 class="page-heading" [innerHTML]="'Terms &amp; Privacy' | translate:'termsAndPrivacyTitle'"></h1>
-	<p class="mat-body-1" [innerHTML]="content"></p>
+	<p class="mat-body-1">
+		<b [innerHTML]="'Terms &amp; Privacy' | translate:'termsAndPrivacyTitle'"></b><br />
+		<a target="_blank" href="https://www.google.com/intl/en/policies/terms/" [innerHTML]="'Google terms of use' | translate:'termsOfUse'"></a><br />
+		<a target="_blank" href="https://www.google.com/intl/en/policies/privacy/" [innerHTML]="'Google privacy policy' | translate:'privacyPolicy'"></a>
+	</p>
 </div>

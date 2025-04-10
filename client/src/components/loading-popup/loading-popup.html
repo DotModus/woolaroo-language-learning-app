@@ -35,17 +35,14 @@
 
   <!-- Detailed information section - only shown when there's a captured image -->
   <div [style.display]="capturedImage ? 'block' : 'none'" class="detailed-info">
-    <h2>Checking your picture...</h2>
-    <p class="info-text">Did you know that at least 40% of the 7,000 languages estimated to be spoken in the world are endangered?</p>
-    <p class="region-info">
-      Here's an endangered<br>
-      language in your region
-    </p>
+    <h2 [innerHTML]="'Checking your picture...' | translate:'checkingYourPicture'"></h2>
+    <p class="info-text" [innerHTML]="'Did you know that at least 40% of the 7,000 languages estimated to be spoken in the world are endangered?' | translate:'didYouKnow'"></p>
+    <p class="region-info" [innerHTML]="'Explore an endangered language using your surroundings' | translate:'regionInfo'"></p>
   </div>
 
   <!-- Simple loading indicator - shown when there's no captured image -->
   <div [style.display]="!capturedImage ? 'block' : 'none'" class="loading-indicator">
-    <h2>Loading...</h2>
+    <h2 [innerHTML]="'Loading...' | translate:'loading'"></h2>
   </div>
 
   <!-- Spinner - always shown -->
