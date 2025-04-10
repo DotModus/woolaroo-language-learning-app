@@ -1,6 +1,6 @@
-<div style="width: 100vw; height: 100vh; background-color: #4F4539; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px;">
+<div class="loading-popup-container">
   <!-- Hidden debug info (only visible in dev when needed) -->
-  <div style="position: absolute; bottom: 0; left: 0; font-size: 10px; color: rgba(255,255,255,0.2); padding: 5px; display: none;">
+  <div class="debug-info">
     showDetailedInfo: {{showDetailedInfo}} |
     isCapturePage: {{isCapturePage}} |
     hasImage: {{!!capturedImage}}
@@ -29,29 +29,27 @@
   </style>
 
   <!-- Image container - always present in DOM for direct manipulation -->
-  <div id="imageContainerForDirectInjection" style="display: none;">
+  <div id="imageContainerForDirectInjection" class="image-container">
     <!-- Image will be injected here by direct DOM manipulation -->
   </div>
 
   <!-- Detailed information section - only shown when there's a captured image -->
-  <div [style.display]="capturedImage ? 'block' : 'none'" style="text-align: center; width: 100%; max-width: 350px; margin-bottom: 20px;">
-    <h2 style="font-size: 20px; font-weight: 600; margin-bottom: 24px; color: #EAE1D9;">Checking your picture...</h2>
-
-    <p style="font-size: 16px; line-height: 1.5; margin-bottom: 20px; color: rgba(234, 225, 217, 0.9);">Did you know that at least 40% of the 7,000 languages estimated to be spoken in the world are endangered?</p>
-
-    <p style="font-size: 16px; line-height: 1.5; font-style: italic; color: rgba(234, 225, 217, 0.8);">
+  <div [style.display]="capturedImage ? 'block' : 'none'" class="detailed-info">
+    <h2>Checking your picture...</h2>
+    <p class="info-text">Did you know that at least 40% of the 7,000 languages estimated to be spoken in the world are endangered?</p>
+    <p class="region-info">
       Here's an endangered<br>
       language in your region
     </p>
   </div>
 
   <!-- Simple loading indicator - shown when there's no captured image -->
-  <div [style.display]="!capturedImage ? 'block' : 'none'" style="text-align: center; margin-bottom: 20px;">
-    <h2 style="font-size: 20px; font-weight: 600; color: #EAE1D9;">Loading...</h2>
+  <div [style.display]="!capturedImage ? 'block' : 'none'" class="loading-indicator">
+    <h2>Loading...</h2>
   </div>
 
   <!-- Spinner - always shown -->
-  <div style="margin: 12px 0;">
+  <div class="spinner-container">
     <app-busy-spinner></app-busy-spinner>
   </div>
 </div>
