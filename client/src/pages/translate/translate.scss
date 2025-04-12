@@ -280,3 +280,26 @@ mat-toolbar {
 		}
 	}
 }
+
+::ng-deep .language-bottom-sheet {
+	max-height: 90vh;
+	width: 100%;
+	border-top-left-radius: 16px;
+	border-top-right-radius: 16px;
+	background-color: #4F4539;
+	color: #EAE1D9;
+
+	.mat-bottom-sheet-container {
+		padding: 0;
+		width: 100%;
+		border-top-left-radius: 16px;
+		border-top-right-radius: 16px;
+		background-color: #4F4539;
+		color: #EAE1D9;
+	}
+
+	.mat-bottom-sheet-container-large {
+		width: 100%;
+		max-width: 100%;
+	}
+}

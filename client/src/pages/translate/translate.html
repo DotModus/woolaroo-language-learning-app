@@ -10,16 +10,22 @@
     </app-toolbar>
 	 <app-image-display [imageUrl]="backgroundImageURL" [altText]="'Captured image'">
 	 </app-image-display>
-    <app-translation-selector
-        [translations]="translations"
-        [defaultSelectedWordIndex]="defaultSelectedWordIndex"
-        [currentLanguage]="currentLanguage"
-        (addRecording)="onAddRecording($event)"
-        (addTranslation)="onAddTranslation($event)"
-        (wordShared)="onWordShared($event)"
-        (selectedWordChanged)="onSelectedWordChanged($event)"
-        (manualEntrySelected)="onManualEntrySelected()">
-    </app-translation-selector>
+    <div class="translation-container" [class.loading]="isLoadingTranslations">
+        <app-translation-selector
+            [translations]="translations"
+            [defaultSelectedWordIndex]="defaultSelectedWordIndex"
+            [currentLanguage]="currentLanguage"
+            (addRecording)="onAddRecording($event)"
+            (addTranslation)="onAddTranslation($event)"
+            (wordShared)="onWordShared($event)"
+            (selectedWordChanged)="onSelectedWordChanged($event)"
+            (manualEntrySelected)="onManualEntrySelected()">
+        </app-translation-selector>
+        <div class="loading-overlay" *ngIf="isLoadingTranslations">
+            <mat-spinner diameter="40"></mat-spinner>
+            <span [innerHTML]="'Loading translations...' | translate:'loadingTranslations'"></span>
+        </div>
+    </div>
     <div class="language-controls">
         <button class="language-button" (click)="onSwitchLanguageClick()">
             <span [innerHTML]="'Change language'|translate:'switchLanguage'"></span>

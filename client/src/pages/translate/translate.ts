@@ -37,6 +37,7 @@ import { isMobileDevice } from "../../util/platform";
 import { share } from "../../util/share";
 import AxL from "../../external/axl";
 import { AxlService } from "../../services/axl.service";
+import { BottomSheetService } from '../../services/bottom-sheet.service';
 
 const logger = getLogger("TranslatePageComponent");
 
@@ -135,6 +136,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 	private _persistedHistory: PersistHistory = {} as PersistHistory;
 	private _downloadData: DialogData = {} as DialogData;
 	public sidenavOpen = false;
+	public isLoadingTranslations = false;
 
 	public get currentLanguage(): string {
 		const fullName = this.endangeredLanguageService.currentLanguage.name;
@@ -161,8 +163,24 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 		@Inject(TRANSLATION_SERVICE)
 		private translationService: ITranslationService,
 		@Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
-		private imageRenderingService: ImageRenderingService
-	) {}
+		private imageRenderingService: ImageRenderingService,
+		private bottomSheetService: BottomSheetService
+	) {
+		// Subscribe to language changes
+		this.bottomSheetService.languageChanged$.subscribe(() => {
+			// Clear current selection immediately
+			this.selectedWord = null;
+			this.defaultSelectedWordIndex = -1;
+
+			if (this.translations) {
+				this.isLoadingTranslations = true;
+				this.loadTranslations(this.translations.map(t => t.english))
+					.finally(() => {
+						this.isLoadingTranslations = false;
+					});
+			}
+		});
+	}
 
 	ngOnInit() {
 		this.analyticsService.logPageView(this.router.url, "Translate");
@@ -287,58 +305,104 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 	}
 
 	async cleanTranslationResponse(translations: WordTranslation[]): Promise<WordTranslation[]> {
-		const result = translations.map((item: WordTranslation, index: number) => {
-			if (item?.translations?.length > 0) {
-				let resi = item.translations.map((el: Translation, index) => el.translation.length ? el : null).filter(x => x !== null);
-				if (resi.length > 0) {
-					return item
-				} else {
-					return null
-				}
-			} else {
+		if (!translations || !Array.isArray(translations)) {
+			logger.warn(`Invalid translations array received: ${JSON.stringify(translations)}`);
+			return [];
+		}
 
-				return null
-			}
-		}).filter(x => x !== null);
-		return result
+		return translations
+			.map((item: WordTranslation) => {
+				if (!item) {
+					logger.warn("Null or undefined translation item found");
+					return null;
+				}
+
+				if (!item.translations || !Array.isArray(item.translations)) {
+					logger.warn(`Invalid translations array in item: ${JSON.stringify(item)}`);
+					return null;
+				}
+
+				const validTranslations = item.translations
+					.filter((trans: Translation) => {
+						if (!trans) return false;
+						if (!trans.translation || typeof trans.translation !== 'string') {
+							logger.warn(`Invalid translation found: ${JSON.stringify(trans)}`);
+							return false;
+						}
+						return trans.translation.length > 0;
+					});
+
+				if (validTranslations.length === 0) {
+					logger.warn(`No valid translations found for item: ${JSON.stringify(item)}`);
+					return null;
+				}
+
+				return {
+					...item,
+					translations: validTranslations
+				};
+			})
+			.filter((item): item is WordTranslation => item !== null);
 	}
 
 	async loadTranslations(words: string[]): Promise<void> {
 		let translations: WordTranslation[];
 		try {
+			logger.log(`Starting translation request for words: ${JSON.stringify(words)}`);
+			logger.log(`Current language: ${this.i18n.currentLanguage.code}`);
+			logger.log(`Target endangered language: ${this.endangeredLanguageService.currentLanguage.code}`);
 
 			let _translations: WordTranslation[] = await this.translationService.translate(
 				words,
 				this.i18n.currentLanguage.code,
 				this.endangeredLanguageService.currentLanguage.code,
 				1
-			)
+			);
+
+			logger.log(`Raw translations received: ${JSON.stringify(_translations)}`);
+
+			if (!_translations || _translations.length === 0) {
+				throw new Error("No translations received from service");
+			}
+
 			translations = await this.cleanTranslationResponse(_translations);
+			logger.log(`Cleaned translations: ${JSON.stringify(translations)}`);
+
+			if (!translations || translations.length === 0) {
+				throw new Error("No translations remained after cleaning");
+			}
+
 		} catch (ex) {
 			logger.warn("Error loading translations", ex);
-			// show words as if none had translations
+			// show words as if none had translations but preserve the original English words
 			this.zone.run(() => {
 				this.translations = words.map((w) => ({
 					english: w,
 					translations: [
 						{
-							original: "",
+							original: w,
 							translation: "",
 							transliteration: "",
 							soundURL: "",
-              english: "",
+							english: w,
 							sentence: "",
-			  split_sentence: ["","",""],
-              translated_word: ""
+							split_sentence: ["","",""],
+							translated_word: ""
 						},
 					],
 				}));
 			});
 			return;
 		}
-		logger.log("Translations loaded");
+
+		logger.log(`Final translations being set: ${JSON.stringify(translations)}`);
 		this.zone.run(() => {
 			this.translations = translations;
+			// Select the first translation by default
+			if (translations.length > 0 && translations[0].translations.length > 0) {
+				this.selectedWord = translations[0].translations[0];
+				this.defaultSelectedWordIndex = 0;
+			}
 		});
 	}
 
@@ -353,10 +417,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 
 	onViewLanguageClick() {
 		this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: "view language" });
-		this.router.navigate([
-			AppRoutes.ListLanguages,
-			this.endangeredLanguageService.currentLanguage.code,
-		]);
+		this.bottomSheetService.openViewLanguage();
 	}
 
 	onSwitchLanguageClick() {
@@ -366,10 +427,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 			label: lang?.name,
 			value: lang?.code
 		});
-		this.router.navigateByUrl(AppRoutes.ChangeLanguage, {
-			state: this._persistedHistory,
-			replaceUrl: true
-		});
+		this.bottomSheetService.openChangeLanguage();
 	}
 
 	onBackClick() {
