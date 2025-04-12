@@ -12,6 +12,8 @@ import { loadCapturePageURL } from "../../../util/camera";
 import { getLogger } from "../../../util/logging";
 import { AxlService } from "../../../services/axl.service";
 import AxL from "../../../external/axl";
+import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+
 interface PersistHistory {
 	image: Blob;
 	imageURL: string;
@@ -27,8 +29,9 @@ const logger = getLogger("ChangeLanguagePageComponent");
 	styleUrls: ["./change-language.scss"],
 })
 export class ChangeLanguagePageComponent implements AfterViewInit {
-	showResults = false;
+	showResults = true;
 	selectedRegion = '';
+	selectedLanguageCode = '';
 	private allLanguages: EndangeredLanguage[] = [];
 	private _persistedHistory: PersistHistory = {} as PersistHistory;
 
@@ -84,7 +87,8 @@ export class ChangeLanguagePageComponent implements AfterViewInit {
 		private i18nService: I18nService,
 		private axl: AxlService,
 		@Inject(PROFILE_SERVICE) private profileService: IProfileService,
-		private endangeredLanguageService: EndangeredLanguageService
+		private endangeredLanguageService: EndangeredLanguageService,
+		private bottomSheetRef: MatBottomSheetRef<ChangeLanguagePageComponent>
 	) {
 		this._currentUILanguageIndex = this.i18nService.languages.indexOf(
 			this.i18nService.currentLanguage
@@ -98,6 +102,19 @@ export class ChangeLanguagePageComponent implements AfterViewInit {
 		this.allLanguages = this._sortLanguages(
 			this.endangeredLanguageService.allLanguages
 		);
+
+		// Set the current language and its region
+		const currentLanguage = this.endangeredLanguageService.currentLanguage;
+		if (currentLanguage) {
+			this.selectedLanguageCode = currentLanguage.code;
+			const region = this.allRegions.find(r => r.code === currentLanguage.region);
+			if (region) {
+				this.selectedRegion = region.name;
+				this.onSearchLanguage({ region: region.code, language: null });
+			} else {
+				this.onSearchLanguage({ region: 'all', language: null });
+			}
+		}
 	}
 
 	ngOnInit() {
@@ -136,8 +153,9 @@ export class ChangeLanguagePageComponent implements AfterViewInit {
 			this.endangeredLanguageService.languages[_index]?.code
 		);
 
-		this.onNextClick()
-
+		this.saveSelectedLanguages().finally(() => {
+			this.bottomSheetRef.dismiss();
+		});
 	}
 
 	onCloseClick() {
@@ -232,12 +250,10 @@ export class ChangeLanguagePageComponent implements AfterViewInit {
 	}
 
 	onBackClick() {
-		if (this.showResults) {
-			this.showResults = false;
-		} else {
-			this.router.navigateByUrl(AppRoutes.CaptureImage, {
-				replaceUrl: true
-			});
-		}
+		this.bottomSheetRef.dismiss();
+	}
+
+	isLanguageSelected(languageCode: string): boolean {
+		return this.selectedLanguageCode === languageCode;
 	}
 }

@@ -2,6 +2,124 @@
 @import "../../../style/palette";
 @import "../../../style/components";
 @import "../../../style/typography";
+
+:host {
+	display: block;
+	height: 100%;
+}
+
+::ng-deep .language {
+	background-color: #4F4539;
+	color: #EAE1D9;
+	height: 100%;
+	overflow-y: auto;
+	padding-bottom: 24px;
+
+	.language-header {
+		padding: 16px;
+		margin: 0;
+
+		.language-title {
+			font-size: 1.75rem;
+			margin-bottom: 8px;
+			color: #EAE1D9;
+		}
+
+		.region-name {
+			font-size: 0.875rem;
+			margin-bottom: 12px;
+			color: #EAE1D9;
+		}
+
+		.language-description {
+			font-size: 0.875rem;
+			margin-bottom: 16px;
+			color: #EAE1D9;
+		}
+
+		.example-heading {
+			font-size: 0.875rem;
+			margin-bottom: 12px;
+			color: #EAE1D9;
+		}
+
+		.sample-word-container {
+			margin-top: 0;
+		}
+	}
+
+	.same-region-section {
+		margin: 16px;
+		padding: 16px;
+		background-color: rgba(0, 0, 0, 0.1);
+
+		.section-heading {
+			font-size: 1.125rem;
+			margin-bottom: 16px;
+			color: #EAE1D9;
+		}
+
+		.same-region-list {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+			gap: 16px;
+
+			.region-language-item {
+				min-height: 140px;
+				padding: 12px;
+				background-color: rgba(0, 0, 0, 0.2);
+				border-radius: 8px;
+				cursor: pointer;
+				transition: background-color 0.2s ease;
+
+				&:hover {
+					background-color: rgba(0, 0, 0, 0.3);
+				}
+
+				.language-name {
+					font-size: 1rem;
+					margin-bottom: 8px;
+					color: #EAE1D9;
+				}
+
+				.language-description {
+					font-size: 0.75rem;
+					color: #EAE1D9;
+					opacity: 0.8;
+				}
+			}
+		}
+	}
+}
+
+::ng-deep app-toolbar {
+	position: relative;
+	z-index: 1;
+	background-color: #4F4539;
+	color: #EAE1D9;
+
+	.back {
+		color: #EAE1D9;
+	}
+}
+
+::ng-deep .external-link {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	color: #EAE1D9;
+	text-decoration: none;
+	margin-bottom: 16px;
+
+	&:hover {
+		text-decoration: underline;
+	}
+
+	app-icon {
+		color: #EAE1D9;
+	}
+}
+
 .banner {
 	height: 310px;
 	position: relative;

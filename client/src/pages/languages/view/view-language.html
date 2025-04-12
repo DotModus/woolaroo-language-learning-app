@@ -1,15 +1,14 @@
-<app-toolbar>
-	<button class="back" (click)="navigateToCapture($event)" slot="start">
-		<app-icon icon="arrow_back"></app-icon>
-	</button>
-</app-toolbar>
-
 <div class="language" *ngIf="language">
+	<app-toolbar *ngIf="!isBottomSheet">
+		<button class="back" (click)="onBackClick($event)" slot="start">
+			<app-icon icon="arrow_back"></app-icon>
+		</button>
+	</app-toolbar>
+
 	<div class="language-header">
-		<h1 class="language-title">{{ language ? language.name : '' }}</h1>
+		<h1 class="language-title">{{ language.name }}</h1>
 		<div class="region-name">
-			<span class="label" [innerHTML]="'Region'|translate:'region'">
-			</span>: {{ getRegionName(language.code) }}
+			<span class="label" [innerHTML]="'Region'|translate:'region'"></span>: {{ getRegionName(language.code) }}
 		</div>
 
 		<a *ngIf="language.organizationURL" (click)="onExploreLanguageClick(language.organizationURL)" class="external-link">
@@ -17,7 +16,7 @@
 			<span>{{language.organizationName}}</span>
 		</a>
 
-		<div class="language-description" [innerHTML]="'Language description'|translate:'description_' + (language ? language.code : '')"></div>
+		<div class="language-description" [innerHTML]="'Language description'|translate:'description_' + language.code"></div>
 
 		<h3 class="example-heading" [innerHTML]="'Example'|translate:'example'"></h3>
 		<div class="sample-word-container">
@@ -27,13 +26,13 @@
 				</div>
 				<div class="translation-content">
 					<span class="original" [innerHTML]="'Tree' | translate:'tree':{}"></span>
-					<span class="translation" [innerHTML]="language ? language.sampleWordTranslation : ''"></span>
+					<span class="translation" [innerHTML]="language.sampleWordTranslation"></span>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div class="same-region-section">
+	<div class="same-region-section" *ngIf="!isBottomSheet">
 		<h3 class="section-heading" [innerHTML]="'In the same region'|translate:'same_region'"></h3>
 		<ul class="same-region-list">
 			<li *ngFor="let lang of getSameRegionLanguages()">
