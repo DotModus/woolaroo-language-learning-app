@@ -8,7 +8,7 @@
 	<div class="language-header">
 		<h1 class="language-title">{{ language.name }}</h1>
 		<div class="region-name">
-			<span class="label" [innerHTML]="'Region'|translate:'region'"></span>: {{ getRegionName(language.code) }}
+			<span class="label" [innerHTML]="'Region'|translate:'region'"></span>: {{ getRegionName() }}
 		</div>
 
 		<a *ngIf="language.organizationURL" (click)="onExploreLanguageClick(language.organizationURL)" class="external-link">
@@ -16,7 +16,9 @@
 			<span>{{language.organizationName}}</span>
 		</a>
 
-		<div class="language-description" [innerHTML]="'Language description'|translate:'description_' + language.code"></div>
+		<div class="language-description">
+			{{ getLanguageShortDescription() }}
+		</div>
 
 		<h3 class="example-heading" [innerHTML]="'Example'|translate:'example'"></h3>
 		<div class="sample-word-container">

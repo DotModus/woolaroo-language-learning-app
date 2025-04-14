@@ -2,23 +2,19 @@
   <span [innerHTML]="'The Languages' | translate:'theLanguages'"></span>
 </app-page-header>
 <div class="content">
-  <app-scroll-list [currentItem]="currentLanguageIndex" (currentItemChanged)="onLanguageChanged($event)">
-    <ng-container *ngFor="let lang of endangeredLanguages">
-      <div class="language" *appScrollListItem (click)="onLanguageClick(lang.code)">
-        <div class="example">
-          <img [src]="prefixImageUrl(lang.sampleWordImageURL)" [alt]="'Tree' | translate:'tree':{}" />
-          <span class="translation" [innerHTML]="lang.sampleWordTranslation"></span>
-          <span class="original" [innerHTML]="'Tree' | translate:'tree':{}"></span>
-        </div>
-        <div class="info">
-          <span class="learn-more" [innerHTML]="'Learn more about'|translate:'learnMoreAbout'"></span>
-          <span class="name">{{ lang.name }}</span>
-          <app-icon icon="forward"></app-icon>
-        </div>
+  <ul class="language-list">
+    <li *ngFor="let lang of endangeredLanguages" class="language-item" (click)="onLanguageClick(lang.code)">
+      <div class="example">
+        <img [src]="prefixImageUrl(lang.sampleWordImageURL)" [alt]="'Tree' | translate:'tree':{}" />
+        <span class="translation" [innerHTML]="lang.sampleWordTranslation"></span>
+        <span class="original" [innerHTML]="'Tree' | translate:'tree':{}"></span>
       </div>
-    </ng-container>
-  </app-scroll-list>
-  <app-pagination-indicator [pageCount]="endangeredLanguages.length"
-    [selectedPage]="currentLanguageIndex"></app-pagination-indicator>
+      <div class="info">
+        <span class="learn-more" [innerHTML]="'Learn more about'|translate:'learnMoreAbout'"></span>
+        <span class="name">{{ lang.name }}</span>
+        <app-icon icon="forward"></app-icon>
+      </div>
+    </li>
+  </ul>
   <div class="instructions" [innerHTML]="'Tap a language to learn more'|translate:'languageListInstructions'"></div>
 </div>

@@ -6,6 +6,7 @@ import { ViewLanguagePageComponent } from "./view-language";
 import { ScrollListModule } from "../../../components/scroll-list/scroll-list.module";
 import { IconComponentModule } from "../../../components/icon/icon.module";
 import { AppToolbarModule } from "../../../components/app-toolbar/app-toolbar.module";
+import { MatBottomSheetModule, MAT_BOTTOM_SHEET_DATA } from "@angular/material/bottom-sheet";
 
 @NgModule({
 	declarations: [ViewLanguagePageComponent],
@@ -16,7 +17,11 @@ import { AppToolbarModule } from "../../../components/app-toolbar/app-toolbar.mo
 		I18nModule,
 		ScrollListModule,
 		IconComponentModule,
-		AppToolbarModule
+		AppToolbarModule,
+		MatBottomSheetModule
 	],
+	providers: [
+		{ provide: MAT_BOTTOM_SHEET_DATA, useValue: {} }
+	]
 })
 export class ViewLanguageModule {}

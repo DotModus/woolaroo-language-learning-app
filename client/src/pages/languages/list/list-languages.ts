@@ -34,13 +34,12 @@ export class ListLanguagesPageComponent {
 
   onCloseClick(ev: MouseEvent) {
     ev.stopPropagation();
-    this.router.navigate([".."], {relativeTo: this.route})
+    this.router.navigate([".."], { relativeTo: this.route, replaceUrl: true });
   }
 
-  onLanguageClick(code: string) {
-    console.log(AppRoutes.ListLanguages, code)
-    this.router.navigate([AppRoutes.ListLanguages, code]);
-  }
+	onLanguageClick(code: string) {
+		this.router.navigate(['languages', code], { replaceUrl: true });
+	}
 
   prefixImageUrl(sampleWordImageURL: string): string {
     return `${this.endangeredLanguageService.imageAssetsURL}${sampleWordImageURL}`;
