@@ -481,7 +481,6 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 		this.renderShareImage();
 	}
 
-	// Make necessary changes such that the following function uses the right transalation and not the first in array
 	onWordShared({
 		word,
 		translation,
@@ -498,59 +497,68 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 			return;
 		}
 
-		const shareTitle = this.i18n.getTranslation("shareTitle") || undefined;
-		const shareText = selectedTranslation
-			? this.i18n.getTranslation("shareText", {
-					original:
-						selectedTranslation.original ||
-						selectedTranslation.english,
-					translation: selectedTranslation.translation,
-					language:
-						this.endangeredLanguageService.currentLanguage.name,
-			  }) || undefined
-			: undefined;
-		const img = this._sharedImage;
+		const language = this.i18n.currentLanguage;
+		const endangeredLanguage = this.endangeredLanguageService.currentLanguage;
 
-		if (!img) {
-			// image not rendered - default to sharing text
-			logger.warn("Shared image data not found");
-			share({ text: shareText, title: shareTitle }).then(
-				() => {},
-				(ex) => logger.warn("Error sharing image", ex)
+		this.imageRenderingService
+			.renderImage(
+				this.backgroundImageData,
+				selectedTranslation,
+				language,
+				endangeredLanguage,
+				window.innerWidth * window.devicePixelRatio,
+				window.innerHeight * window.devicePixelRatio
+			)
+			.then(
+				(img) => {
+					this._sharedImage = img;
+
+					// For testing: Download the rendered image
+					const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+					const filename = `woolaroo-rendered-${selectedTranslation.original || selectedTranslation.english}-${timestamp}.jpg`;
+					try {
+						downloadFile(img, filename);
+						logger.log(`Rendered image downloaded as ${filename}`);
+					} catch (err) {
+						logger.error("Error downloading rendered image", err);
+					}
+
+					// Original share functionality
+					const shareTitle = this.i18n.getTranslation("shareTitle") || undefined;
+					const shareText = this.i18n.getTranslation("shareText", {
+						original: selectedTranslation.original || selectedTranslation.english,
+						translation: selectedTranslation.translation,
+						language: endangeredLanguage.name,
+					}) || undefined;
+
+					share({
+						text: shareText,
+						title: shareTitle,
+						files: [new File([img], `woolaroo-translation-${selectedTranslation.original}.jpg`, {
+							type: img.type,
+						})]
+					}).then(
+						() => {},
+						(ex) => {
+							logger.warn("Error sharing image", ex);
+							if (ex instanceof NotSupportedError) {
+								// If sharing is not supported, show download dialog
+								this._downloadData = {
+									image: img,
+									filename: `woolaroo-translation-${selectedTranslation.original || selectedTranslation.english}.jpg`,
+								};
+								this.dialog.open(DownnloadDialog, {
+									data: this._downloadData,
+								});
+							}
+						}
+					);
+				},
+				(err) => {
+					logger.warn("Error rendering image", err);
+					this._sharedImage = null;
+				}
 			);
-			return;
-		}
-
-		const files: File[] = [
-			new File(
-				[img],
-				`woolaroo-translation-${selectedTranslation.original}.jpg`,
-				{
-					type: img.type,
-				}
-			),
-		];
-
-		share({ text: shareText, title: shareTitle, files }).then(
-			() => {},
-			(ex) => {
-				logger.warn("Error sharing image", ex);
-				if (ex instanceof NotSupportedError) {
-					// sharing not supported - default to downloading image
-					this._downloadData = {
-						image: img,
-						filename: `woolaroo-translation-${
-							selectedTranslation.original ||
-							selectedTranslation.english
-						}.jpg`,
-					};
-
-					this.dialog.open(DownnloadDialog, {
-						data: this._downloadData,
-					});
-				}
-			}
-		);
 	}
 
 	onManualEntrySelected() {
@@ -581,5 +589,11 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 
 	onSidenavClosed() {
 		this.sidenavOpen = false;
+	}
+
+	checkTranslations() {
+		console.log("checkTranslations");
+		console.log(this.translations);
+		return true;
 	}
 }

@@ -25,11 +25,11 @@ mat-toolbar {
   }
 
   ::ng-deep {
-    [slot="start"],
-    [slot="end"] {
+    [slot="start"] {
       @include icon-button;
       position: absolute;
       top: 7px;
+      left: 8px;
       width: 36px;
       height: 36px;
 
@@ -40,30 +40,6 @@ mat-toolbar {
 
       .mat-icon {
         color: map.get(map.get($app-theme, "foreground"), "text");
-      }
-    }
-
-    [slot="start"] {
-      left: 8px;
-    }
-
-    [slot="end"] {
-      right: 8px;
-    }
-  }
-}
-
-:host-context([dir=rtl]) {
-  mat-toolbar {
-    ::ng-deep {
-      [slot="start"] {
-        left: auto;
-        right: 8px;
-      }
-
-      [slot="end"] {
-        left: 8px;
-        right: auto;
       }
     }
   }

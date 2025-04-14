@@ -84,7 +84,7 @@ export class ChangeLanguagePageComponent implements AfterViewInit {
 
 	constructor(
 		private router: Router,
-		private i18nService: I18nService,
+		public i18nService: I18nService,
 		private axl: AxlService,
 		@Inject(PROFILE_SERVICE) private profileService: IProfileService,
 		private endangeredLanguageService: EndangeredLanguageService,
@@ -247,13 +247,5 @@ export class ChangeLanguagePageComponent implements AfterViewInit {
 	onSubmitFeedbackClick() {
 		this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: "click share feedback button" });
 		this.router.createUrlTree([], {});
-	}
-
-	onBackClick() {
-		this.bottomSheetRef.dismiss();
-	}
-
-	isLanguageSelected(languageCode: string): boolean {
-		return this.selectedLanguageCode === languageCode;
 	}
 }

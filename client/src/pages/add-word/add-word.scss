@@ -63,6 +63,8 @@ mat-toolbar {
     cursor: pointer;
     padding: 8px;
     flex: 0 0 auto;
+    position: absolute;
+    left: 8px;
 
     &:hover {
       opacity: 0.8;
@@ -78,9 +80,9 @@ mat-toolbar {
     color: #ffffff;
     font-weight: 500;
     font-size: 20px;
-    text-align: left;
-    margin-left: 8px;
+    text-align: center;
     flex: 1 1 auto;
+    margin: 0 48px; // Add margin to account for the close button
   }
 
   // Spacer to push elements to edges
@@ -101,12 +103,11 @@ mat-toolbar {
 }
 
 .content {
-  padding-top: 30px;
-  padding-left: 24px;
-  padding-right: 24px;
-  max-width: 800px;
-  margin: 0 auto;
-  padding-bottom: 40px;
+  padding: 24px;
+  height: calc(100% - 64px);
+  display: flex;
+  flex-direction: column;
+  position: relative;
 
   .mat-body-1 {
     letter-spacing: 0;
@@ -138,5 +139,25 @@ mat-toolbar {
     padding-left: 40px;
     padding-right: 40px;
     padding-top: 40px;
+  }
+
+  .submit {
+    margin-top: auto;
+    align-self: flex-start;
+    padding: 8px 24px;
+    background-color: #DEC2A2;
+    color: #1F1B16 !important;
+    font-weight: 500;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: #E5CBB0;
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
   }
 }

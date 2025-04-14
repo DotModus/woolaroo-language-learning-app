@@ -23,6 +23,8 @@
 	color: #EAE1D9;
 	width: 100%;
 	overflow-y: auto;
+	overflow-x: hidden;
+	box-sizing: border-box;
 
 	@media only screen and (min-width: 321px) and (max-width: 1023px) and (orientation: landscape) {
 		overflow: scroll;
@@ -52,6 +54,7 @@
 		flex-direction: column;
 		align-items: flex-start;
 		box-sizing: border-box;
+		overflow-x: hidden;
 
 		.header-section {
 			position: sticky;
@@ -60,33 +63,45 @@
 			z-index: 2;
 			width: 100%;
 			padding: 24px;
+			box-sizing: border-box;
 
 			.main-heading {
 				font-size: 2rem;
 				margin-bottom: 12px;
-				text-align: left;
 				color: #EAE1D9;
 				font-weight: 500;
 				width: 100%;
 				position: static;
 				padding: 0;
+				word-break: break-word;
+				text-align: start;
+				unicode-bidi: plaintext;
 			}
 
 			.sub-heading {
 				font-size: 1.25rem;
-				text-align: left;
 				color: #EAE1D9;
 				font-weight: normal;
 				width: 100%;
 				position: static;
 				padding: 0;
 				margin-bottom: 24px;
+				word-break: break-word;
+				text-align: start;
+				unicode-bidi: plaintext;
 			}
 
 			.region-pills {
 				position: static;
 				padding: 0;
 				margin-bottom: 32px;
+				width: 100%;
+				box-sizing: border-box;
+				overflow-x: hidden;
+				display: flex;
+				flex-wrap: wrap;
+				gap: 12px;
+				justify-content: flex-start;
 			}
 		}
 
@@ -103,6 +118,8 @@
 			background-color: #4F4539;
 			padding-bottom: 16px;
 			z-index: 1;
+			box-sizing: border-box;
+			overflow-x: hidden;
 
 			.region-pill {
 				padding: 8px 24px;
@@ -113,6 +130,10 @@
 				font-size: 1rem;
 				cursor: pointer;
 				transition: all 0.2s ease;
+				white-space: nowrap;
+				flex-shrink: 0;
+				text-align: start;
+				unicode-bidi: plaintext;
 
 				&:hover {
 					background-color: rgba(255, 185, 86, 0.1);
@@ -129,30 +150,50 @@
 			width: 100%;
 			padding: 0 24px;
 			margin-bottom: 48px;
+			box-sizing: border-box;
+			overflow-x: hidden;
 
 			.language-grid {
 				list-style: none;
 				padding: 0;
 				margin: 0;
 				display: grid;
-				grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-				gap: 32px;
+				grid-template-columns: 1fr;
+				gap: 16px;
 				padding-bottom: 32px;
+				width: 100%;
+				box-sizing: border-box;
+
+				@media (min-width: 600px) {
+					grid-template-columns: repeat(2, 1fr);
+				}
+
+				@media (min-width: 900px) {
+					grid-template-columns: repeat(3, 1fr);
+				}
+
+				@media (min-width: 1200px) {
+					grid-template-columns: repeat(4, 1fr);
+				}
 
 				li {
-					margin-bottom: 32px;
+					margin-bottom: 0;
+					width: 100%;
+					box-sizing: border-box;
 
 					.language-card {
 						background-color: rgba(222, 194, 162, 0.1);
 						border: 2px solid #DEC2A2;
 						border-radius: 12px;
-						padding: 24px;
+						padding: 16px;
 						cursor: pointer;
 						transition: all 0.3s ease;
 						height: 100%;
 						min-height: 140px;
 						display: flex;
 						flex-direction: column;
+						width: 100%;
+						box-sizing: border-box;
 
 						&:hover {
 							transform: translateY(-2px);
@@ -184,9 +225,11 @@
 						.language-name {
 							font-size: 1.25rem;
 							font-weight: 500;
-							margin: 0 0 16px 0;
+							margin: 0 0 12px 0;
 							color: #EAE1D9;
-							text-align: left;
+							text-align: start;
+							word-break: break-word;
+							unicode-bidi: plaintext;
 						}
 
 						.language-description {
@@ -194,7 +237,9 @@
 							margin: 0;
 							color: rgba(234, 225, 217, 0.8);
 							line-height: 1.5;
-							text-align: left;
+							text-align: start;
+							word-break: break-word;
+							unicode-bidi: plaintext;
 						}
 					}
 				}
