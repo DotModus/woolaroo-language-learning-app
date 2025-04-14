@@ -1,4 +1,4 @@
-<div class="change-language">
+<div class="change-language" [dir]="i18nService.currentLanguage.direction">
 	<div class="language-filter">
 		<div class="header-section">
 			<h1 class="main-heading" [innerHTML]="'Choose Language' | translate:'chooseLanguage'"></h1>
@@ -25,7 +25,7 @@
 			<ul class="language-grid">
 				<li *ngFor="let lang of endangeredLanguages">
 					<div class="language-card"
-						[class.selected]="isLanguageSelected(lang.code)"
+						[class.selected]="lang.code === selectedLanguageCode"
 						(click)="onEndangeredLanguageChanged(endangeredLanguages.indexOf(lang))">
 						<h3 class="language-name">{{ lang.name }}</h3>
 						<p class="language-description" [innerHTML]="'Description'|translate:lang.code"></p>

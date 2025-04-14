@@ -21,6 +21,7 @@ interface ImageRenderingConfig {
 		logoURL: string;
 		attributionHeight: number;
 		attributionURL: string;
+		tagURL: string;
 		spacing: number;
 	};
 	padding: number;
@@ -220,7 +221,7 @@ export class ImageRenderingService {
 		// 1. Translation element if available and different from transliteration
 		if (word.translation && word.translation !== word.transliteration) {
 			elements.push({
-				text: word.translation,
+				text: word.translation.charAt(0).toUpperCase() + word.translation.slice(1),
 				config: this.config.translation
 			});
 		}
@@ -241,8 +242,9 @@ export class ImageRenderingService {
 		});
 
 		// 4. Original word (English)
+		const originalWord = word.original || word.english;
 		elements.push({
-			text: word.original || word.english,
+			text: originalWord.charAt(0).toUpperCase() + originalWord.slice(1),
 			config: this.config.originalWord
 		});
 

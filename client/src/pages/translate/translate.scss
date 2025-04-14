@@ -20,6 +20,8 @@ mat-sidenav-container {
 	color: mat.get-color-from-palette($app-inverted, "500-contrast");
 	width: 25px !important;
 	height: auto;
+	position: absolute;
+	left: 8px;
 }
 
 :host {
@@ -43,9 +45,13 @@ mat-sidenav-container {
 
 // Add RTL support for open menu button
 :host-context([dir="rtl"]) {
-	.open-menu {
-		left: auto;
-		right: 8px;
+	mat-toolbar {
+		.back {
+			right: 8px;
+		}
+		.submit-feedback {
+			left: 8px;
+		}
 	}
 }
 
@@ -137,17 +143,6 @@ mat-toolbar {
 	.back app-icon,
 	.submit-feedback app-icon {
 		@include directional;
-	}
-}
-
-:host-context([dir="rtl"]) {
-	mat-toolbar {
-		.back {
-			right: 8px;
-		}
-		.submit-feedback {
-			left: 8px;
-		}
 	}
 }
 
@@ -288,18 +283,38 @@ mat-toolbar {
 	border-top-right-radius: 16px;
 	background-color: #4F4539;
 	color: #EAE1D9;
+	overflow-x: hidden;
 
 	.mat-bottom-sheet-container {
 		padding: 0;
 		width: 100%;
+		max-width: 100%;
 		border-top-left-radius: 16px;
 		border-top-right-radius: 16px;
 		background-color: #4F4539;
 		color: #EAE1D9;
+		overflow-x: hidden;
 	}
 
 	.mat-bottom-sheet-container-large {
 		width: 100%;
 		max-width: 100%;
+		overflow-x: hidden;
 	}
+
+	// Ensure all content fits within width
+	.mat-bottom-sheet-content {
+		width: 100%;
+		max-width: 100%;
+		overflow-x: hidden;
+	}
+}
+
+app-toolbar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 1000;
+	background-color: #4F4539;
 }
