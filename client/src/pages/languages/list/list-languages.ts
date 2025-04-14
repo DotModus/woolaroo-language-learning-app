@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { I18nService } from '../../../i18n/i18n.service';
 import { EndangeredLanguage, EndangeredLanguageService } from '../../../services/endangered-language';
-import { AppRoutes } from '../../../app/routes';
 
 @Component({
   selector: 'app-list-languages',
@@ -34,13 +33,12 @@ export class ListLanguagesPageComponent {
 
   onCloseClick(ev: MouseEvent) {
     ev.stopPropagation();
-    this.router.navigate([".."], {relativeTo: this.route})
+    this.router.navigate([".."], { relativeTo: this.route, replaceUrl: true });
   }
 
-  onLanguageClick(code: string) {
-    console.log(AppRoutes.ListLanguages, code)
-    this.router.navigate([AppRoutes.ListLanguages, code]);
-  }
+	onLanguageClick(code: string) {
+		this.router.navigate(['languages', code], { replaceUrl: true });
+	}
 
   prefixImageUrl(sampleWordImageURL: string): string {
     return `${this.endangeredLanguageService.imageAssetsURL}${sampleWordImageURL}`;

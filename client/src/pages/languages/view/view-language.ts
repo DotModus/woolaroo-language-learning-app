@@ -37,15 +37,22 @@ export class ViewLanguagePageComponent implements OnInit, OnDestroy {
 		} else {
 			// Otherwise, get the language from the route params
 			this.route.paramMap.subscribe((params: ParamMap) => {
-				this.language =
-					this.endangeredLanguageService.languages.find(
-						(lang) => lang.code === params.get("id") || lang.code === "kar"
-					) || null;
+				const languageCode = params.get("id");
+				this.language = this.endangeredLanguageService.languages.find(
+					(lang) => lang.code === languageCode
+				) || null;
+
+				// Force change detection to update the view
+				this.cdr.detectChanges();
 			});
 		}
 	}
 
 	ngOnInit() {
+		// If we're in the drawer and don't have a language yet, get it from the current language service
+		if (this.isBottomSheet && !this.language) {
+			this.language = this.endangeredLanguageService.currentLanguage;
+		}
 		this._languageImage = this.endangeredLanguageService.imageAssetsURL;
 	}
 
@@ -66,11 +73,10 @@ export class ViewLanguagePageComponent implements OnInit, OnDestroy {
 	}
 
 	onLanguageClick(code: string) {
-		window.scrollTo(0, 0);
-		if (this.isBottomSheet && this.bottomSheetRef) {
-			this.bottomSheetRef.dismiss();
+		if (this.isBottomSheet) {
+			this.bottomSheetRef?.dismiss();
 		}
-		this.router.navigate([AppRoutes.ListLanguages, code], {replaceUrl: true});
+		this.router.navigate(['languages', code], { replaceUrl: true });
 	}
 
 	onBackClick(ev: MouseEvent) {
@@ -108,7 +114,18 @@ export class ViewLanguagePageComponent implements OnInit, OnDestroy {
 		return sameRegionLanguages.slice(0, 10);
 	}
 
-	getRegionName(code: string): string {
-		return this.i18nService.getTranslation(`region_${code}`) || code;
+	getRegionName(): string {
+		const i18nLanguage = this.i18nService.currentLanguage.code
+		const displayRegion =  this.language.displayRegions[i18nLanguage];
+
+		return displayRegion ?? '';
+	}
+
+	getLanguageShortDescription(): string {
+		const i18nLanguage = this.i18nService.currentLanguage.code
+
+		const description = this.language.shortDescriptions[i18nLanguage];
+
+		return description ?? '';
 	}
 }
