@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { I18nService } from '../../../i18n/i18n.service';
 import { EndangeredLanguage, EndangeredLanguageService } from '../../../services/endangered-language';
-import { AppRoutes } from '../../../app/routes';
 
 @Component({
   selector: 'app-list-languages',

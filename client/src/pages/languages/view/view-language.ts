@@ -118,7 +118,7 @@ export class ViewLanguagePageComponent implements OnInit, OnDestroy {
 		const i18nLanguage = this.i18nService.currentLanguage.code
 		const displayRegion =  this.language.displayRegions[i18nLanguage];
 
-		return displayRegion || '';
+		return displayRegion ?? '';
 	}
 
 	getLanguageShortDescription(): string {
@@ -126,8 +126,6 @@ export class ViewLanguagePageComponent implements OnInit, OnDestroy {
 
 		const description = this.language.shortDescriptions[i18nLanguage];
 
-		console.log(description);
-
-		return description || '';
+		return description ?? '';
 	}
 }
