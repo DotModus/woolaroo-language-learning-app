@@ -84,7 +84,7 @@ export class ViewLanguagePageComponent implements OnInit, OnDestroy {
 		if (this.isBottomSheet && this.bottomSheetRef) {
 			this.bottomSheetRef.dismiss();
 		} else {
-			this.router.navigate([".."], {relativeTo: this.route});
+			this.router.navigate([".."], {relativeTo: this.route, replaceUrl: true});
 		}
 	}
 
