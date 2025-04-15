@@ -145,12 +145,8 @@ export class ImageRenderingService {
 			height / window.innerHeight
 		);
 
-		// Define text area dimensions (60% width, centered)
-		const textAreaWidth = width * 0.6; // 60% of the screen width
-		const textAreaLeft = (width - textAreaWidth) / 2; // Center horizontally
-
 		// Add full-width area at the bottom with height of 420px
-		const bottomAreaHeight = 420;
+		const bottomAreaHeight = width <= 480 ? 110 : 260; // Reduced by half on mobile
 		const bottomAreaY = height - bottomAreaHeight;
 
 		// Set the background color to #F0F2E7
@@ -170,6 +166,30 @@ export class ImageRenderingService {
 		}
 
 		context.setTransform(scale, 0, 0, scale, 0, 0);
+
+		// Adjust text sizes based on screen width
+		const textScale = width <= 480 ? 0.4 : 0.85; // Further reduced text size on mobile
+		this.config.translation.font = width <= 480 ? "bold 18px Arial" : "bold 34px Arial";
+		this.config.transliteration.font = width <= 480 ? "16px Arial" : "30px Arial";
+		this.config.languages.font = width <= 480 ? "14px Arial" : "24px Arial";
+		this.config.originalWord.font = width <= 480 ? "bold 20px Arial" : "bold 36px Arial";
+
+		// Scale line heights and spacing
+		this.config.translation.lineHeight *= textScale;
+		this.config.translation.lineSpacing *= textScale;
+		this.config.translation.marginBottom *= textScale;
+		this.config.transliteration.lineHeight *= textScale;
+		this.config.transliteration.lineSpacing *= textScale;
+		this.config.transliteration.marginBottom *= textScale;
+		this.config.languages.lineHeight *= textScale;
+		this.config.languages.lineSpacing *= textScale;
+		this.config.languages.marginBottom *= textScale;
+		this.config.originalWord.lineHeight *= textScale;
+		this.config.originalWord.lineSpacing *= textScale;
+		this.config.originalWord.marginBottom *= textScale;
+
+		// Further reduce padding on mobile
+		this.config.padding = width <= 480 ? 4 : 32;
 
 		// Render translations first (from top)
 		this._renderTranslations(
@@ -202,10 +222,10 @@ export class ImageRenderingService {
 	) {
 		const centerX = (width * 0.5) / scale;
 		// Start at top with padding instead of bottom
-		let y = this.config.padding / scale;
+		let y = (this.config.padding * 2) / scale; // Double the padding at the top
 
-		// Limit text to 60% of the screen width, leaving 20% on each side
-		const textAreaWidth = width * 0.6; // 60% of total width
+		// Limit text to 90% of the screen width on mobile, 60% on desktop
+		const textAreaWidth = width <= 480 ? width * 0.9 : width * 0.6;
 		const maxTextWidth = (textAreaWidth - 2 * this.config.padding) / scale;
 
 		// The correct order of elements from top to bottom is:
@@ -312,47 +332,6 @@ export class ImageRenderingService {
 		return y + config.marginBottom; // Return the new position after this text
 	}
 
-	private _renderText(
-		context: CanvasRenderingContext2D,
-		text: string,
-		config: ImageRenderingTextConfig,
-		centerX: number,
-		bottomY: number,
-		maxWidth: number
-	): number {
-		context.font = config.font;
-		let y = bottomY - config.marginBottom;
-		const lines = ImageRenderingService._getTextLines(
-			context,
-			text,
-			maxWidth
-		);
-		for (let k = lines.length - 1; k >= 0; k--) {
-			const line = lines[k];
-			const metrics = context.measureText(line);
-			const x = centerX - Math.min(metrics.width, maxWidth) * 0.5;
-
-			// Draw text drop shadow
-			context.fillStyle = this.config.dropShadowColor;
-			context.fillText(
-				line,
-				x + this.config.dropShadowDistance,
-				y + this.config.dropShadowDistance,
-				maxWidth
-			);
-
-			// Draw text with bright color for better visibility against black overlay
-			context.fillStyle = '#FFFFFF'; // White text for maximum visibility
-			context.fillText(line, x, y, maxWidth);
-
-			y -= config.lineHeight;
-			if (k > 0) {
-				y -= config.lineSpacing;
-			}
-		}
-		return y;
-	}
-
 	/**
 	 * Renders content in the bottom area, including logo and link
 	 */
@@ -366,62 +345,67 @@ export class ImageRenderingService {
 		const bannerConfig = this.config.banner;
 
 		try {
-			// Draw Woolaroo logo on the left side of the bottom area
+			// Load both images first
 			const logoImage = await ImageRenderingService._loadImage(
 				bannerConfig.logoURL
 			);
+			const tagImage = await ImageRenderingService._loadImage(
+				bannerConfig.tagURL
+			);
 
-			// Size the logo to be about 1/4 of the bottom area height
-			const logoHeight = Math.min(bottomAreaHeight * 0.25, 80 * scale);
-			const logoScale = logoHeight / logoImage.naturalHeight;
-			const logoWidth = logoImage.naturalWidth * logoScale;
+			// Calculate the desired width based on screen size
+			const desiredWidth = width <= 480 ? width * 0.3 : width * 0.15; // 30% on mobile, 15% on desktop/tablet
 
-			// Position logo on the left side with padding
-			const leftPadding = width * 0.1; // 10% of width as padding
+			// Calculate scales for both images to match the desired width
+			const logoScale = desiredWidth / logoImage.naturalWidth;
+			const tagScale = desiredWidth / tagImage.naturalWidth;
+
+			// Calculate heights based on the scales
+			const logoHeight = logoImage.naturalHeight * logoScale;
+			const tagHeight = tagImage.naturalHeight * tagScale;
+
+			// Calculate total height of both images plus spacing
+			const totalHeight = logoHeight + tagHeight + 8; // Reduced spacing to 8px
+
+			// Position both images on the left side with reduced padding
+			const leftPadding = width <= 480 ? width * 0.05 : width * 0.03; // 5% on mobile, 3% on desktop/tablet
 			const logoX = leftPadding;
-			const logoY = bottomAreaY + (bottomAreaHeight * 0.5) - (logoHeight / 2); // Centered vertically
+			const tagX = leftPadding;
 
-			context.drawImage(logoImage, logoX, logoY, logoWidth, logoHeight);
+			// Center both images vertically in the bottom section
+			const startY = bottomAreaY + (bottomAreaHeight - totalHeight) / 2;
+			const logoY = startY;
+			const tagY = startY + logoHeight + 8; // Reduced spacing to 8px
 
-			// Add the goo.gl/woolaroo link on the right side
-			const linkText = "goo.gl/woolaroo";
-			const rightPadding = width * 0.1; // 10% of width as padding
+			// Save the current context state
+			context.save();
 
-			// Set up text style for the link
-			context.font = "bold 24px Arial";
-			const linkMetrics = context.measureText(linkText);
-			const linkWidth = linkMetrics.width;
+			// Reset the transform to draw the images at the correct scale
+			context.setTransform(1, 0, 0, 1, 0, 0);
 
-			// Position link on the right side
-			const linkX = width - rightPadding - linkWidth;
-			const linkY = bottomAreaY + (bottomAreaHeight * 0.5) + 8; // Centered vertically, slightly adjusted
+			// Draw the logo
+			context.drawImage(logoImage, logoX, logoY, desiredWidth, logoHeight);
 
-			// Draw the link text
-			context.fillStyle = "#333333"; // Dark gray color for text
-			context.fillText(linkText, linkX, linkY);
+			// Draw the tag
+			context.drawImage(tagImage, tagX, tagY, desiredWidth, tagHeight);
 
-			// Optionally add an underline to make it look more like a link
-			context.beginPath();
-			context.strokeStyle = "#333333";
-			context.lineWidth = 1;
-			context.moveTo(linkX, linkY + 3);
-			context.lineTo(linkX + linkWidth, linkY + 3);
-			context.stroke();
+			// Restore the previous context state
+			context.restore();
 
 		} catch (error) {
+			console.error('Failed to render bottom area content:', error);
 			// Fallback: If images fail to load, render text instead
 			context.font = "bold 28px Arial";
 			context.fillStyle = "#333333";
 
-			// Render "Woolaroo" text on the left as fallback
-			context.fillText("Woolaroo", width * 0.1, bottomAreaY + bottomAreaHeight * 0.5);
+			// Calculate center position for fallback text
+			const centerY = bottomAreaY + bottomAreaHeight / 2;
 
-			// Render link on the right
-			const linkText = "goo.gl/woolaroo";
-			context.font = "bold 24px Arial";
-			const linkMetrics = context.measureText(linkText);
-			const linkX = width - width * 0.1 - linkMetrics.width;
-			context.fillText(linkText, linkX, bottomAreaY + bottomAreaHeight * 0.5);
+			// Render "Woolaroo" text on the left as fallback
+			context.fillText("Woolaroo", width * 0.05, centerY - 20);
+
+			// Render "Google Arts & Culture" text below the logo
+			context.fillText("Google Arts & Culture", width * 0.05, centerY + 20);
 		}
 	}
 

@@ -348,10 +348,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 	async loadTranslations(words: string[]): Promise<void> {
 		let translations: WordTranslation[];
 		try {
-			logger.log(`Starting translation request for words: ${JSON.stringify(words)}`);
-			logger.log(`Current language: ${this.i18n.currentLanguage.code}`);
-			logger.log(`Target endangered language: ${this.endangeredLanguageService.currentLanguage.code}`);
-
+			// Get translations from the translation service
 			let _translations: WordTranslation[] = await this.translationService.translate(
 				words,
 				this.i18n.currentLanguage.code,
@@ -361,44 +358,29 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 
 			logger.log(`Raw translations received: ${JSON.stringify(_translations)}`);
 
-			if (!_translations || _translations.length === 0) {
-				throw new Error("No translations received from service");
-			}
-
+			// Clean the translations
 			translations = await this.cleanTranslationResponse(_translations);
 			logger.log(`Cleaned translations: ${JSON.stringify(translations)}`);
 
 			if (!translations || translations.length === 0) {
+				logger.warn("No translations remained after cleaning");
 				throw new Error("No translations remained after cleaning");
 			}
 
 		} catch (ex) {
-			logger.warn("Error loading translations", ex);
-			// show words as if none had translations but preserve the original English words
+			logger.warn("Error loading translations:", ex);
+			// Set empty translations array instead of fallback translations
 			this.zone.run(() => {
-				this.translations = words.map((w) => ({
-					english: w,
-					translations: [
-						{
-							original: w,
-							translation: "",
-							transliteration: "",
-							soundURL: "",
-							english: w,
-							sentence: "",
-							split_sentence: ["","",""],
-							translated_word: ""
-						},
-					],
-				}));
+				this.translations = [];
+				logger.log("Setting empty translations array");
 			});
 			return;
 		}
 
-		logger.log(`Final translations being set: ${JSON.stringify(translations)}`);
+		// Set the translations and select the first one
 		this.zone.run(() => {
 			this.translations = translations;
-			// Select the first translation by default
+			logger.log(`Setting final translations: ${JSON.stringify(this.translations)}`);
 			if (translations.length > 0 && translations[0].translations.length > 0) {
 				this.selectedWord = translations[0].translations[0];
 				this.defaultSelectedWordIndex = 0;
@@ -513,15 +495,15 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 				(img) => {
 					this._sharedImage = img;
 
-					// For testing: Download the rendered image
-					const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-					const filename = `woolaroo-rendered-${selectedTranslation.original || selectedTranslation.english}-${timestamp}.jpg`;
-					try {
-						downloadFile(img, filename);
-						logger.log(`Rendered image downloaded as ${filename}`);
-					} catch (err) {
-						logger.error("Error downloading rendered image", err);
-					}
+					// // For testing: Download the rendered image
+					// const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+					// const filename = `woolaroo-rendered-${selectedTranslation.original || selectedTranslation.english}-${timestamp}.jpg`;
+					// try {
+					// 	downloadFile(img, filename);
+					// 	logger.log(`Rendered image downloaded as ${filename}`);
+					// } catch (err) {
+					// 	logger.error("Error downloading rendered image", err);
+					// }
 
 					// Original share functionality
 					const shareTitle = this.i18n.getTranslation("shareTitle") || undefined;
@@ -595,5 +577,9 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 		console.log("checkTranslations");
 		console.log(this.translations);
 		return true;
+	}
+
+	navigateToCapture(): void {
+		this.router.navigateByUrl(AppRoutes.CaptureImage, { replaceUrl: true });
 	}
 }
