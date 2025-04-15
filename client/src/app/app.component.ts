@@ -77,7 +77,7 @@ export class AppComponent implements OnInit {
 		// set document language direction
 		window.document.body.setAttribute(
 			"dir",
-			this.i18nService.currentLanguage.direction
+			this.i18nService?.currentLanguage?.direction ?? "ltr"
 		);
 		// lock to portrait mode
 		if (
