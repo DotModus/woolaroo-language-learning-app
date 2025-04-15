@@ -513,15 +513,15 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 				(img) => {
 					this._sharedImage = img;
 
-					// For testing: Download the rendered image
-					const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-					const filename = `woolaroo-rendered-${selectedTranslation.original || selectedTranslation.english}-${timestamp}.jpg`;
-					try {
-						downloadFile(img, filename);
-						logger.log(`Rendered image downloaded as ${filename}`);
-					} catch (err) {
-						logger.error("Error downloading rendered image", err);
-					}
+					// // For testing: Download the rendered image
+					// const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+					// const filename = `woolaroo-rendered-${selectedTranslation.original || selectedTranslation.english}-${timestamp}.jpg`;
+					// try {
+					// 	downloadFile(img, filename);
+					// 	logger.log(`Rendered image downloaded as ${filename}`);
+					// } catch (err) {
+					// 	logger.error("Error downloading rendered image", err);
+					// }
 
 					// Original share functionality
 					const shareTitle = this.i18n.getTranslation("shareTitle") || undefined;
