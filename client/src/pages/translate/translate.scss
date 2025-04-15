@@ -318,3 +318,88 @@ app-toolbar {
 	z-index: 1000;
 	background-color: #4F4539;
 }
+
+.no-translations {
+	flex: 1 1 auto;
+	min-height: 200px;
+	margin-top: 380px;
+	margin-bottom: 12px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+
+	// Adjust positioning for desktop
+	@media only screen and (min-width: 1024px) {
+		margin-top: 400px;
+	}
+
+	// Tablet positioning (portrait)
+	@media only screen and (min-width: 481px) and (max-width: 768px) {
+		margin-top: 340px;
+		min-height: 190px;
+	}
+
+	// Tablet positioning (landscape)
+	@media only screen and (min-width: 769px) and (max-width: 1023px) {
+		margin-top: 370px;
+		min-height: 190px;
+	}
+
+	// Adjust for smaller devices
+	@media only screen and (max-width: 480px) {
+		margin-top: 300px;
+		min-height: 180px;
+	}
+
+	// Even smaller devices
+	@media only screen and (max-width: 360px) {
+		margin-top: 270px;
+	}
+
+	.no-translations-content {
+		width: 100%;
+		max-width: 400px; // Reduced from 540px
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 32px; // Increased from 24px
+		padding: 24px 16px; // Added vertical padding
+		box-sizing: border-box;
+
+		span {
+			color: mat.get-color-from-palette($app-inverted, "500-contrast");
+			font-size: 1.25rem;
+			line-height: 1.5;
+			max-width: 320px; // Added max-width for text
+			padding: 32px 16px; // Added horizontal padding for text
+			width: 70%;
+			font-weight: 300;
+		}
+
+		.upload-button {
+			background-color: #FFB956;
+			border: none;
+			border-radius: 20px;
+			padding: 12px 24px;
+			font-size: 1rem;
+			color: rgba(0, 0, 0, 0.8);
+			cursor: pointer;
+			transition: opacity 0.2s ease, transform 0.2s ease;
+			font-weight: 500;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+			&:hover {
+				opacity: 0.9;
+				transform: translateY(-1px);
+				box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+			}
+
+			&:active {
+				opacity: 0.8;
+				transform: translateY(1px);
+				box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+			}
+		}
+	}
+}

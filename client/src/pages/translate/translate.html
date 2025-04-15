@@ -10,6 +10,8 @@
     </app-toolbar>
 	 <app-image-display [imageUrl]="backgroundImageURL" [altText]="'Captured image'">
 	 </app-image-display>
+
+	 @if (translations && translations.length > 0) {
     <div class="translation-container" [class.loading]="isLoadingTranslations">
         <app-translation-selector
             [translations]="translations"
@@ -34,5 +36,15 @@
            <span [innerHTML]="'About' | translate:'about'"></span>{{currentLanguage}}
         </button>
     </div>
+} @else {
+    <div class="no-translations">
+        <div class="no-translations-content">
+            <span>Sorry, we can't translate anything in this photo</span>
+            <button class="upload-button" (click)="navigateToCapture()">
+                Upload a photo of something else
+            </button>
+        </div>
+    </div>
+}
   </mat-sidenav-content>
 </mat-sidenav-container>
