@@ -39,11 +39,19 @@
 } @else {
     <div class="no-translations">
         <div class="no-translations-content">
-            <span>Sorry, we can't translate anything in this photo</span>
-            <button class="upload-button" (click)="navigateToCapture()">
-                Upload a photo of something else
-            </button>
-        </div>
+            <span>Sorry, we can't translate anything in this photo. Pick a different photo or switch language.</span>
+			</div>
+
+
+    </div>
+
+	  <div class="language-controls">
+        <button class="language-button" (click)="onSwitchLanguageClick()">
+            <span [innerHTML]="'Change language'|translate:'switchLanguage'"></span>
+        </button>
+        <button class="language-button" (click)="onViewLanguageClick()">
+           <span [innerHTML]="'About' | translate:'about'"></span>{{currentLanguage}}
+        </button>
     </div>
 }
   </mat-sidenav-content>

@@ -85,6 +85,11 @@ export class I18nService {
 		const URL_PARAMS = JSON.parse(localStorage.getItem('URL_PARAMS') || '{}');
 
 		const message = { ...URL_PARAMS, lang: language.code };
+
+		if(language.direction === "rtl") {
+			message.rtl = 1;
+		}
+
 		window.axl.sendMessage(AxL.ChildToHost.SET_URL_PARAMS, message);
 	}
 
