@@ -84,7 +84,7 @@ export class I18nService {
 		await this.loadTranslations(language);
 		const URL_PARAMS = JSON.parse(localStorage.getItem('URL_PARAMS') || '{}');
 
-		const message = { ...URL_PARAMS, lang: language.code };
+		const message = { ...URL_PARAMS, lang: language.code, hl: language.code };
 
 		if(language.direction === "rtl") {
 			message.rtl = 1;
