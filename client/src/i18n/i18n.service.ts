@@ -90,9 +90,6 @@ export class I18nService {
 			message.rtl = 1;
 		}
 
-		console.log("message", message);
-
-
 		window.axl.sendMessage(AxL.ChildToHost.SET_URL_PARAMS, message);
 	}
 
