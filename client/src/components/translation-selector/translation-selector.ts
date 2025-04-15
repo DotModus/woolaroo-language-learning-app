@@ -213,13 +213,6 @@ export class TranslationSelectorComponent {
 		const translationToShare = this.displayTranslation.translation;
 		const languageToShare = this.currentLanguage || "indigenous language";
 
-		// Send share message through the AxL service
-		this.axl.sendAxlMessage(AxL.ChildToHost.SHARE, {
-			title: `Learn ${languageToShare} with Woolaroo`,
-			text: `I just learned that "${englishWord}" means "${translationToShare}" in ${languageToShare}!`,
-			url: window.location.href
-		});
-
 		// Also emit the event for parent components
 		this.wordShared.emit({
 			word: this.selectedWord,

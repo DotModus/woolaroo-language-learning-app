@@ -495,16 +495,6 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 				(img) => {
 					this._sharedImage = img;
 
-					// // For testing: Download the rendered image
-					// const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-					// const filename = `woolaroo-rendered-${selectedTranslation.original || selectedTranslation.english}-${timestamp}.jpg`;
-					// try {
-					// 	downloadFile(img, filename);
-					// 	logger.log(`Rendered image downloaded as ${filename}`);
-					// } catch (err) {
-					// 	logger.error("Error downloading rendered image", err);
-					// }
-
 					// Original share functionality
 					const shareTitle = this.i18n.getTranslation("shareTitle") || undefined;
 					const shareText = this.i18n.getTranslation("shareText", {
@@ -512,6 +502,13 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 						translation: selectedTranslation.translation,
 						language: endangeredLanguage.name,
 					}) || undefined;
+
+					// Send share message through the AxL service
+					this.axl.sendAxlMessage(AxL.ChildToHost.SHARE, {
+						title: `Do you know ${endangeredLanguage.name}?`,
+						text: `Do you know ${endangeredLanguage.name}?`,
+						url: window.location.href
+					});
 
 					share({
 						text: shareText,

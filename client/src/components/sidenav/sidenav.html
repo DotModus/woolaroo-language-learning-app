@@ -27,11 +27,11 @@
 <div class="language-switcher">
   <div class="language-label">{{ 'Switch Language' | translate: 'switchLanguage' }}</div>
   <select class="language-select" (change)="onLanguageChange($event.target.value)">
-    <option value="en" [selected]="currentLanguage.code === 'en'">English</option>
-    <option value="hi" [selected]="currentLanguage.code === 'hi'">हिन्दी (Hindi)</option>
-    <option value="es" [selected]="currentLanguage.code === 'es'">Español (Spanish)</option>
-    <option value="fr" [selected]="currentLanguage.code === 'fr'">Français (French)</option>
-    <option value="it" [selected]="currentLanguage.code === 'it'">Italiano (Italian)</option>
-    <option value="ar" [selected]="currentLanguage.code === 'ar'">العربية (Arabic)</option>
+    <option value="en" [selected]="isLanguageSelected('en')">English</option>
+    <option value="hi" [selected]="isLanguageSelected('hi')">हिन्दी (Hindi)</option>
+    <option value="es" [selected]="isLanguageSelected('es')">Español (Spanish)</option>
+    <option value="fr" [selected]="isLanguageSelected('fr')">Français (French)</option>
+    <option value="it" [selected]="isLanguageSelected('it')">Italiano (Italian)</option>
+    <option value="ar" [selected]="isLanguageSelected('ar')">العربية (Arabic)</option>
   </select>
 </div>

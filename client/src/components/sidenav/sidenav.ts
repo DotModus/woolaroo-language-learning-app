@@ -57,4 +57,11 @@ export class SidenavComponent {
 			state: state
 		});
 	}
+
+	isLanguageSelected(languageCode: string): boolean {
+		if (!this.currentLanguage && languageCode === "en") {
+			return true;
+		}
+		return languageCode === this.currentLanguage?.code;
+	}
 }
