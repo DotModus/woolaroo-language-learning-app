@@ -501,16 +501,18 @@
 }
 
 .same-region-section {
-	margin: 40px;
-	background-color: rgba(0, 0, 0, 0.2);
+	margin: 40px 16px;
 	padding: 20px;
 	border-radius: 16px;
+	width: calc(100% - 32px);
+	box-sizing: border-box;
+	flex-shrink: 0;
 
 	.section-heading {
-		color: #EAE1D9;
 		font-size: 1.4rem;
-		font-weight: 500;
 		margin-bottom: 24px;
+		color: #EAE1D9;
+		word-break: break-word;
 	}
 
 	.same-region-list {
@@ -544,7 +546,8 @@
 		.region-language-item {
 			min-height: 140px;
 			padding: 12px;
-			background-color: rgba(0, 0, 0, 0.2);
+			background-color: transparent;
+			border: 1px solid #DEC2A2;
 			border-radius: 8px;
 			cursor: pointer;
 			width: 100%;
