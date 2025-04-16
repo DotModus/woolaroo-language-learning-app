@@ -9,6 +9,7 @@ import {
 	Input,
 	Output,
 	ViewChild,
+	ChangeDetectorRef,
 } from "@angular/core";
 import { WordTranslation } from "../../services/entities/translation";
 import { Point } from "../../util/geometry";
@@ -66,14 +67,11 @@ export class WordScrollListComponent implements AfterViewChecked {
 		this._translations = value;
 		this.translationsChanged = true;
 		if (this._translations) {
-			if (this._defaultSelectedWordIndex < 0) {
-				this.selectedWordIndex = Math.floor(
-					(this._translations.length - 1) / 2
-				); // select center word (or left of center if even number)
-			} else {
-				this.selectedWordIndex = this._defaultSelectedWordIndex;
-			}
+			// Always select the first word when translations change
+			this.selectedWordIndex = 0;
 		}
+		// Force change detection
+		this.changeDetectorRef.detectChanges();
 	}
 
 	private get minScrollPosition(): number {
@@ -145,7 +143,8 @@ export class WordScrollListComponent implements AfterViewChecked {
 
 	constructor(
 		@Inject(WORD_SCROLL_LIST_CONFIG) private config: WordScrollListConfig,
-		private hostElement: ElementRef
+		private hostElement: ElementRef,
+		private changeDetectorRef: ChangeDetectorRef
 	) {}
 
 	private static getTime(): number {
@@ -154,8 +153,13 @@ export class WordScrollListComponent implements AfterViewChecked {
 
 	ngAfterViewChecked() {
 		if (this.translationsChanged) {
-			this.centerWords();
-			this.translationsChanged = false;
+			// Center the first word with smooth animation
+			setTimeout(() => {
+				if (this._translations && this._translations.length > 0 && !this.isDragging && !this.isSnappingToWord) {
+					this.scrollToWord(0);
+				}
+				this.translationsChanged = false;
+			}, 0);
 		}
 	}
 
@@ -281,26 +285,6 @@ export class WordScrollListComponent implements AfterViewChecked {
 		this.updateDrag(ev.clientX, ev.clientY);
 	};
 
-	private centerWords() {
-		if (!this.scrollContent || this.selectedWordIndex < 0) {
-			return;
-		}
-		const scrollContainer = this.hostElement.nativeElement as HTMLElement;
-		const scrollContent = this.scrollContent.nativeElement;
-		const items = scrollContent.getElementsByTagName("li");
-		if (!items || this.selectedWordIndex >= items.length) {
-			return;
-		}
-		const containerBounds = scrollContainer.getBoundingClientRect();
-		const centerX = containerBounds.left + containerBounds.width * 0.5;
-		const currentItem = items[this.selectedWordIndex];
-		const currentItemBounds = currentItem.getBoundingClientRect();
-		const currentItemCenterX =
-			currentItemBounds.left + currentItemBounds.width * 0.5;
-		this.setScrollPosition(centerX - currentItemCenterX);
-	}
-
-	// predict where snap position will be after decelerating
 	private getEndingSnapWordIndex(position: number, velocity: number): number {
 		if (Math.abs(velocity) > this.config.snapMaxSpeed) {
 			// over max speed
