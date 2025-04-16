@@ -137,6 +137,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 	private _downloadData: DialogData = {} as DialogData;
 	public sidenavOpen = false;
 	public isLoadingTranslations = false;
+	private originalWords: string[] = [];
 
 	public get currentLanguage(): string {
 		const fullName = this.endangeredLanguageService.currentLanguage.name;
@@ -172,9 +173,9 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 			this.selectedWord = null;
 			this.defaultSelectedWordIndex = -1;
 
-			if (this.translations) {
+			if (this.originalWords.length > 0) {
 				this.isLoadingTranslations = true;
-				this.loadTranslations(this.translations.map(t => t.english))
+				this.loadTranslations(this.originalWords)
 					.finally(() => {
 						this.isLoadingTranslations = false;
 					});
@@ -257,6 +258,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 			} else if (words) {
 				const debugImage = await this.loadImage(debugImageUrl);
 				await this.setImageData(debugImage, debugImageUrl);
+				this.originalWords = words;
 				await this.loadTranslations(words);
 			} else {
 				throw new WordsNotFoundError("Words not set");
@@ -265,6 +267,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 			throw new WordsNotFoundError("Words not set");
 		} else {
 			await this.setImageData(image, imageURL);
+			this.originalWords = words;
 			await this.loadTranslations(words);
 		}
 	}
