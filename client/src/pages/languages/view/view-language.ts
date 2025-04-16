@@ -34,17 +34,6 @@ export class ViewLanguagePageComponent implements OnInit, OnDestroy {
 		// If we're in a bottom sheet, use the language from the data
 		if (this.isBottomSheet && data?.language) {
 			this.language = data.language;
-		} else {
-			// Otherwise, get the language from the route params
-			this.route.paramMap.subscribe((params: ParamMap) => {
-				const languageCode = params.get("id");
-				this.language = this.endangeredLanguageService.languages.find(
-					(lang) => lang.code === languageCode
-				) || null;
-
-				// Force change detection to update the view
-				this.cdr.detectChanges();
-			});
 		}
 	}
 
@@ -52,6 +41,23 @@ export class ViewLanguagePageComponent implements OnInit, OnDestroy {
 		// If we're in the drawer and don't have a language yet, get it from the current language service
 		if (this.isBottomSheet && !this.language) {
 			this.language = this.endangeredLanguageService.currentLanguage;
+		} else {
+			// Subscribe to route params to handle language changes
+			this.subscriptions.push(
+				this.route.paramMap.subscribe((params: ParamMap) => {
+					const languageCode = params.get("id");
+					if (languageCode) {
+						// Set the current language in the service
+						this.endangeredLanguageService.setLanguage(languageCode);
+						// Get the language from the service
+						this.language = this.endangeredLanguageService.languages.find(
+							(lang) => lang.code === languageCode
+						) || null;
+						// Force change detection to update the view
+						this.cdr.detectChanges();
+					}
+				})
+			);
 		}
 		this._languageImage = this.endangeredLanguageService.imageAssetsURL;
 	}

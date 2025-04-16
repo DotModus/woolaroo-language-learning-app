@@ -161,5 +161,18 @@
 	"termsOfUse": "Conditions d'utilisation de Google",
 	"privacyPolicy": "Politique de confidentialité de Google",
 	"example": "Exemple",
-	"same_region": "Dans la même région"
+	"same_region": "Dans la même région",
+	"showWord": "Afficher le mot",
+	"chooseLanguage": "Choisir une langue",
+	"filterByRegion": "Filtrer par région",
+	"somethingElse": "Télécharger une photo d'autre chose",
+	"sendFeedback": "Ajouter un mot",
+
+	"enterSuggestedWord": "Saisissez le mot suggéré",
+	"enterSuggestedTransliteration": "Saisissez la translittération suggérée",
+	"enterWordInEnglish": "Saisissez le mot en anglais",
+	"enterWordInYourLanguage": "Saisissez le mot dans votre langue",
+	"enterCurrentWord": "Saisissez le mot actuel",
+	"enterCurrentTransliteration": "Saisissez la translittération actuelle",
+	"enterYourFeedbackHere": "Saisissez votre commentaire ici"
 }

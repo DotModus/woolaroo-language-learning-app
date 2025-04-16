@@ -4,7 +4,7 @@ import { I18nService, Language } from './i18n.service';
 
 @Injectable({providedIn: 'root'})
 export class I18nDirectionality implements OnDestroy {
-  public get value(): Direction { return this.i18n.currentLanguage.direction; }
+  public get value(): Direction { return this.i18n?.currentLanguage?.direction ?? 'ltr'; }
   public readonly change = new EventEmitter<Direction>();
 
   constructor(private i18n:I18nService) {

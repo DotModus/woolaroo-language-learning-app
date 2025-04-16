@@ -4,16 +4,16 @@
     <div style="display: flex; flex-direction: column;" *ngIf="!suggested">
 
       <mat-form-field class="text custom-field" appearance="outline" style="--mat-form-field-label-color: white; --mat-form-field-outline-color: white;">
-        <input style="color: white !important;" type="text" required matInput class="white-text-input" name="nativeWord" formControlName="nativeWord" maxlength="100" placeholder="Enter current word" />
+        <input style="color: white !important;" type="text" required matInput class="white-text-input" name="nativeWord" formControlName="nativeWord" maxlength="100" [placeholder]="'Enter current word' | translate:'enterCurrentWord'" />
       </mat-form-field>
 
       <mat-form-field class="text custom-field" appearance="outline" style="--mat-form-field-label-color: white; --mat-form-field-outline-color: white;">
-      <input style="color: white !important;" type="text" required matInput class="white-text-input" name="transliteration" formControlName="transliteration" placeholder="Enter current transliteration" />
+      <input style="color: white !important;" type="text" required matInput class="white-text-input" name="transliteration" formControlName="transliteration" [placeholder]="'Enter current transliteration' | translate:'enterCurrentTransliteration'" />
       </mat-form-field>
 
       <mat-form-field class="text custom-field" appearance="outline" [hideRequiredMarker]="true"
         [hintLabel]="'e.g. مرحبا' | translate:'nativeScriptHint'" style="--mat-form-field-label-color: white; --mat-form-field-outline-color: white;">
-      <input style="color: white !important;" type="text" matInput class="white-text-input" name="suggestedTranslation" formControlName="suggestedTranslation" maxlength="100" placeholder="Enter suggested word" />
+      <input style="color: white !important;" type="text" matInput class="white-text-input" name="suggestedTranslation" formControlName="suggestedTranslation" maxlength="100" [placeholder]="'Enter suggested word' | translate:'enterSuggestedWord'" />
       </mat-form-field>
 
     </div>
@@ -21,21 +21,21 @@
     <div style="display: flex; flex-direction: column;" *ngIf="suggested">
       <mat-form-field class="text custom-field" appearance="outline"
         [hintLabel]="'e.g. مرحبا' | translate:'nativeScriptHint'" style="--mat-form-field-label-color: white; --mat-form-field-outline-color: white;">
-      <input style="color: white !important;" type="text" required matInput class="white-text-input" name="suggestedTranslation" formControlName="suggestedTranslation" maxlength="100" placeholder="Enter suggested word" />
+      <input style="color: white !important;" type="text" required matInput class="white-text-input" name="suggestedTranslation" formControlName="suggestedTranslation" maxlength="100" [placeholder]="'Enter suggested word' | translate:'enterSuggestedWord'" />
       </mat-form-field>
     </div>
 
     <mat-form-field class="text custom-field" appearance="outline" [hideRequiredMarker]="true"
     [hintLabel]="'Word in Latin alphabet (e.g. \'marhaba\')' | translate:'transliterationHint'" style="--mat-form-field-label-color: white; --mat-form-field-outline-color: white;">
-      <input style="color: white !important;" type="text" matInput class="white-text-input" name="suggestedTransliteration" formControlName="suggestedTransliteration" placeholder="Enter suggested transliteration" />
+      <input style="color: white !important;" type="text" matInput class="white-text-input" name="suggestedTransliteration" formControlName="suggestedTransliteration" [placeholder]="'Enter suggested transliteration' | translate:'enterSuggestedTransliteration'" />
       </mat-form-field>
     <mat-form-field class="text custom-field" appearance="outline"
                     [hintLabel]="'e.g. \'hello\'' | translate:'englishWordHint'" style="--mat-form-field-label-color: white; --mat-form-field-outline-color: white;">
-      <input style="color: white !important;" type="text" required matInput class="white-text-input" name="englishWord" formControlName="englishWord" maxlength="100" placeholder="Enter word in English" />
+      <input style="color: white !important;" type="text" required matInput class="white-text-input" name="englishWord" formControlName="englishWord" maxlength="100" [placeholder]="'Enter word in English' | translate:'enterWordInEnglish'" />
     </mat-form-field>
     <mat-form-field *ngIf="primaryLanguageWordAvailable" class="text custom-field" appearance="outline"
                     [hintLabel]="'e.g. \'hello\'' | translate:'wordInPrimaryLanguageHint'" style="--mat-form-field-label-color: white; --mat-form-field-outline-color: white;">
-      <input style="color: white !important;" type="text" required matInput class="white-text-input" name="word" formControlName="word" maxlength="100" placeholder="Enter word in your language" />
+      <input style="color: white !important;" type="text" required matInput class="white-text-input" name="word" formControlName="word" maxlength="100" [placeholder]="'Enter word in your language' | translate:'enterWordInYourLanguage'" />
     </mat-form-field>
     <div class="special-chars" style="color: rgba(255, 255, 255, 0.8);">
       <span *ngIf="operatingSystem === operatingSystemValues.Android || operatingSystem === operatingSystemValues.iOS"
