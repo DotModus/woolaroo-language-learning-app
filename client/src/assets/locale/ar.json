@@ -110,5 +110,17 @@
 	"termsOfUse": "شروط استخدام جوجل",
 	"privacyPolicy": "سياسة خصوصية جوجل",
 	"example": "مثال",
-	"same_region": "في نفس المنطقة"
+	"same_region": "في نفس المنطقة",
+	"showWord": "إظهار الكلمة",
+	"chooseLanguage": "اختر اللغة",
+	"filterByRegion": "تصفية حسب المنطقة",
+	"somethingElse": "تحميل صورة لشيء آخر",
+	"sendFeedback": "أضف كلمة",
+	"enterSuggestedWord": "أدخل الكلمة المقترحة",
+	"enterSuggestedTransliteration": "أدخل الترجمة المقترحة",
+	"enterWordInEnglish": "أدخل الكلمة بالإنجليزية",
+	"enterWordInYourLanguage": "أدخل الكلمة بلغتك",
+	"enterCurrentWord": "أدخل الكلمة الحالية",
+	"enterCurrentTransliteration": "أدخل الترجمة الحالية",
+	"enterYourFeedbackHere": "أدخل ملاحظاتك هنا"
 }

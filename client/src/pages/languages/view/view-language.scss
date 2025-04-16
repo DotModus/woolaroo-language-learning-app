@@ -4,15 +4,14 @@
 @import "../../../style/typography";
 
 :host {
-	display: flex;
-	flex-direction: column;
-	height: 100%;
+	display: block;
 	width: 100%;
-	overflow: hidden;
+	height: 100%;
+	// background-color: #1E1E1E;
 }
 
 ::ng-deep .language {
-	background-color: #4F4539;
+	// background-color: #1E1E1E;
 	color: #EAE1D9;
 	height: 100%;
 	width: 100%;
@@ -165,7 +164,7 @@
 ::ng-deep app-toolbar {
 	position: relative;
 	z-index: 1;
-	background-color: #4F4539;
+	background-color: #1E1E1E;
 	color: #EAE1D9;
 	flex-shrink: 0;
 

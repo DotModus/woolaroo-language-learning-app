@@ -94,7 +94,7 @@ export class I18nService {
 	}
 
 	async loadTranslations(lang: Language) {
-		logger.log(`Loading translations: ${lang.code}`);
+		logger.log(`Loading translations: ${lang?.code}`);
 		try {
 			this._translations = await this.http
 				.get<{ [key: string]: string }>(lang.file)
@@ -103,7 +103,7 @@ export class I18nService {
 			logger.warn("Error loading translation file", err);
 			this._translations = {};
 		}
-		logger.log(`Translations loaded: ${lang.code}`);
+		logger.log(`Translations loaded: ${lang?.code}`);
 		this.currentLanguageChanged.emit(lang);
 	}
 

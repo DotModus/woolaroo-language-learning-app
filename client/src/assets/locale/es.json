@@ -1,7 +1,7 @@
 {
 	"intro1": "Woolaroo brinda una nueva forma de explorar lenguas indígenas.",
 	"intro2": "Por medio del aprendizaje automático, reconoce objetos de tu cámara y los traduce.",
-	"getStarted": "Comencemos",
+	"getStarted": "Vamos a empezar",
 	"next": "Siguiente",
 	"skip": "Omitir",
 	"introFeedback": "Este es un experimento educativo y nuestros socios proporcionaron las traducciones.",
@@ -162,5 +162,17 @@
 	"termsOfUse": "Condiciones de uso de Google",
 	"privacyPolicy": "Política de privacidad de Google",
 	"example": "Ejemplo",
-	"same_region": "En la misma región"
+	"same_region": "En la misma región",
+	"showWord": "Mostrar la palabra",
+	"chooseLanguage": "Elige idioma",
+	"filterByRegion": "Filtrar por región",
+	"somethingElse": "Sube una foto de otro objeto",
+	"sendFeedback": "Añadir la palabra",
+	"enterSuggestedWord": "Introducir la palabra sugerida",
+	"enterSuggestedTransliteration": "Introducir transliteración sugerida",
+	"enterWordInEnglish": "Introducir la palabra en inglés",
+	"enterWordInYourLanguage": "Introducir la palabra en tu lengua",
+	"enterCurrentWord": "Introducir la palabra actual",
+	"enterCurrentTransliteration": "Introducir transliteración actual",
+	"enterYourFeedbackHere": "Deja tus comentarios aquí"
 }

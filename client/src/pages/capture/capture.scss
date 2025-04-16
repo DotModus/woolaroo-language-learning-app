@@ -15,7 +15,7 @@
   display: block;
   width: 100%;
   height: 100%;
-  background-color: #000;
+  background-color: #1F1B16;
 }
 
 // Center error popup within camera frame
@@ -43,8 +43,8 @@ mat-sidenav-content {
   flex-direction: column;
   height: calc(100vh - 56px); // Subtract toolbar height
   width: 100%;
-  margin-top: 56px; // Top margin instead of padding-top
-  background-color: #000;
+  margin-top: 50px; // Top margin instead of padding-top
+  background-color: #1F1B16;
 }
 
 .capture-section {
@@ -224,7 +224,7 @@ app-toolbar {
   left: 0;
   width: 100%;
   z-index: 10;
-  background-color: rgba(0, 0, 0, 0.8) !important;
+  background-color: #1E1E1E !important;
 }
 
 // Force black background on Angular Material components
@@ -236,7 +236,7 @@ app-toolbar {
   }
 
   .mat-toolbar {
-    background-color: rgba(0, 0, 0, 0.8) !important;
+    background-color: #1E1E1E !important;
   }
 }
 
@@ -282,11 +282,11 @@ app-toolbar {
   align-items: center;
   cursor: pointer;
   border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.6); // Darker background for better contrast against transparent container
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); // Add shadow for depth
+  background-color: transparent; // Darker background for better contrast against transparent container
+  box-shadow: none !important; // Add shadow for depth
 
   &:hover {
-    background-color: rgba(0, 0, 0, 0.8); // Darker on hover
+    background-color: transparent; // Darker on hover
   }
 
   app-icon {
@@ -315,7 +315,7 @@ app-toolbar {
     width: 24px;
     height: 24px;
     fill: #DEC2A2 !important;
-    filter: drop-shadow(0 0 2px rgba(222, 194, 162, 0.3)); // Add subtle glow
+    // filter: drop-shadow(0 0 2px rgba(222, 194, 162, 0.3)); // Add subtle glow
   }
 }
 
@@ -323,11 +323,9 @@ app-toolbar {
 .capture-icon {
   width: 65px; // Reduced from 80px
   height: 65px; // Reduced from 80px
-  background-color: rgba(0, 0, 0, 0.7); // Darker background for emphasis
+  background-color:transparent; // Darker background for emphasis
 
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.9); // Almost black on hover
-  }
+
 
   app-icon {
     ::ng-deep svg {
@@ -335,7 +333,7 @@ app-toolbar {
       width: 40px !important; // Reduced from 50px
       height: 40px !important; // Reduced from 50px
       transform: translate(-50%, -50%) scale(1.5); // Reduced scale from 1.7
-      filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.6)); // Enhanced glow for better visibility
+    //   filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.6)); // Enhanced glow for better visibility
     }
   }
 }
