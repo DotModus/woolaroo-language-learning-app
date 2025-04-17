@@ -6,7 +6,9 @@
   @include toolbar-page;
 
   .content {
-    padding: 160px 0 30px 0;
+    padding: 60px;
+    max-width: 1200px;
+    margin: 0 auto;
     width: 100%;
     max-width: 100%;
     display: flex;
@@ -44,115 +46,125 @@
   }
 }
 
-.language-list {
-  list-style: none;
+.page-title {
+  color: #EAE1D9;
+  font-size: 24px;
+  font-weight: 300;
+  text-align: center;
+  margin-bottom: 32px;
   padding: 0 20px;
-  margin: 0;
+  max-width: 600px;
+}
+
+.region-header {
   width: 100%;
-  max-width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
+  max-width: 600px;
+  padding: 0 20px;
+  margin-bottom: 24px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+
+  .region-button {
+    background-color: #4F4539;
+    color: #EAE1D9;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  padding: 0 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 
   @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 32px;
     padding: 0 40px;
   }
 
   @media (min-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px 32px;
     padding: 0 60px;
   }
 }
 
-.language-item {
-  background: transparent;
-  border: 2px solid #DEC2A2;
+.grid-item {
+  background-color: #FFB956;
   border-radius: 12px;
-  padding: 20px;
+  padding: 16px;
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
-  width: calc(100% - 40px);
-  max-width: 280px;
+  text-align: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 600;
+  color: #1F1B16;
+  border: none;
+  box-shadow: none;
 
-  @media (min-width: 768px) {
-    width: calc(50% - 30px);
+  // Region-specific styles
+  &:not(.language-item) {
+    min-height: 50px;
+    width: 250px;
+    margin: 0 auto;
+    padding: 10px;
+    font-size: 16px;
   }
 
-  @media (min-width: 1024px) {
-    width: calc(25% - 30px);
+  &.alt-color {
+    background-color: #DEC2A2;
   }
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
 
-  .example {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
-    width: 100%;
+  &.language-item {
+    min-height: 200px;
+    padding: 8px 20px;
 
-    img {
+    .info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
       width: 100%;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 8px;
-    }
 
-    .translation {
-      font-size: 24px;
-      font-weight: 600;
-      color: #FFFFFF;
-      text-align: center;
-      line-height: 1.2;
-      word-break: break-word;
-      width: 100%;
-    }
+      .name {
+        font-size: 22px;
+        font-weight: 600;
+        color: #1F1B16;
+        text-align: center;
+        margin: 8px 0;
+        word-break: break-word;
+        width: 100%;
+      }
 
-    .original {
-      font-size: 18px;
-      color: #FFFFFF;
-      text-align: center;
-      opacity: 0.8;
-      word-break: break-word;
-      width: 100%;
-    }
-  }
-
-  .info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    margin-top: auto;
-    width: 100%;
-
-    .learn-more {
-      font-size: 16px;
-      color: #FFFFFF;
-      opacity: 0.8;
-      text-align: center;
-      width: 100%;
-    }
-
-    .name {
-      font-size: 22px;
-      font-weight: 600;
-      color: #FFFFFF;
-      text-align: center;
-      margin: 8px 0;
-      word-break: break-word;
-      width: 100%;
-    }
-
-    app-icon {
-      color: #FFFFFF;
-      margin-top: 8px;
+      .description {
+        font-size: 16px;
+        color: #1F1B16;
+        opacity: 0.8;
+        text-align: center;
+        line-height: 1.4;
+        width: 100%;
+      }
     }
   }
 }
@@ -169,4 +181,34 @@
   padding: 0 20px;
   width: 100%;
   box-sizing: border-box;
+}
+
+app-toolbar {
+  --background: var(--ion-color-primary);
+  --color: var(--ion-color-primary-contrast);
+  --padding-start: 0;
+  --padding-end: 0;
+  --min-height: 56px;
+
+  .back {
+    --background: transparent;
+    --color: var(--ion-color-primary-contrast);
+    --padding-start: 8px;
+    --padding-end: 8px;
+    margin: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    app-icon {
+      font-size: 24px;
+    }
+  }
+
+  span {
+    font-size: 20px;
+    font-weight: 500;
+    margin: 0 16px;
+  }
 }

@@ -1,20 +1,40 @@
-<app-page-header>
+<app-toolbar>
+  <button class="back" (click)="onCloseClick($event)" slot="start">
+    <app-icon icon="arrow_back"></app-icon>
+  </button>
   <span [innerHTML]="'The Languages' | translate:'theLanguages'"></span>
-</app-page-header>
+</app-toolbar>
+
 <div class="content">
-  <ul class="language-list">
-    <li *ngFor="let lang of endangeredLanguages" class="language-item" (click)="onLanguageClick(lang.code)">
-      <div class="example">
-        <img [src]="prefixImageUrl(lang.sampleWordImageURL)" [alt]="'Tree' | translate:'tree':{}" />
-        <span class="translation" [innerHTML]="lang.sampleWordTranslation"></span>
-        <span class="original" [innerHTML]="'Tree' | translate:'tree':{}"></span>
-      </div>
-      <div class="info">
-        <span class="learn-more" [innerHTML]="'Learn more about'|translate:'learnMoreAbout'"></span>
-        <span class="name">{{ lang.name }}</span>
-        <app-icon icon="forward"></app-icon>
-      </div>
-    </li>
-  </ul>
-  <div class="instructions" [innerHTML]="'Tap a language to learn more'|translate:'languageListInstructions'"></div>
+  <h1 class="page-title" [innerHTML]="'discoverMoreEndangeredLanguages'|translate:'discoverMoreEndangeredLanguages'"></h1>
+
+  @if (selectedRegion) {
+    <div class="region-header">
+      <button class="region-button" (click)="onRegionBack()">
+        <span [innerHTML]="'Region'|translate:'region'"></span>: {{selectedRegion.name}}
+      </button>
+    </div>
+  }
+
+  <div class="grid-container">
+    @if (!selectedRegion) {
+      @for (region of regions; track region.code) {
+        <button class="grid-item" [class.alt-color]="$even" (click)="onRegionSelect(region)">
+          <span [innerHTML]="region.name | translate:region.code"></span>
+        </button>
+      }
+      <button class="grid-item view-all" (click)="onRegionSelect({code: 'all', name: 'View All', languages: allLanguages})">
+        <span [innerHTML]="'View All' | translate:'viewAll'"></span>
+      </button>
+    } @else {
+      @for (lang of selectedRegion.languages; track lang.code) {
+        <div class="grid-item language-item" [class.alt-color]="$even" (click)="onLanguageClick(lang.code)">
+          <div class="info">
+            <span class="name">{{ lang.name }}</span>
+            <span class="description" [innerHTML]="'Description'|translate:lang.code"></span>
+          </div>
+        </div>
+      }
+    }
+  </div>
 </div>
