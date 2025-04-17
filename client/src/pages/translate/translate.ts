@@ -574,12 +574,17 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 	}
 
 	checkTranslations() {
-		console.log("checkTranslations");
-		console.log(this.translations);
 		return true;
 	}
 
 	navigateToCapture(): void {
 		this.router.navigateByUrl(AppRoutes.CaptureImage, { replaceUrl: true });
+	}
+
+	getSlot(): string {
+		if (this.i18n.currentLanguage.direction === 'rtl') {
+			return 'end';
+		}
+		return 'start';
 	}
 }

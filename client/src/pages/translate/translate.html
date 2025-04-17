@@ -3,11 +3,19 @@
     <app-sidenav (menuClosed)="onSidenavClosed()"></app-sidenav>
   </mat-sidenav>
   <mat-sidenav-content>
+
     <app-toolbar>
-        <button (click)="onOpenMenuClick()" class="open-menu" aria-label="Open Menu" slot="start" style="position: absolute; left: 8px;">
-            <app-icon icon="menu"></app-icon>
-        </button>
+		@if (getSlot() === 'start') {
+			<button slot="start" class="open-menu" (click)="onOpenMenuClick()">
+				<app-icon icon="menu"></app-icon>
+			</button>
+		} @else {
+			<button slot="end" class="open-menu" (click)="onOpenMenuClick()">
+				<app-icon icon="menu"></app-icon>
+			</button>
+		}
     </app-toolbar>
+
 	 <app-image-display [imageUrl]="backgroundImageURL" [altText]="'Captured image'">
 	 </app-image-display>
 

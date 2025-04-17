@@ -26,22 +26,31 @@ mat-toolbar {
   }
 
   ::ng-deep {
-    [slot="start"] {
+    [slot="start"],
+    [slot="end"] {
       @include icon-button;
       position: absolute;
       top: 7px;
-      left: 8px;
       width: 36px;
       height: 36px;
 
       app-icon {
         width: 24px;
         height: 24px;
+        color: #EAE1D9;
       }
 
       .mat-icon {
-        color: map.get(map.get($app-theme, "foreground"), "text");
+        color: #EAE1D9;
       }
+    }
+
+    [slot="start"] {
+      left: 8px;
+    }
+
+    [slot="end"] {
+      right: 8px;
     }
   }
 }

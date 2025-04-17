@@ -17,11 +17,17 @@ mat-sidenav-container {
 // Open menu button
 .open-menu {
 	@include icon-button;
-	color: mat.get-color-from-palette($app-inverted, "500-contrast");
-	width: 25px !important;
-	height: auto;
+	width: 34px;
+	height: 34px;
 	position: absolute;
-	left: 8px;
+	top: 7px;
+	right: 8px;
+
+	app-icon {
+		color: #EAE1D9;
+		width: 22px;
+		height: 22px;
+	}
 }
 
 :host {
