@@ -7,6 +7,7 @@ import { IconComponentModule } from "../../../components/icon/icon.module";
 import { ScrollListModule } from "../../../components/scroll-list/scroll-list.module";
 import { PaginationIndicatorModule } from "../../../components/pagination-indicator/pagination-indicator.module";
 import { PageHeaderModule } from "../../../components/page-header/page-header.module";
+import { AppToolbarModule } from "../../../components/app-toolbar/app-toolbar.module";
 
 @NgModule({
 	declarations: [ListLanguagesPageComponent],
@@ -19,6 +20,7 @@ import { PageHeaderModule } from "../../../components/page-header/page-header.mo
 		IconComponentModule,
 		ScrollListModule,
 		PaginationIndicatorModule,
+		AppToolbarModule,
 	],
 })
 export class ListLanguagesModule {}

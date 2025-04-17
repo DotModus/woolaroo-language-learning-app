@@ -134,4 +134,12 @@ export class ViewLanguagePageComponent implements OnInit, OnDestroy {
 
 		return description ?? '';
 	}
+
+	getLanguageDescription(): string {
+		const i18nLanguage = this.i18nService.currentLanguage.code
+
+		const description = this.language.descriptions[i18nLanguage];
+
+		return description ?? '';
+	}
 }
