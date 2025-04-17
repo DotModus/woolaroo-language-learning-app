@@ -19,16 +19,18 @@ export class ViewLanguagePageComponent implements OnInit, OnDestroy {
 	private _languageImage: string = '';
 	private subscriptions: Subscription[] = [];
 	public isBottomSheet: boolean = false;
+	public i18nService: I18nService;
 
 	constructor(
 		@Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
-		private i18nService: I18nService,
+		i18nService: I18nService,
 		private endangeredLanguageService: EndangeredLanguageService,
 		private router: Router,
 		private route: ActivatedRoute,
 		private cdr: ChangeDetectorRef,
 		@Optional() private bottomSheetRef?: MatBottomSheetRef<ViewLanguagePageComponent>
 	) {
+		this.i18nService = i18nService;
 		this.isBottomSheet = !!bottomSheetRef;
 
 		// If we're in a bottom sheet, use the language from the data

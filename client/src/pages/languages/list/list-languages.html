@@ -1,7 +1,13 @@
 <app-toolbar>
-  <button class="back" (click)="onCloseClick($event)" slot="start">
-    <app-icon icon="arrow_back"></app-icon>
-  </button>
+  @if (i18nService.currentLanguage.direction === 'ltr') {
+    <button class="back" (click)="onCloseClick($event)" slot="start">
+      <app-icon icon="arrow_back"></app-icon>
+    </button>
+  } @else {
+    <button class="back" (click)="onCloseClick($event)" slot="end">
+      <app-icon icon="arrow_back"></app-icon>
+    </button>
+  }
   <span [innerHTML]="'The Languages' | translate:'theLanguages'"></span>
 </app-toolbar>
 
