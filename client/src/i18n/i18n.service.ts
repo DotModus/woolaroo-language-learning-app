@@ -32,6 +32,7 @@ export class I18nService {
 	private _translations: { [key: string]: string } | null;
 
 	private _currentLanguage: Language;
+
 	public get currentLanguage(): Language {
 		return this._currentLanguage;
 	}
