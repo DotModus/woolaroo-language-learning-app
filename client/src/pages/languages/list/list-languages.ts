@@ -18,6 +18,7 @@ export class ListLanguagesPageComponent implements OnInit {
   public selectedRegion: Region | null = null;
   public regions: Region[] = [];
   public allLanguages: EndangeredLanguage[] = [];
+  public i18nService: I18nService;
 
   private _currentLanguageIndex = 0;
   public get currentLanguageIndex() { return this._currentLanguageIndex; }
@@ -31,9 +32,10 @@ export class ListLanguagesPageComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private i18nService: I18nService,
+    i18nService: I18nService,
     private endangeredLanguageService: EndangeredLanguageService
   ) {
+    this.i18nService = i18nService;
     this._currentLanguageIndex = history.state.languageIndex || 0;
   }
 

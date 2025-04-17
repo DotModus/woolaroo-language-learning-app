@@ -26,6 +26,10 @@ import { addOpenedListener } from "../../../util/dialog";
 	styleUrls: ["./about.scss"],
 })
 export class IntroAboutPageComponent implements AfterViewInit {
+	public i18nService: I18nService;
+	public tAndC: boolean = false;
+	public sidenavOpen: boolean = false;
+
 	get iOS(): boolean {
 		return (
 			getOperatingSystem() === OperatingSystem.iOS &&
@@ -33,20 +37,17 @@ export class IntroAboutPageComponent implements AfterViewInit {
 		);
 	}
 
-	tAndC: boolean = false;
-
-	public sidenavOpen = false;
-
 	constructor(
 		private router: Router,
 		private axl: AxlService,
 		@Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
 		@Inject(PROFILE_SERVICE) private profileService: IProfileService,
 		private dialog: MatDialog,
-		private i18n: I18nService,
+		i18nService: I18nService,
 		@Inject(IMAGE_RECOGNITION_SERVICE) private imageRecognitionService: IImageRecognitionService,
 		private sessionService: SessionService
 	) {
+		this.i18nService = i18nService;
 		console.log(navigator.language);
 	}
 
@@ -173,10 +174,10 @@ export class IntroAboutPageComponent implements AfterViewInit {
 			(err) => {
 				loadingPopUp.close();
 				const errorTitle =
-					this.i18n.getTranslation("imageRecognitionErrorTitle") ||
+					this.i18nService.getTranslation("imageRecognitionErrorTitle") ||
 					"Unable to connect";
 				const errorMessage =
-					this.i18n.getTranslation("imageRecognitionErrorMessage") ||
+					this.i18nService.getTranslation("imageRecognitionErrorMessage") ||
 					"Please check network connection";
 				this.dialog.open(ErrorPopUpComponent, {
 					data: { message: errorMessage, title: errorTitle },
