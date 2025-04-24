@@ -248,4 +248,11 @@ export class ChangeLanguagePageComponent implements AfterViewInit {
 		this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: "click share feedback button" });
 		this.router.createUrlTree([], {});
 	}
+
+	getLanguageDirection() {
+		if (!this.i18nService.currentLanguage) {
+			return 'ltr';
+		}
+		return this.i18nService.currentLanguage.direction;
+	}
 }

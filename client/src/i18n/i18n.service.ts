@@ -34,7 +34,7 @@ export class I18nService {
 	private _currentLanguage: Language;
 
 	public get currentLanguage(): Language {
-		return this._currentLanguage;
+		return this._currentLanguage ?? this.config.languages[0];
 	}
 
 	public readonly currentLanguageChanged: EventEmitter<Language> =
@@ -59,6 +59,7 @@ export class I18nService {
 		const params = windowparams.size > 0 ? windowparams : docparams;
 		const paramslang = params.get("locale") || params.get("lang");
 		this._currentLanguage = this.config.languages.find((lang) => {
+
 			if (paramslang) {
 				localStorage.removeItem('profile');
 				return lang.code === paramslang;

@@ -40,7 +40,7 @@ export class AddWordFieldsetComponent {
   public keymanUrl: string;
 
   // only show primary language word if current language is not english
-  public get primaryLanguageWordAvailable(): boolean { return this.i18n.currentLanguage.code != DEFAULT_LOCALE; }
+  public get primaryLanguageWordAvailable(): boolean { return (this.i18n.currentLanguage?.code ?? "en") != DEFAULT_LOCALE; }
 
   @Input() public formGroup: FormGroup | undefined = undefined;
   @Input() public includeRecording: boolean = true;

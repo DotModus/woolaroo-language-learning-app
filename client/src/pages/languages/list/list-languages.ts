@@ -98,4 +98,11 @@ export class ListLanguagesPageComponent implements OnInit {
   getTranslatedText(key: string): string {
     return this.i18nService.getTranslation(key);
   }
+
+  getLanguageDirection() {
+    if (!this.i18nService.currentLanguage) {
+      return 'ltr';
+    }
+    return this.i18nService.currentLanguage.direction;
+  }
 }

@@ -1,5 +1,5 @@
 <app-toolbar>
-  @if (i18nService.currentLanguage.direction === 'ltr') {
+  @if (getLanguageDirection() === 'ltr') {
     <button class="back" (click)="onCloseClick($event)" slot="start">
       <app-icon icon="arrow_back"></app-icon>
     </button>
