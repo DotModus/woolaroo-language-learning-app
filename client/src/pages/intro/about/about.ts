@@ -220,4 +220,11 @@ export class IntroAboutPageComponent implements AfterViewInit {
 	nextPage(profile: Profile | null = null) {
 		this.router.navigateByUrl(AppRoutes.CaptureImage, {replaceUrl: true});
 	}
+
+	getLanguageDirection() {
+		if (!this.i18nService.currentLanguage) {
+			return 'ltr';
+		}
+		return this.i18nService.currentLanguage.direction;
+	}
 }
