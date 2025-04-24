@@ -582,7 +582,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 	}
 
 	getSlot(): string {
-		if (this.i18n.currentLanguage.direction === 'rtl') {
+		if (this.i18n.currentLanguage?.direction === 'rtl') {
 			return 'end';
 		}
 		return 'start';
