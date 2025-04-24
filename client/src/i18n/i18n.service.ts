@@ -59,8 +59,6 @@ export class I18nService {
 		const params = windowparams.size > 0 ? windowparams : docparams;
 		const paramslang = params.get("locale") || params.get("lang");
 		this._currentLanguage = this.config.languages.find((lang) => {
-			console.log(lang);
-			console.log(paramslang);
 
 			if (paramslang) {
 				localStorage.removeItem('profile');
