@@ -4,7 +4,7 @@
   </mat-sidenav>
   <mat-sidenav-content>
 <app-toolbar>
-    @if (i18nService.currentLanguage.direction === 'ltr') {
+    @if (getLanguageDirection() === 'ltr') {
       <button (click)="onOpenMenuClick()" class="open-menu" aria-label="Open Menu" slot="start">
           <app-icon icon="menu"></app-icon>
       </button>
