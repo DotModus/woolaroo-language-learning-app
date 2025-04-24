@@ -49,7 +49,7 @@ export class AddWordPageComponent implements AfterViewInit {
 		this.form = new FormGroup({
 			word: new FormControl(
 				word ? word.translations[0].original : "",
-				this.i18n.currentLanguage.code !== DEFAULT_LOCALE
+				(this.i18n.currentLanguage?.code ?? "en") !== DEFAULT_LOCALE
 					? [Validators.required]
 					: []
 			),
@@ -100,11 +100,11 @@ export class AddWordPageComponent implements AfterViewInit {
 		const feedback: Feedback = this.form.value;
 		if (
 			!feedback.word &&
-			this.i18n.currentLanguage.code == DEFAULT_LOCALE
+			(this.i18n.currentLanguage?.code ?? "en") == DEFAULT_LOCALE
 		) {
 			feedback.word = feedback.englishWord;
 		}
-		feedback.language = this.i18n.currentLanguage.code;
+		feedback.language = this.i18n.currentLanguage?.code ?? "en";
 		feedback.nativeLanguage =
 			this.endangeredLanguageService.currentLanguage.code;
 		this.feedbackService

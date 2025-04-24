@@ -118,7 +118,7 @@ export class AppComponent implements OnInit {
 		this.i18nService.currentLanguageChanged.subscribe(() => {
 			window.document.body.setAttribute(
 				"dir",
-				this.i18nService.currentLanguage.direction
+				this.i18nService.currentLanguage?.direction ?? "ltr"
 			);
 			this.profileService.loadProfile().then((profile) => {
 				profile.language = this.i18nService.currentLanguage.code;
