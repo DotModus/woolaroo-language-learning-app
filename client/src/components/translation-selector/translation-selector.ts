@@ -15,6 +15,7 @@ import { Point } from "../../util/geometry";
 import { getLogger } from "../../util/logging";
 import { AxlService } from "../../services/axl.service";
 import AxL from "../../external/axl";
+import { LanguageChangeService } from "../../services/language-change.service";
 
 enum AudioState {
 	Stopped,
@@ -103,7 +104,8 @@ export class TranslationSelectorComponent {
 	}
 
 	constructor(
-		private axl: AxlService
+		private axl: AxlService,
+		public languageChangeService: LanguageChangeService
 	) {}
 
 	onPlayAudioClick() {

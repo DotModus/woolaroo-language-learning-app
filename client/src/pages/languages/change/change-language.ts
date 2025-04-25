@@ -13,6 +13,7 @@ import { getLogger } from "../../../util/logging";
 import { AxlService } from "../../../services/axl.service";
 import AxL from "../../../external/axl";
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { LanguageChangeService } from '../../../services/language-change.service';
 
 interface PersistHistory {
 	image: Blob;
@@ -88,7 +89,8 @@ export class ChangeLanguagePageComponent implements AfterViewInit {
 		private axl: AxlService,
 		@Inject(PROFILE_SERVICE) private profileService: IProfileService,
 		private endangeredLanguageService: EndangeredLanguageService,
-		private bottomSheetRef: MatBottomSheetRef<ChangeLanguagePageComponent>
+		private bottomSheetRef: MatBottomSheetRef<ChangeLanguagePageComponent>,
+		private languageChangeService: LanguageChangeService
 	) {
 		this._currentUILanguageIndex = this.i18nService.languages.indexOf(
 			this.i18nService.currentLanguage
@@ -141,7 +143,7 @@ export class ChangeLanguagePageComponent implements AfterViewInit {
 		});
 	}
 
-	onEndangeredLanguageChanged(index: number) {
+	async onEndangeredLanguageChanged(index: number) {
 		let _index = index;
 
 		if (index > this.endangeredLanguages.length - 1) {
@@ -153,9 +155,13 @@ export class ChangeLanguagePageComponent implements AfterViewInit {
 			this.endangeredLanguageService.languages[_index]?.code
 		);
 
-		this.saveSelectedLanguages().finally(() => {
+		this.languageChangeService.setLoading(true);
+		try {
+			await this.saveSelectedLanguages();
 			this.bottomSheetRef.dismiss();
-		});
+		} finally {
+			this.languageChangeService.setLoading(false);
+		}
 	}
 
 	onCloseClick() {

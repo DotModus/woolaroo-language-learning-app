@@ -38,7 +38,7 @@ export const environment = {
 			{
 				code: 'hi',
 				name: 'हिन्दी',
-				file: params.assetsBaseUrl + 'locale/hi.json',
+				file: params.assetsBaseUrl + 'assets/locale/hi.json',
 				direction: 'ltr',
 				default: params.language === 'hi'
 			},

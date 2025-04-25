@@ -20,7 +20,7 @@
 	 </app-image-display>
 
 	 @if (translations && translations.length > 0) {
-    <div class="translation-container" [class.loading]="isLoadingTranslations">
+    <div class="translation-container">
         <app-translation-selector
             [translations]="translations"
             [defaultSelectedWordIndex]="defaultSelectedWordIndex"
@@ -31,10 +31,6 @@
             (selectedWordChanged)="onSelectedWordChanged($event)"
             (manualEntrySelected)="onManualEntrySelected()">
         </app-translation-selector>
-        <div class="loading-overlay" *ngIf="isLoadingTranslations">
-            <mat-spinner diameter="40"></mat-spinner>
-            <span [innerHTML]="'Loading translations...' | translate:'loadingTranslations'"></span>
-        </div>
     </div>
     <div class="language-controls">
         <button class="language-button" (click)="onSwitchLanguageClick()">

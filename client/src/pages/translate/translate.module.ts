@@ -3,6 +3,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CommonModule } from '@angular/common';
 import {
 	TranslatePageComponent,
 	TRANSLATE_PAGE_CONFIG,
@@ -21,6 +22,7 @@ import { SidenavModule } from "../../components/sidenav/sidenav.module";
 @NgModule({
 	declarations: [TranslatePageComponent, DownnloadDialog],
 	imports: [
+		CommonModule,
 		MatButtonModule,
 		MatSidenavModule,
 		IconComponentModule,
