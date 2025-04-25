@@ -15,6 +15,7 @@ import { Point } from "../../util/geometry";
 import { getLogger } from "../../util/logging";
 import { AxlService } from "../../services/axl.service";
 import AxL from "../../external/axl";
+import { LanguageChangeService } from "../../services/language-change.service";
 
 enum AudioState {
 	Stopped,
@@ -31,7 +32,30 @@ const logger = getLogger("TranslationSelectorComponent");
 })
 export class TranslationSelectorComponent {
 	@Input()
-	public translations: WordTranslation[] | null = null;
+	set translations(value: WordTranslation[] | null) {
+		this._translations = value;
+		// Reset selected word and translation when translations change
+		this.selectedWord = null;
+		this.selectedTranslation = null;
+		this.selectedWordVisible = false;
+
+		// If we have translations, automatically select the first one
+		if (value && value.length > 0) {
+			this.selectedWord = value[0];
+			this.selectedTranslation = value[0].translations[0]?.translation || null;
+			this.selectedWordVisible = true;
+			this.selectedWordChanged.emit({
+				index: 0,
+				word: value[0],
+				translation: this.selectedTranslation || ''
+			});
+		}
+	}
+	get translations(): WordTranslation[] | null {
+		return this._translations;
+	}
+	private _translations: WordTranslation[] | null = null;
+
 	@Output()
 	public wordShared: EventEmitter<{
 		word: WordTranslation;
@@ -86,15 +110,19 @@ export class TranslationSelectorComponent {
 			return null;
 		}
 
-		if (!this.selectedTranslation) {
-			return this.selectedWord?.translations[0];
+		// Find the current translation in the updated translations array
+		const currentWord = this.translations.find(w => w.english === this.selectedWord?.english);
+		if (!currentWord) {
+			return null;
 		}
 
-		return (
-			this.selectedWord?.translations.find(
-				(t) => t.translation === this.selectedTranslation
-			) || null
-		);
+		if (!this.selectedTranslation) {
+			return currentWord.translations[0] || null;
+		}
+
+		return currentWord.translations.find(
+			(t) => t.translation === this.selectedTranslation
+		) || currentWord.translations[0] || null;
 	}
 
 	private _translationIndex = 0;
@@ -103,7 +131,8 @@ export class TranslationSelectorComponent {
 	}
 
 	constructor(
-		private axl: AxlService
+		private axl: AxlService,
+		public languageChangeService: LanguageChangeService
 	) {}
 
 	onPlayAudioClick() {
@@ -140,7 +169,7 @@ export class TranslationSelectorComponent {
 	}
 
 	onSelectedWordChanged(ev: { index: number; word: WordTranslation | null }) {
-		this.selectedTranslation = null;
+		// Reset audio state
 		if (this.audioState !== AudioState.Stopped) {
 			this.audioState = AudioState.Stopped;
 			const audioPlayer = this.audioPlayer
@@ -151,30 +180,20 @@ export class TranslationSelectorComponent {
 				audioPlayer.currentTime = 0;
 			}
 		}
-		// will be fired immediately after "translations" is set, so need to delay changing
-		// state again by a frame to avoid "expression changed after it was checked" error
-		setTimeout(() => {
-			this.selectedWordVisible = !!ev.word;
-			// don't set selectedWord to null - we don't want to immediately hide translation, but transition out
-			if (ev.word) {
-				this.selectedWord = ev.word;
 
-				this.selectedTranslation = ev.word.translations[0]?.translation;
-				this.selectedWordChanged.emit({
-					...ev,
-					translation: ev.word.translations[0]?.translation,
-				});
-			}
-		}, 1);
+		// Update selected word and translation
+		this.selectedWordVisible = !!ev.word;
+		this.selectedWord = ev.word;
 
-		if (!this.selectedTranslation) {
-			return;
+		if (ev.word) {
+			this.selectedTranslation = ev.word.translations[0]?.translation || null;
+			this.selectedWordChanged.emit({
+				...ev,
+				translation: this.selectedTranslation || '',
+			});
+		} else {
+			this.selectedTranslation = null;
 		}
-
-		this.selectedWordChanged.emit({
-			...ev,
-			translation: this.selectedTranslation,
-		});
 	}
 
 	onTargetPositionChanged(position: Point) {

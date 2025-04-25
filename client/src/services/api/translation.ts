@@ -107,7 +107,9 @@ export class APITranslationService implements ITranslationService {
 		maxTranslations: number = 0
 	): Promise<WordTranslation[]> {
 		const lowercaseWords = englishWords.map((w) => w.toLowerCase());
-		const storedLanguageCode = localStorage.getItem("currentLanguage");
+		const currentLanguage = localStorage.getItem("currentLanguage");
+		const profile = localStorage.getItem("profile");
+		const profileJson = profile ? JSON.parse(profile) : null;
 		const newRequest: TranslateRequest = {
 			words: lowercaseWords,
 			primaryLanguage,
@@ -124,7 +126,7 @@ export class APITranslationService implements ITranslationService {
 		const _payload = {
 			english_words: lowercaseWords,
 			primary_language: primaryLanguage,
-			target_language: targetLanguage || storedLanguageCode,
+			target_language: targetLanguage || currentLanguage || profileJson?.endangeredLanguage || "san",
 		};
 
 		const response = await this.http
@@ -190,7 +192,7 @@ export class APITranslationService implements ITranslationService {
 
 		const firstPart = sentence.substring(0, index).trim();
 		const thirdPart = sentence.substring(index + word.length).trim();
-	
+
 
 
 		return [firstPart,word,thirdPart]

@@ -38,6 +38,7 @@ import { share } from "../../util/share";
 import AxL from "../../external/axl";
 import { AxlService } from "../../services/axl.service";
 import { BottomSheetService } from '../../services/bottom-sheet.service';
+import { LanguageChangeService } from '../../services/language-change.service';
 
 const logger = getLogger("TranslatePageComponent");
 
@@ -136,7 +137,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 	private _persistedHistory: PersistHistory = {} as PersistHistory;
 	private _downloadData: DialogData = {} as DialogData;
 	public sidenavOpen = false;
-	public isLoadingTranslations = false;
+	public languageChangeService: LanguageChangeService;
 	private originalWords: string[] = [];
 
 	public get currentLanguage(): string {
@@ -165,8 +166,11 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 		private translationService: ITranslationService,
 		@Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
 		private imageRenderingService: ImageRenderingService,
-		private bottomSheetService: BottomSheetService
+		private bottomSheetService: BottomSheetService,
+		languageChangeService: LanguageChangeService
 	) {
+		this.languageChangeService = languageChangeService;
+
 		// Subscribe to language changes
 		this.bottomSheetService.languageChanged$.subscribe(() => {
 			// Clear current selection immediately
@@ -174,11 +178,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 			this.defaultSelectedWordIndex = -1;
 
 			if (this.originalWords.length > 0) {
-				this.isLoadingTranslations = true;
-				this.loadTranslations(this.originalWords)
-					.finally(() => {
-						this.isLoadingTranslations = false;
-					});
+				this.loadTranslations(this.originalWords);
 			}
 		});
 	}
@@ -351,6 +351,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 	async loadTranslations(words: string[]): Promise<void> {
 		let translations: WordTranslation[];
 		try {
+			this.languageChangeService.setLoading(true);
 			// Get translations from the translation service
 			let _translations: WordTranslation[] = await this.translationService.translate(
 				words,
@@ -378,6 +379,8 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 				logger.log("Setting empty translations array");
 			});
 			return;
+		} finally {
+			this.languageChangeService.setLoading(false);
 		}
 
 		// Set the translations and select the first one

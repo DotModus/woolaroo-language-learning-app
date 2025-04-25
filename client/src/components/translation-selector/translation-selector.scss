@@ -557,28 +557,28 @@ app-word-scroll-list {
 
     /* Context toggle section - now inside info-details */
     .context-toggle-section {
-      width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
+      padding: 16px 0;
 
       .context-toggle {
         display: flex;
         align-items: center;
         gap: 8px;
-        color: rgba(131, 85, 0, 1);
-        text-decoration: none;
-        font-size: 12px;
+        color: #835500;
         cursor: pointer;
-        text-shadow: none;
+        text-decoration: none;
+        font-size: 14px;
 
-        svg {
-          width: 20px;
-          height: 20px;
+        mat-spinner {
+          ::ng-deep circle {
+            stroke: #835500;
+          }
         }
 
         &:hover {
-          text-decoration: underline;
+          opacity: 0.8;
         }
       }
     }
@@ -637,4 +637,24 @@ app-word-scroll-list {
       text-shadow: none;
     }
   }
+}
+
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    z-index: 1;
+
+    span {
+        color: #666;
+        font-size: 14px;
+    }
 }
