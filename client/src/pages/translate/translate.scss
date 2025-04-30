@@ -314,7 +314,7 @@ app-toolbar {
 .no-translations {
 	flex: 1 1 auto;
 	min-height: 200px;
-	margin-top: 380px;
+	margin-top: 120px;  // Reduced from 380px
 	margin-bottom: 12px;
 	display: flex;
 	align-items: center;
@@ -323,30 +323,30 @@ app-toolbar {
 
 	// Adjust positioning for desktop
 	@media only screen and (min-width: 1024px) {
-		margin-top: 400px;
+		margin-top: 140px;  // Reduced from 400px
 	}
 
 	// Tablet positioning (portrait)
 	@media only screen and (min-width: 481px) and (max-width: 768px) {
-		margin-top: 340px;
+		margin-top: 100px;  // Reduced from 340px
 		min-height: 190px;
 	}
 
 	// Tablet positioning (landscape)
 	@media only screen and (min-width: 769px) and (max-width: 1023px) {
-		margin-top: 370px;
+		margin-top: 120px;  // Reduced from 370px
 		min-height: 190px;
 	}
 
 	// Adjust for smaller devices
 	@media only screen and (max-width: 480px) {
-		margin-top: 300px;
+		margin-top: 80px;  // Reduced from 300px
 		min-height: 180px;
 	}
 
 	// Even smaller devices
 	@media only screen and (max-width: 360px) {
-		margin-top: 270px;
+		margin-top: 70px;  // Reduced from 270px
 	}
 
 	.no-translations-content {

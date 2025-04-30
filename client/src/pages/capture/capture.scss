@@ -115,8 +115,14 @@ mat-sidenav-content {
     max-height: min(440px, 60vh);
   }
 
+  // Tablet view
+  @media (min-width: 768px) and (max-width: 1024px) {
+    max-width: 400px;
+    max-height: 400px;
+  }
+
   // Desktop view
-  @media only screen and (min-width: 481px) {
+  @media only screen and (min-width: 1025px) {
     max-width: 290px;
     max-height: 290px;
   }
@@ -138,17 +144,26 @@ mat-sidenav-content {
     max-width: min(330px, 95vw);
     max-height: min(440px, 60vh);
     width: 95vw;
-    height: calc(95vw * 4/3); // 4:3 aspect ratio (330:440 simplified)
-    aspect-ratio: 3/4; // Match the 330:440 ratio
+    height: calc(95vw * 4/3);
+    aspect-ratio: 3/4;
+  }
+
+  // Tablet dimensions
+  @media (min-width: 768px) and (max-width: 1024px) {
+    max-width: 400px;
+    max-height: 400px;
+    width: 400px;
+    height: 400px;
+    aspect-ratio: 1/1;
   }
 
   // Larger screens: 290px x 290px
-  @media only screen and (min-width: 481px) {
+  @media only screen and (min-width: 1025px) {
     max-width: 290px;
     max-height: 290px;
     width: 290px;
     height: 290px;
-    aspect-ratio: 1/1; // Square aspect ratio
+    aspect-ratio: 1/1;
   }
 }
 
@@ -174,7 +189,7 @@ app-camera-preview {
 
 .instruction-text {
   text-align: center;
-  font-size: clamp(1.25rem, 3.5vw, 1.75rem); // Increased from 1.125rem-1.5rem to 1.25rem-1.75rem
+  font-size: clamp(1.25rem, 3.5vw, 1.75rem);
   font-weight: 300;
   line-height: 1.5;
   color: #EAE1D9;
@@ -182,6 +197,12 @@ app-camera-preview {
   width: 90%;
   max-width: 400px;
   padding: 0 10px;
+
+  @media (min-width: 768px) and (max-width: 1024px) {
+    font-size: 1.5rem;
+    max-width: 500px;
+    margin: 0 auto;
+  }
 }
 
 .camera-frame {
@@ -256,8 +277,14 @@ app-toolbar {
     width: 95vw;
   }
 
+  // Tablet dimensions
+  @media (min-width: 768px) and (max-width: 1024px) {
+    max-width: 400px;
+    width: 400px;
+  }
+
   // Desktop dimensions: match camera preview width (290px)
-  @media only screen and (min-width: 481px) {
+  @media only screen and (min-width: 1025px) {
     max-width: 290px;
     width: 290px;
   }
@@ -317,27 +344,48 @@ app-toolbar {
 
 // Load photo icon specific styles
 .load-photo-icon {
-  width: 52px; // Reduced from 55px
-  height: 52px; // Reduced from 55px
+  width: 52px;
+  height: 52px;
 
   app-icon ::ng-deep svg {
-    width: 26px; // Reduced from 28px
-    height: 26px; // Reduced from 28px
+    width: 26px;
+    height: 26px;
     fill: #DEC2A2 !important;
+  }
+
+  @media (min-width: 768px) and (max-width: 1024px) {
+    width: 85px;
+    height: 85px;
+
+    app-icon ::ng-deep svg {
+      width: 42px;
+      height: 42px;
+    }
   }
 }
 
 // Capture icon specific styles
 .capture-icon {
-  width: 72px; // Reduced from 75px
-  height: 72px; // Reduced from 75px
+  width: 72px;
+  height: 72px;
   background-color: transparent;
 
   app-icon {
     ::ng-deep svg {
       fill: mat.get-color-from-palette($app-primary, 500) !important;
-      width: 42px !important; // Reduced from 45px
-      height: 42px !important; // Reduced from 45px
+      width: 42px !important;
+      height: 42px !important;
+      transform: translate(-50%, -50%) scale(1.5);
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1024px) {
+    width: 120px;
+    height: 120px;
+
+    app-icon ::ng-deep svg {
+      width: 70px !important;
+      height: 70px !important;
       transform: translate(-50%, -50%) scale(1.5);
     }
   }
