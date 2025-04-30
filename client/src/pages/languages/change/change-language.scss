@@ -57,35 +57,28 @@
 		overflow-x: hidden;
 
 		.header-section {
-			position: sticky;
-			top: 0;
 			background-color: #4F4539;
-			z-index: 2;
 			width: 100%;
-			padding: 24px;
+			padding: 12px;
 			box-sizing: border-box;
 
 			.main-heading {
-				font-size: 2rem;
-				margin-bottom: 12px;
+				font-size: 1.25rem;
+				margin-bottom: 6px;
 				color: #EAE1D9;
 				font-weight: 500;
 				width: 100%;
-				position: static;
-				padding: 0;
 				word-break: break-word;
 				text-align: start;
 				unicode-bidi: plaintext;
 			}
 
 			.sub-heading {
-				font-size: 1.25rem;
+				font-size: 0.875rem;
 				color: #EAE1D9;
 				font-weight: normal;
 				width: 100%;
-				position: static;
-				padding: 0;
-				margin-bottom: 24px;
+				margin-bottom: 12px;
 				word-break: break-word;
 				text-align: start;
 				unicode-bidi: plaintext;
@@ -94,7 +87,7 @@
 			.region-pills {
 				position: static;
 				padding: 0;
-				margin-bottom: 32px;
+				// margin-bottom: 32px;
 				width: 100%;
 				box-sizing: border-box;
 				overflow-x: hidden;
@@ -110,14 +103,11 @@
 			flex-wrap: wrap;
 			gap: 12px;
 			justify-content: flex-start;
-			margin-bottom: 32px;
+			margin-bottom: 12px;
 			width: 100%;
-			padding: 0;
-			position: sticky;
-			top: 100px;
+			padding: 0 12px;
 			background-color: #4F4539;
 			padding-bottom: 16px;
-			z-index: 1;
 			box-sizing: border-box;
 			overflow-x: hidden;
 
@@ -151,7 +141,7 @@
 			padding: 0 24px;
 			margin-bottom: 48px;
 			box-sizing: border-box;
-			overflow-x: hidden;
+			// overflow-x: hidden;
 
 			.language-grid {
 				list-style: none;
@@ -346,5 +336,22 @@
 		height: 75vh !important;
 		max-height: 75vh !important;
 		padding: 0 !important;
+	}
+}
+
+// Desktop styles
+@media only screen and (min-width: 768px) {
+	.header-section {
+		padding: 16px;
+
+		.main-heading {
+			font-size: 1.5rem;
+			margin-bottom: 8px;
+		}
+
+		.sub-heading {
+			font-size: 1rem;
+			margin-bottom: 16px;
+		}
 	}
 }

@@ -11,7 +11,6 @@
 }
 
 ::ng-deep .language {
-	// background-color: #1E1E1E;
 	color: #EAE1D9;
 	height: 100%;
 	width: 100%;
@@ -21,32 +20,45 @@
 	overflow-x: hidden;
 	padding-bottom: 24px;
 
-	.language-header {
-		padding: 16px;
-		margin: 0;
-		width: 100%;
-		box-sizing: border-box;
-		flex-shrink: 0;
+	&.full-page {
+		padding-top: 64px; // Standard toolbar height
+	}
 
-		.language-title {
-			font-size: 1.75rem;
-			margin-bottom: 8px;
-			color: #EAE1D9;
+	.language-header {
+		padding: 12px;
+		color: #EAE1D9;
+		position: relative;
+		z-index: 1;
+
+		// Only apply background color in bottom sheet
+		.language.bottom-sheet & {
+			background-color: #4F4539;
+		}
+
+		.language-name {
+			font-size: 1.25rem;
+			font-weight: 500;
+			margin-bottom: 6px;
 			word-break: break-word;
+			text-align: start;
+			unicode-bidi: plaintext;
 		}
 
 		.region-name {
 			font-size: 0.875rem;
 			margin-bottom: 12px;
-			color: #EAE1D9;
 			word-break: break-word;
+			text-align: start;
+			unicode-bidi: plaintext;
 		}
 
 		.language-description {
 			font-size: 0.875rem;
-			margin-bottom: 16px;
-			color: #EAE1D9;
+			line-height: 1.4;
+			margin-bottom: 12px;
 			word-break: break-word;
+			text-align: start;
+			unicode-bidi: plaintext;
 		}
 
 		.example-heading {
@@ -94,6 +106,28 @@
 				.original, .translation {
 					word-break: break-word;
 				}
+			}
+		}
+	}
+
+	// Desktop styles
+	@media only screen and (min-width: 768px) {
+		.language-header {
+			padding: 16px;
+
+			.language-name {
+				font-size: 1.5rem;
+				margin-bottom: 8px;
+			}
+
+			.region-name {
+				font-size: 1rem;
+				margin-bottom: 16px;
+			}
+
+			.language-description {
+				font-size: 1rem;
+				margin-bottom: 16px;
 			}
 		}
 	}
@@ -162,9 +196,12 @@
 }
 
 ::ng-deep app-toolbar {
-	position: relative;
-	z-index: 1;
-	background-color: #1E1E1E;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 2;
+	background-color: #4F4539;
 	color: #EAE1D9;
 	flex-shrink: 0;
 
@@ -382,15 +419,16 @@
 
 .language {
 	.language-header {
-		margin: 40px 0;
+		margin: 0 0 40px 0;
 		padding: 24px;
 
 		.language-title {
 			font-family: $main-font;
-			font-size: 2.5rem;
+			font-size: 1.5rem;
 			margin: 0 0 12px 0;
 			color: #EAE1D9;
 			line-height: 1.2;
+			font-weight: 400;
 		}
 
 		.region-name {
@@ -584,12 +622,4 @@
 	font-weight: 500;
 	margin: 0;
 	color: white;
-}
-
-app-toolbar {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	z-index: 100;
 }

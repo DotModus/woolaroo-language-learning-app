@@ -342,20 +342,20 @@ app-word-scroll-list {
 
 .info-section {
   width: 420px;
-  min-height: 220px; /* Reduced min-height since we removed the spacer */
+//   min-height: 220px;
   background-color: mat.get-color-from-palette($app-primary, 500);
   border-radius: 16px;
   margin: 20px auto 0;
-  overflow: visible; /* Changed from hidden to visible to show tooltips outside */
+  overflow: visible;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  position: relative; /* Ensure position context for absolute children */
+  position: relative;
 
   @media only screen and (max-width: 480px) {
     width: calc(100% - 32px);
     margin: 20px 16px 0;
-    min-height: 220px; /* Reduced min-height since we removed the spacer */
+    // min-height: 220px;
   }
 
   /* Hide audio element */
@@ -369,19 +369,19 @@ app-word-scroll-list {
   /* Heading section */
   .info-heading {
     width: 100%;
-    min-height: 48px; /* Changed from fixed height to min-height */
+    min-height: 48px;
     padding: 12px 16px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     box-sizing: border-box;
-    flex-shrink: 0; /* Prevent from shrinking */
+    flex-shrink: 0;
 
     h2 {
       margin: 0;
       font-size: 16px;
-      font-weight: 500;
+      font-weight: 400;
       color: rgba(69, 43, 0, 1);
       text-shadow: none;
       width: 100%;
@@ -498,19 +498,19 @@ app-word-scroll-list {
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 8px 0; /* Add padding for better spacing */
+      padding: 8px 0;
 
       .selected-word {
-        font-size: 32px;
-        color: rgba(69, 43, 0, 1);
+        font-size: 28px;
+        color: #452B00;
         text-align: center;
         font-weight: 500;
         text-shadow: none;
-        word-break: break-word; /* Allow breaking long words */
-        hyphens: auto; /* Enable hyphenation */
+        word-break: break-word;
+        hyphens: auto;
 
         &.sentence {
-          font-size: 24px;
+          font-size: 28px;
           display: flex;
           gap: 4px;
           flex-wrap: wrap;
@@ -546,7 +546,7 @@ app-word-scroll-list {
   .info-details {
     position: relative;
     width: 100%;
-    padding: 16px;
+    padding: 0 16px;
     color: rgba(69, 43, 0, 1);
     font-size: 14px;
     line-height: 1.5;
