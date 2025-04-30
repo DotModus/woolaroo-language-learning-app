@@ -57,7 +57,7 @@ ul {
         &:not(.selected) .word {
             background-color: transparent;
             color: mat.get-color-from-palette($app-primary, 500);
-            border: 1px solid mat.get-color-from-palette($app-primary, 500);
+            border: 2px solid mat.get-color-from-palette($app-primary, 500);
             border-radius: 8px;
             padding: 6px 12px;
             height: 44px;

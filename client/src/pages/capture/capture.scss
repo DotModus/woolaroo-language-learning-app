@@ -81,13 +81,14 @@ mat-sidenav-content {
 .bottom-section {
   flex: 1;
   height: 20%;
-  min-height: 120px; // Reduced to accommodate the 100px height container plus padding
+  min-height: 120px;
   display: flex;
-  justify-content: center; // Center horizontally
-  align-items: center; // Center vertically
+  justify-content: center;
+  align-items: center;
   z-index: 2;
   background-color: transparent;
   padding: 10px 0;
+  width: 100%;
 
   @media only screen and (max-width: 480px) {
     min-height: 120px;
@@ -173,7 +174,7 @@ app-camera-preview {
 
 .instruction-text {
   text-align: center;
-  font-size: clamp(1.125rem, 3vw, 1.5rem); // Responsive font size between 18px and 24px
+  font-size: clamp(1.25rem, 3.5vw, 1.75rem); // Increased from 1.125rem-1.5rem to 1.25rem-1.75rem
   font-weight: 300;
   line-height: 1.5;
   color: #EAE1D9;
@@ -265,11 +266,19 @@ app-toolbar {
 // Container for the icons inside the red div
 .icon-container {
   display: flex;
-  justify-content: flex-start; // Left-justify the icons
+  justify-content: center;
   align-items: center;
-  gap: 30px; // Increased space between the icons
-  width: 90%; // Set a width to give some padding from the edges
-  padding-left: 20px; // Increased padding on the left
+  width: 100%;
+  position: relative;
+
+  .load-photo-icon {
+    position: absolute;
+    left: 0;
+  }
+
+  .capture-icon {
+    position: relative;
+  }
 }
 
 // Icon button base styles
@@ -308,32 +317,28 @@ app-toolbar {
 
 // Load photo icon specific styles
 .load-photo-icon {
-  width: 50px;
-  height: 50px;
+  width: 52px; // Reduced from 55px
+  height: 52px; // Reduced from 55px
 
   app-icon ::ng-deep svg {
-    width: 24px;
-    height: 24px;
+    width: 26px; // Reduced from 28px
+    height: 26px; // Reduced from 28px
     fill: #DEC2A2 !important;
-    // filter: drop-shadow(0 0 2px rgba(222, 194, 162, 0.3)); // Add subtle glow
   }
 }
 
 // Capture icon specific styles
 .capture-icon {
-  width: 65px; // Reduced from 80px
-  height: 65px; // Reduced from 80px
-  background-color:transparent; // Darker background for emphasis
-
-
+  width: 72px; // Reduced from 75px
+  height: 72px; // Reduced from 75px
+  background-color: transparent;
 
   app-icon {
     ::ng-deep svg {
       fill: mat.get-color-from-palette($app-primary, 500) !important;
-      width: 40px !important; // Reduced from 50px
-      height: 40px !important; // Reduced from 50px
-      transform: translate(-50%, -50%) scale(1.5); // Reduced scale from 1.7
-    //   filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.6)); // Enhanced glow for better visibility
+      width: 42px !important; // Reduced from 45px
+      height: 42px !important; // Reduced from 45px
+      transform: translate(-50%, -50%) scale(1.5);
     }
   }
 }

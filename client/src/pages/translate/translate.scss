@@ -62,63 +62,49 @@ mat-sidenav-container {
 }
 
 app-image-display {
-	position: absolute;
-	top: 75px;
-	left: 50%;
-	transform: translateX(-50%);
+	position: relative;
+	z-index: 1;
+	display: block;
+	margin: 60px auto 16px;  // Added top margin to account for header
+	width: 100%;
+	max-width: 540px;
+}
+
+.translation-container {
+	position: relative;
 	z-index: 0;
 	width: 100%;
 	max-width: 540px;
-	margin: 0 auto;
-
-	// Desktop position
-	@media only screen and (min-width: 1024px) {
-		top: 96px;
-	}
-
-	// Tablet position
-	@media only screen and (min-width: 481px) and (max-width: 1023px) {
-		top: 84px;
-	}
-
-	// Small mobile adjustment
-	@media only screen and (max-width: 480px) {
-		top: 70px;
-	}
+	margin: 16px auto;
+	padding: 0 16px;
+	box-sizing: border-box;
 }
 
 app-translation-selector {
 	flex: 1 1 auto;
 	min-height: 200px;
-	margin-top: 380px;
+	margin-top: 0;
 	margin-bottom: 12px;
+}
 
-	// Adjust positioning for desktop
-	@media only screen and (min-width: 1024px) {
-		margin-top: 400px;
+// Adjust spacing for smaller viewports
+@media only screen and (max-height: 700px) {
+	app-image-display {
+		margin: 48px auto 12px;  // Reduced top margin for smaller screens
 	}
 
-	// Tablet positioning (portrait)
-	@media only screen and (min-width: 481px) and (max-width: 768px) {
-		margin-top: 340px;
-		min-height: 190px;
+	.translation-container {
+		margin: 12px auto;
+	}
+}
+
+@media only screen and (max-height: 600px) {
+	app-image-display {
+		margin: 40px auto 8px;  // Further reduced top margin for very small screens
 	}
 
-	// Tablet positioning (landscape)
-	@media only screen and (min-width: 769px) and (max-width: 1023px) {
-		margin-top: 370px;
-		min-height: 190px;
-	}
-
-	// Adjust for smaller devices
-	@media only screen and (max-width: 480px) {
-		margin-top: 300px;
-		min-height: 180px;
-	}
-
-	// Even smaller devices
-	@media only screen and (max-width: 360px) {
-		margin-top: 270px;
+	.translation-container {
+		margin: 8px auto;
 	}
 }
 

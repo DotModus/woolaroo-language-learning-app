@@ -1,4 +1,4 @@
-<div class="language" *ngIf="language">
+<div class="language" [class.bottom-sheet]="isBottomSheet" [class.full-page]="!isBottomSheet">
 	<app-toolbar *ngIf="!isBottomSheet">
 		@if (i18nService.currentLanguage.direction === 'ltr') {
 			<button class="back" (click)="onBackClick($event)" slot="start">

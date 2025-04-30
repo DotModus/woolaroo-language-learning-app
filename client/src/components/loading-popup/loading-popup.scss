@@ -10,7 +10,7 @@
 .loading-popup-container {
   width: 100vw;
   height: 100vh;
-  background-color: #4F4539;
+  background-color: #1F1B16;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -59,7 +59,7 @@
 
   h2 {
     font-size: 20px;
-    font-weight: 600;
+    font-weight: 400;
     margin-bottom: 24px;
     color: #EAE1D9;
   }
@@ -74,7 +74,6 @@
   .region-info {
     font-size: 16px;
     line-height: 1.5;
-    font-style: italic;
     color: rgba(234, 225, 217, 0.8);
   }
 }
