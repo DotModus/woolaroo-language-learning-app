@@ -3,10 +3,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { IAnalyticsService, ANALYTICS_SERVICE } from '../../services/analytics';
 import { IImageRecognitionService, IMAGE_RECOGNITION_SERVICE } from '../../services/image-recognition';
-import { LoadingPopUpComponent } from '../../components/loading-popup/loading-popup';
+import { ErrorPopUpComponent } from '../../components/error-popup/error-popup';
 import { AppRoutes } from '../../app/routes';
 import { SessionService } from '../../services/session';
-import { addOpenedListener } from '../../util/dialog';
 import { ImageLoaderPageBase } from '../../pages/capture/capture';
 import { cameraStreamIsAvailable } from '../../util/camera';
 import { IProfileService, PROFILE_SERVICE } from '../../services/profile';
@@ -20,10 +19,11 @@ import { I18nService } from '../../i18n/i18n.service';
 export class PhotoSourcePageComponent extends ImageLoaderPageBase implements AfterViewInit {
   private _profileService: IProfileService;
   public get cameraIsAvailable() { return cameraStreamIsAvailable(); }
+  public sidenavOpen = false;
 
   constructor(
     route: ActivatedRoute,
-	router: Router,
+    router: Router,
     i18n: I18nService,
     dialog: MatDialog,
     sessionService: SessionService,
@@ -38,32 +38,38 @@ export class PhotoSourcePageComponent extends ImageLoaderPageBase implements Aft
     this.analyticsService.logPageView(this.router.url, 'Photo Source');
   }
 
+  onSidenavClosed() {
+    this.sidenavOpen = false;
+  }
+
+  onOpenMenuClick() {
+    this.sidenavOpen = true;
+  }
+
   onCaptureClick() {
+    // Check camera availability first
+    if (!this.cameraIsAvailable) {
+      const errorMessage = this.i18n.getTranslation("startCameraError") ||
+        "Camera access denied. To proceed, please enable camera permissions in your browser settings.";
+      const errorDialog = this.dialog.open(ErrorPopUpComponent, {
+        data: { message: errorMessage },
+        panelClass: "capture-camera-error",
+      });
+      return;
+    }
+
     this._profileService.loadProfile().then(
       profile => {
         if (!profile.language || !profile.endangeredLanguage) {
           // no language chosen - let user change language
-			this.router.navigateByUrl(AppRoutes.ChangeLanguage, {replaceUrl: true});
+          this.router.navigateByUrl(AppRoutes.ChangeLanguage, {replaceUrl: true});
         } else {
-          // language chosen - show loading popup then navigate to capture image
-          const loadingPopUp = this.dialog.open(LoadingPopUpComponent,
-            {
-              closeOnNavigation: false,
-              disableClose: true,
-              panelClass: 'loading-popup',
-              data: { showDetailedInfo: false } // Not showing detailed info - just navigation
-            });
-          this.sessionService.currentSession.currentModal = loadingPopUp;
-          loadingPopUp.beforeClosed().subscribe({
-            complete: () => this.sessionService.currentSession.currentModal = null
-          });
-			addOpenedListener(
-				loadingPopUp,
-			() => this.router.navigateByUrl(AppRoutes.CaptureImage, {replaceUrl: true}));
+          // language chosen - navigate directly to capture image
+          this.router.navigateByUrl(AppRoutes.CaptureImage, {replaceUrl: true});
         }
       },
       () => {
-		  this.router.navigateByUrl(AppRoutes.ChangeLanguage, {replaceUrl: true});
+        this.router.navigateByUrl(AppRoutes.ChangeLanguage, {replaceUrl: true});
       }
     );
   }
