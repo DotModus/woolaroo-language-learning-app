@@ -151,13 +151,35 @@ export class ChangeLanguagePageComponent implements AfterViewInit {
 		}
 
 		this._currentEndangeredLanguageIndex = _index;
-		this.endangeredLanguageService.setLanguage(
-			this.endangeredLanguageService.languages[_index]?.code
-		);
+		const newEndangeredLanguage = this.endangeredLanguageService.languages[_index];
+
+		if (!newEndangeredLanguage) {
+			return;
+		}
 
 		this.languageChangeService.setLoading(true);
 		try {
+			// First save the selected languages
 			await this.saveSelectedLanguages();
+
+			// Then ensure translations are loaded for the UI language
+			const uiLanguage = this.i18nService.languages[this.currentUILanguageIndex];
+			if (uiLanguage) {
+				// Load translations for the UI language
+				await this.i18nService.loadTranslations(uiLanguage);
+
+				// Set the new endangered language after translations are loaded
+				this.endangeredLanguageService.setLanguage(newEndangeredLanguage.code);
+
+				// Force a refresh of the endangered language descriptions
+				const currentLanguage = this.endangeredLanguageService.currentLanguage;
+				if (currentLanguage) {
+					// Trigger a change detection by updating the language again
+					this.endangeredLanguageService.setLanguage(currentLanguage.code);
+				}
+			}
+
+			// Only dismiss after everything is loaded
 			this.bottomSheetRef.dismiss();
 		} finally {
 			this.languageChangeService.setLoading(false);
