@@ -17,7 +17,11 @@
 			<span class="label" [innerHTML]="'Region'|translate:'region'"></span>: {{ getRegionName() }}
 		</div>
 
-		<a *ngIf="language.organizationURL" (click)="onExploreLanguageClick(language.organizationURL)" class="external-link">
+		<a *ngIf="language.organizationURL"
+		   [href]="language.organizationURL"
+		   target="_blank"
+		   rel="noopener noreferrer"
+		   class="external-link">
 			<app-icon icon="partner_link"></app-icon>
 			<span>{{language.organizationName}}</span>
 		</a>

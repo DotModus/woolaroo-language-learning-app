@@ -8,6 +8,7 @@ import {
 } from "../../../services/endangered-language";
 import { AppRoutes } from "../../../app/routes";
 import { Subscription } from 'rxjs';
+import { ExternalNavigationService } from '../../../services/external-navigation.service';
 
 @Component({
 	selector: 'app-view-language',
@@ -28,6 +29,7 @@ export class ViewLanguagePageComponent implements OnInit, OnDestroy {
 		private router: Router,
 		private route: ActivatedRoute,
 		private cdr: ChangeDetectorRef,
+		private externalNavigationService: ExternalNavigationService,
 		@Optional() private bottomSheetRef?: MatBottomSheetRef<ViewLanguagePageComponent>
 	) {
 		this.i18nService = i18nService;
@@ -74,10 +76,8 @@ export class ViewLanguagePageComponent implements OnInit, OnDestroy {
 			: "";
 	}
 
-	onExploreLanguageClick(url: string) {
-		if (url) {
-			window.open(url);
-		}
+	onExploreLanguageClick(url: string): void {
+		this.externalNavigationService.navigateToExternalUrl(url);
 	}
 
 	onLanguageClick(code: string) {
