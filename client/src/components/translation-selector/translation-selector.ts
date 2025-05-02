@@ -238,12 +238,6 @@ export class TranslationSelectorComponent {
 			translation: this.displayTranslation.translation
 		});
 
-		// Show share success toast and hide after timeout
-		this.showShareToast = true;
-		setTimeout(() => {
-			this.showShareToast = false;
-		}, 3000);
-
 		logger.log(`Shared word: ${englishWord} (${translationToShare})`);
 	}
 
