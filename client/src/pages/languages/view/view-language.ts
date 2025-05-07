@@ -80,7 +80,7 @@ export class ViewLanguagePageComponent implements OnInit, OnDestroy {
 	}
 
 	onExploreLanguageClick(url: string): void {
-		this.axl.sendAxlMessage(AxL.ChildToHost.NAVIGATE, url);
+		this.axl.navigateExternalLink(AxL.ChildToHost.NAVIGATE, url);
 		window.open(url, '_blank');
 	}
 

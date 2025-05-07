@@ -57,4 +57,8 @@ sendAxlMessage(type: string, payload: any): void {
 	window.axl.sendMessage(type, { ...payload });
 }
 
+navigateExternalLink(type: string, url: string): void {
+	window.axl.sendMessage(type, url);
+}
+
 }
