@@ -62,9 +62,37 @@
 			padding: 12px;
 			box-sizing: border-box;
 
+			.header-content {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				width: 100%;
+				margin-bottom: 6px;
+
+				.close-button {
+					background: none;
+					border: none;
+					padding: 8px;
+					cursor: pointer;
+					color: #EAE1D9;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					transition: transform 0.2s ease;
+
+					&:hover {
+						transform: translateY(2px);
+					}
+
+					app-icon {
+						font-size: 24px;
+					}
+				}
+			}
+
 			.main-heading {
 				font-size: 1.25rem;
-				margin-bottom: 6px;
+				margin-bottom: 0;
 				color: #EAE1D9;
 				font-weight: 500;
 				width: 100%;
@@ -330,12 +358,27 @@
 }
 
 ::ng-deep .language-bottom-sheet {
-	height: 75vh !important;
+	max-height: 75vh !important;
+	width: 100% !important;
+	max-width: 800px !important;
+	margin: 0 auto !important;
+	border-top-left-radius: 16px;
+	border-top-right-radius: 16px;
+	background-color: none;
+	color: #EAE1D9;
+	overflow-x: hidden;
 
 	.mat-bottom-sheet-container {
-		height: 75vh !important;
 		max-height: 75vh !important;
 		padding: 0 !important;
+		width: 100% !important;
+		max-width: 800px !important;
+		margin: 0 auto !important;
+		border-top-left-radius: 16px;
+		border-top-right-radius: 16px;
+		background-color: none;
+		color: #EAE1D9;
+		overflow-x: hidden;
 	}
 }
 

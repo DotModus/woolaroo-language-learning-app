@@ -9,6 +9,8 @@ import {
 import { AppRoutes } from "../../../app/routes";
 import { Subscription } from 'rxjs';
 import { ExternalNavigationService } from '../../../services/external-navigation.service';
+import { AxlService } from '../../../services/axl.service';
+import AxL from '../../../external/axl';
 
 @Component({
 	selector: 'app-view-language',
@@ -30,6 +32,7 @@ export class ViewLanguagePageComponent implements OnInit, OnDestroy {
 		private route: ActivatedRoute,
 		private cdr: ChangeDetectorRef,
 		private externalNavigationService: ExternalNavigationService,
+		private axl: AxlService,
 		@Optional() private bottomSheetRef?: MatBottomSheetRef<ViewLanguagePageComponent>
 	) {
 		this.i18nService = i18nService;
@@ -77,7 +80,8 @@ export class ViewLanguagePageComponent implements OnInit, OnDestroy {
 	}
 
 	onExploreLanguageClick(url: string): void {
-		this.externalNavigationService.navigateToExternalUrl(url);
+		this.axl.sendAxlMessage(AxL.ChildToHost.NAVIGATE, url);
+		window.open(url, '_blank');
 	}
 
 	onLanguageClick(code: string) {

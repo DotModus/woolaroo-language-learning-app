@@ -2,12 +2,13 @@ import { AfterViewInit, Component, Inject, InjectionToken } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router';
 import { IAnalyticsService, ANALYTICS_SERVICE } from '../../services/analytics';
 import { AppRoutes } from '../../app/routes';
+import { AxlService } from '../../services/axl.service';
+import AxL from '../../external/axl';
 
 interface TermsPageConfig {
   enabled: boolean;
   content: string;
 }
-
 
 export const TERMS_PAGE_CONFIG = new InjectionToken<TermsPageConfig>('Terms page config');
 
@@ -19,10 +20,13 @@ export const TERMS_PAGE_CONFIG = new InjectionToken<TermsPageConfig>('Terms page
 export class TermsPageComponent implements AfterViewInit {
   public content: string;
 
-  constructor(@Inject(TERMS_PAGE_CONFIG) private config: TermsPageConfig,
+  constructor(
+    @Inject(TERMS_PAGE_CONFIG) private config: TermsPageConfig,
     private router: Router,
     private route: ActivatedRoute,
-    @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService) {
+    private axl: AxlService,
+    @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService
+  ) {
     this.content = config.content;
   }
 
@@ -35,5 +39,10 @@ export class TermsPageComponent implements AfterViewInit {
     this.router.navigateByUrl(AppRoutes.CaptureImage, {
       replaceUrl: true
     });
+  }
+
+  navigateExternalLink(url: string) {
+	  this.axl.sendAxlMessage(AxL.ChildToHost.NAVIGATE, url);
+	  window.open(url, '_blank');
   }
 }
