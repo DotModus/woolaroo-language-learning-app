@@ -271,16 +271,17 @@ mat-toolbar {
 ::ng-deep .language-bottom-sheet {
 	max-height: 90vh;
 	width: 100%;
+	max-width: 800px;
 	border-top-left-radius: 16px;
 	border-top-right-radius: 16px;
-	background-color: #4F4539;
+	background-color: none;
 	color: #EAE1D9;
 	overflow-x: hidden;
 
 	.mat-bottom-sheet-container {
 		padding: 0;
 		width: 100%;
-		max-width: 100%;
+		max-width: 800px;
 		border-top-left-radius: 16px;
 		border-top-right-radius: 16px;
 		background-color: #4F4539;
@@ -290,7 +291,7 @@ mat-toolbar {
 
 	.mat-bottom-sheet-container-large {
 		width: 100%;
-		max-width: 100%;
+		max-width: 800px;
 		overflow-x: hidden;
 	}
 

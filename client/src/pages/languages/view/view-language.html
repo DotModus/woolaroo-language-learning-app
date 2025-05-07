@@ -18,8 +18,7 @@
 		</div>
 
 		<a *ngIf="language.organizationURL"
-		   [href]="language.organizationURL"
-		   target="_blank"
+		   (click)="onExploreLanguageClick(language.organizationURL)"
 		   rel="noopener noreferrer"
 		   class="external-link">
 			<app-icon icon="partner_link"></app-icon>

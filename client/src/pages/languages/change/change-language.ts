@@ -89,7 +89,7 @@ export class ChangeLanguagePageComponent implements AfterViewInit {
 		private axl: AxlService,
 		@Inject(PROFILE_SERVICE) private profileService: IProfileService,
 		private endangeredLanguageService: EndangeredLanguageService,
-		private bottomSheetRef: MatBottomSheetRef<ChangeLanguagePageComponent>,
+		public bottomSheetRef: MatBottomSheetRef<ChangeLanguagePageComponent>,
 		private languageChangeService: LanguageChangeService
 	) {
 		this._currentUILanguageIndex = this.i18nService.languages.indexOf(

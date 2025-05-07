@@ -117,3 +117,32 @@ app-toolbar {
   right: 0;
   z-index: 100;
 }
+
+::ng-deep .terms-bottom-sheet {
+    max-height: 75vh;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    background-color: #4F4539;
+    color: #EAE1D9;
+    overflow-x: hidden;
+
+    .mat-bottom-sheet-container {
+        max-height: 75vh;
+        padding: 0 !important;
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+        background-color: #4F4539;
+        color: #EAE1D9;
+        overflow-x: hidden;
+    }
+}
+
+.link {
+  cursor: pointer;
+}

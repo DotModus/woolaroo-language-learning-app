@@ -10,11 +10,13 @@
 		<b [innerHTML]="'Terms &amp; Privacy' | translate:'termsAndPrivacyTitle'"></b><br />
 		<a target="_blank"
 		   rel="noopener noreferrer"
-		   href="https://www.google.com/intl/en/policies/terms/"
+		   (click)="navigateExternalLink('https://www.google.com/intl/en/policies/terms/')"
+		   class="link"
 		   [innerHTML]="'Google terms of use' | translate:'termsOfUse'"></a><br />
 		<a target="_blank"
 		   rel="noopener noreferrer"
-		   href="https://www.google.com/intl/en/policies/privacy/"
+		   (click)="navigateExternalLink('https://www.google.com/intl/en/policies/privacy/')"
+		   class="link"
 		   [innerHTML]="'Google privacy policy' | translate:'privacyPolicy'"></a>
 	</p>
 </div>
