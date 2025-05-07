@@ -42,7 +42,7 @@ export class TermsPageComponent implements AfterViewInit {
   }
 
   navigateExternalLink(url: string) {
-	  this.axl.sendAxlMessage(AxL.ChildToHost.NAVIGATE, url);
+	  this.axl.navigateExternalLink(AxL.ChildToHost.NAVIGATE, url);
 	  window.open(url, '_blank');
   }
 }
