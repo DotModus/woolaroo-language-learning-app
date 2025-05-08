@@ -45,6 +45,7 @@ export class EndangeredLanguageService {
 	private _displayRegions: any = [];
 
 	private _currentLanguage: EndangeredLanguage = {} as EndangeredLanguage;
+
 	public get currentLanguage(): EndangeredLanguage {
 		return this._currentLanguage;
 	}
@@ -151,6 +152,8 @@ export class EndangeredLanguageService {
 
 	public setLanguages(languages: EndangeredLanguage[]) {
 		this._contextLanguages = languages;
-		this._currentLanguage = languages[0];
+		if (!this._currentLanguage?.code || !languages.find(lang => lang.code === this._currentLanguage.code)) {
+			this._currentLanguage = languages[0];
+		}
 	}
 }

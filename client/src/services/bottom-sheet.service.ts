@@ -26,8 +26,10 @@ export class BottomSheetService {
 
   openChangeLanguage() {
     const ref = this.bottomSheet.open(ChangeLanguagePageComponent, this.bottomSheetConfig);
-    ref.afterDismissed().subscribe(() => {
-      this.languageChangedSubject.next();
+    ref.afterDismissed().subscribe((result) => {
+      if (result?.languageChanged) {
+        this.languageChangedSubject.next();
+      }
     });
   }
 

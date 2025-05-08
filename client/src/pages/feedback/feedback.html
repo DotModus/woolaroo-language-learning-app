@@ -11,7 +11,7 @@
       <textarea matInput name="content" required formControlName="content" class="white-text-input" style="color: white !important;" placeholder="'Enter your feedback here'"></textarea>
       <mat-error *ngIf="feedbackForm.controls['content'].hasError('required')" [innerHTML]="'Feedback required' | translate:'feedbackRequired'"></mat-error>
     </mat-form-field>
-    <button mat-button color="primary" class="submit" type="submit">
+    <button mat-button color="primary" class="submit" type="submit" (click)="onFormSubmit()">
       <span [innerHTML]="'Submit' | translate:'submit'"></span>
     </button>
   </div>

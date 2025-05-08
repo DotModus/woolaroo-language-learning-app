@@ -141,6 +141,9 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 	private originalWords: string[] = [];
 
 	public get currentLanguage(): string {
+		if (!this.endangeredLanguageService.currentLanguage?.name) {
+			return '';
+		}
 		const fullName = this.endangeredLanguageService.currentLanguage.name;
 		if (isMobileDevice() && fullName.length > 10) {
 			return fullName.substring(0, 10) + '...';

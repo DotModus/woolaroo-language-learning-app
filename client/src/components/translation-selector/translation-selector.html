@@ -17,7 +17,7 @@
 	</div>
 
 	<!-- Audio element hidden -->
-	<audio #audioPlayer [src]="displayTranslation?.soundURL | gcsUrl" preload="none" (play)="onAudioPlaying()"
+	<audio #audioPlayer [src]="displayTranslation?.soundURL | gcsUrl" preload="metadata" (play)="onAudioPlaying()"
 		(ended)="onAudioStopped()" (pause)="onAudioStopped()"></audio>
 
 	<!-- Fixed height word display -->
@@ -79,7 +79,7 @@
 <!-- Toast notification for successful sharing -->
 <div class="share-toast" [class.visible]="showShareToast">
   <div class="toast-content">
-    <app-icon icon="check_circle"></app-icon>
+    <app-icon icon="check"></app-icon>
     <span>Word shared successfully!</span>
   </div>
 </div>

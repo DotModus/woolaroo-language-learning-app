@@ -136,6 +136,7 @@ export class TranslationSelectorComponent {
 	) {}
 
 	onPlayAudioClick() {
+		try {
 		this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: "click audio icon" });
 		if (!this.audioPlayer || !this.audioPlayer.nativeElement) {
 			logger.warn("Audio player not initialized");
@@ -155,6 +156,9 @@ export class TranslationSelectorComponent {
 				audioPlayer.pause();
 				audioPlayer.currentTime = 0;
 				break;
+		}
+			} catch (error) {
+			logger.error("Error playing audio: " + error.toString());
 		}
 	}
 
