@@ -179,18 +179,16 @@ export class ChangeLanguagePageComponent implements AfterViewInit {
 				}
 			}
 
-			// Only dismiss after everything is loaded
-			this.bottomSheetRef.dismiss();
+			// Only dismiss after everything is loaded, with a result indicating language was changed
+			this.bottomSheetRef.dismiss({ languageChanged: true });
 		} finally {
 			this.languageChangeService.setLoading(false);
 		}
 	}
 
 	onCloseClick() {
-		loadCapturePageURL().then(
-			(url) => this.router.navigateByUrl(url, {replaceUrl: true}),
-			() => this.router.navigateByUrl(AppRoutes.CaptureImage, {replaceUrl: true})
-		);
+		// Dismiss without language change
+		this.bottomSheetRef.dismiss({ languageChanged: false });
 	}
 
 	onNextClick() {

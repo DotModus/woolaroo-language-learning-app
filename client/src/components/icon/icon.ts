@@ -5,7 +5,7 @@ import { environment } from '../../environments/environment';
 
 export type Icon = 'play_audio' | 'record_audio' | 'stop_audio' | 'play_recording' | 'arrow_back' | 'back' | 'add_feedback' |
   'add_to_home' | 'brand' | 'photo_library' | 'capture_photo' | 'menu' | 'close' | 'share' | 'search' | 'add' | 'language' | 'forward' |
-  'read_more' | 'expand_more';
+  'read_more' | 'expand_more' | 'check';
 
 @Component({
   selector: 'app-icon',
@@ -51,7 +51,8 @@ export class IconComponent {
 		read_more: 'read_more.svg',
 		switch: '360.svg',
 	  partner_link:'partner-link.svg',
-      expand_more: 'expand_more.svg'
+      expand_more: 'expand_more.svg',
+      check: 'check.svg'
     };
     for (const iconID of Object.keys(icons)) {
       this.iconRegistry.addSvgIcon(iconID, this.domSanitizer.bypassSecurityTrustResourceUrl(baseUrl + icons[iconID]));

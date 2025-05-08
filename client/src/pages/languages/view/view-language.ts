@@ -54,6 +54,7 @@ export class ViewLanguagePageComponent implements OnInit, OnDestroy {
 				this.route.paramMap.subscribe((params: ParamMap) => {
 					const languageCode = params.get("id");
 					if (languageCode) {
+						console.log("languageCode::view-language.ts", languageCode);
 						// Set the current language in the service
 						this.endangeredLanguageService.setLanguage(languageCode);
 						// Get the language from the service

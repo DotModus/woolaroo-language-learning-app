@@ -148,6 +148,7 @@ export class AppComponent implements OnInit {
 					const endangeredLanguage = map.get("endangeredLanguage");
 
 					if (endangeredLanguage) {
+						console.log("endangeredLanguage::app.component.ts", endangeredLanguage);
 						this.endangeredLanguageService.setLanguage(
 							endangeredLanguage
 						);
