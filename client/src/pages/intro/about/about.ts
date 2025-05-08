@@ -217,6 +217,11 @@ export class IntroAboutPageComponent implements AfterViewInit {
 		this.router.navigateByUrl(AppRoutes.TermsAndConditions, {replaceUrl: true});
 	}
 
+	onTermsToggled() {
+		console.log("Terms toggled");
+		this.tAndC = !this.tAndC;
+	}
+
 	nextPage(profile: Profile | null = null) {
 		this.router.navigateByUrl(AppRoutes.CaptureImage, {replaceUrl: true});
 	}
