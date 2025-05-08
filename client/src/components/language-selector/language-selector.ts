@@ -28,7 +28,6 @@ export class LanguageSelectorComponent {
 		return this.endangeredLanguageService.currentLanguage.code;
 	}
 	public set currentEndangeredLanguage(code: string) {
-		console.log("currentEndangeredLanguage::language-selector.ts", code);
 		this.endangeredLanguageService.setLanguage(code);
 	}
 
