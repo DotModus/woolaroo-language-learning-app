@@ -230,7 +230,7 @@ export class TranslationSelectorComponent {
 		// Build a meaningful share message
 		const englishWord = this.selectedWord.english;
 		const translationToShare = this.displayTranslation.translation;
-		const languageToShare = this.currentLanguage || "indigenous language";
+		const languageToShare = this.currentLanguage || "";
 
 		// Also emit the event for parent components
 		this.wordShared.emit({

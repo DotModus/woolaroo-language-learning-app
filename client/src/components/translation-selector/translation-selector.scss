@@ -250,7 +250,7 @@ app-selection-line {
 }
 
 app-word-scroll-list {
-	margin-top: 0;
+	margin: 12px 0;
 	flex: 0 0 auto;
 }
 
@@ -330,7 +330,7 @@ app-word-scroll-list {
 .translation-heading {
   text-align: center;
   width: 100%;
-  margin-bottom: 8px;
+  margin-bottom: 0;
 
   span {
     font-size: 0.8rem;
@@ -345,7 +345,7 @@ app-word-scroll-list {
 //   min-height: 220px;
   background-color: mat.get-color-from-palette($app-primary, 500);
   border-radius: 16px;
-  margin: 20px auto 0;
+  margin: 0 auto;
   overflow: visible;
   box-sizing: border-box;
   display: flex;
@@ -354,7 +354,7 @@ app-word-scroll-list {
 
   @media only screen and (max-width: 480px) {
     width: calc(100% - 32px);
-    margin: 20px 16px 0;
+    margin: 0 16px;
     // min-height: 220px;
   }
 

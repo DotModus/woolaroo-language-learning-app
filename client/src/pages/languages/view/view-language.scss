@@ -50,6 +50,38 @@
 			unicode-bidi: plaintext;
 		}
 
+		.language-title {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			font-size: 1.25rem;
+			font-weight: 500;
+			margin-bottom: 6px;
+			word-break: break-word;
+			text-align: start;
+			unicode-bidi: plaintext;
+
+			.close-button {
+				background: none;
+				border: none;
+				color: #EAE1D9;
+				padding: 8px;
+				cursor: pointer;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				margin-left: 8px;
+
+				&:hover {
+					opacity: 0.8;
+				}
+
+				app-icon {
+					font-size: 24px;
+				}
+			}
+		}
+
 		.region-name {
 			font-size: 0.875rem;
 			margin-bottom: 12px;

@@ -12,7 +12,12 @@
 	</app-toolbar>
 
 	<div class="language-header">
-		<h1 class="language-title">{{ language.name }}</h1>
+		<h1 class="language-title">
+			{{ language.name }}
+			<button *ngIf="isBottomSheet" class="close-button" (click)="onBackClick($event)">
+				<app-icon icon="expand_more"></app-icon>
+			</button>
+		</h1>
 		<div class="region-name">
 			<span class="label" [innerHTML]="'Region'|translate:'region'"></span>: {{ getRegionName() }}
 		</div>
