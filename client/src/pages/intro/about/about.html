@@ -5,11 +5,11 @@
   <mat-sidenav-content>
 <app-toolbar>
     @if (getLanguageDirection() === 'ltr') {
-      <button (click)="onOpenMenuClick()" class="open-menu" aria-label="Open Menu" slot="start">
+      <button (click)="onOpenMenuClick()" class="open-menu" aria-label="Open Menu" slot="start" [disabled]="!tAndC">
           <app-icon icon="menu"></app-icon>
       </button>
     } @else {
-      <button (click)="onOpenMenuClick()" class="open-menu" aria-label="Open Menu" slot="end">
+      <button (click)="onOpenMenuClick()" class="open-menu" aria-label="Open Menu" slot="end" [disabled]="!tAndC">
           <app-icon icon="menu"></app-icon>
       </button>
     }
@@ -32,8 +32,9 @@
     <div class="section bottom-section">
         <!-- Checkbox container moved above the feature box -->
         <div class="custom-checkbox-container">
-            <input type="checkbox" id="terms-checkbox" [(ngModel)]="tAndC" class="custom-checkbox-input">
-            <label for="terms-checkbox" class="custom-checkbox-label" (click)="onViewTermsClick()" [innerHTML]="'Accept terms & conditions' | translate: 't_and_c'"></label>
+            <input (click)="onTermsToggled()" (touchend)="onTermsToggled()" type="checkbox" id="terms-checkbox" [(ngModel)]="tAndC" class="custom-checkbox-input">
+            <label for="terms-checkbox" class="custom-checkbox-label"
+			[innerHTML]="'Accept terms & conditions' | translate: 't_and_c'"></label>
         </div>
 
         <!-- Desktop-only feature box -->
@@ -51,6 +52,7 @@
             mat-flat-button
             color="primary"
             (click)="onNextClick()"
+			(touchend)="onNextClick()"
             class="next mobile-only"
             [disabled]="!tAndC"
         >

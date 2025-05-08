@@ -37,6 +37,7 @@
 		</div>
 		<div class="icon-placeholder" *ngIf="!showSentence"
 		     (click)="onPlayAudioClick()"
+			 (touchend)="onPlayAudioClick()"
 		     [class.disabled]="!displayTranslation?.soundURL"
 		     [ngClass]="{'no-audio': !displayTranslation?.soundURL}">
 			<app-icon icon="audio_black"></app-icon>
