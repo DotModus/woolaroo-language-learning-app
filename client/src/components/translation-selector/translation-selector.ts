@@ -136,6 +136,10 @@ export class TranslationSelectorComponent {
 	) {}
 
 	onPlayAudioClick() {
+		if (!this.displayTranslation?.soundURL) {
+			logger.warn("No audio URL available");
+			return;
+		}
 		try {
 		this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: "click audio icon" });
 		if (!this.audioPlayer || !this.audioPlayer.nativeElement) {
