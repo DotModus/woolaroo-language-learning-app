@@ -5,11 +5,11 @@
   <mat-sidenav-content>
 <app-toolbar>
     @if (getLanguageDirection() === 'ltr') {
-      <button (click)="onOpenMenuClick()" class="open-menu" aria-label="Open Menu" slot="start">
+      <button (click)="onOpenMenuClick()" class="open-menu" aria-label="Open Menu" slot="start" [disabled]="!tAndC">
           <app-icon icon="menu"></app-icon>
       </button>
     } @else {
-      <button (click)="onOpenMenuClick()" class="open-menu" aria-label="Open Menu" slot="end">
+      <button (click)="onOpenMenuClick()" class="open-menu" aria-label="Open Menu" slot="end" [disabled]="!tAndC">
           <app-icon icon="menu"></app-icon>
       </button>
     }

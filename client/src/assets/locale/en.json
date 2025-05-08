@@ -34,7 +34,8 @@
   "add": "Add",
   "inLanguage": "In ${language}",
   "switchLanguage": "Switch language",
-  "addWordInstructions": "Contribute to the app by adding new words in ${endangeredLanguage} and their translations",
+  "addWordInstructions":
+  "Contribute to the app by adding new words in ${endangeredLanguage} and their translations",
   "theApp": "The App",
   "languageToEndangeredLanguage": "${sourceLanguage} to ${endangeredLanguage}",
   "about": "About",
