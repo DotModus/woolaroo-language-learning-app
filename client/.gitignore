@@ -48,3 +48,10 @@ Thumbs.db
 /src/assets/debug
 
 .angular/
+
+# Playwright
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

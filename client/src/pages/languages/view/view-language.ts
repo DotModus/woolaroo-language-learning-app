@@ -66,6 +66,10 @@ export class ViewLanguagePageComponent implements OnInit, OnDestroy {
 				})
 			);
 		}
+		if (!this.language) {
+			this.router.navigateByUrl(`/${AppRoutes.IntroAbout}`, { replaceUrl: true });
+			return;
+		}
 		this._languageImage = this.endangeredLanguageService.imageAssetsURL;
 	}
 
