@@ -169,10 +169,10 @@ export class ImageRenderingService {
 
 		// Adjust text sizes based on screen width
 		const textScale = width <= 480 ? 0.4 : 0.85; // Further reduced text size on mobile
-		this.config.translation.font = width <= 480 ? "bold 18px Arial" : "bold 34px Arial";
+		this.config.translation.font = width <= 480 ? "400 28px Arial" : "400 48px Arial"; // Reduced weight, increased size
 		this.config.transliteration.font = width <= 480 ? "16px Arial" : "30px Arial";
 		this.config.languages.font = width <= 480 ? "14px Arial" : "24px Arial";
-		this.config.originalWord.font = width <= 480 ? "bold 20px Arial" : "bold 36px Arial";
+		this.config.originalWord.font = width <= 480 ? "400 32px Arial" : "400 52px Arial"; // Reduced weight, increased size
 
 		// Scale line heights and spacing
 		this.config.translation.lineHeight *= textScale;
@@ -221,8 +221,11 @@ export class ImageRenderingService {
 		scale: number
 	) {
 		const centerX = (width * 0.5) / scale;
-		// Start at top with padding instead of bottom
-		let y = (this.config.padding * 2) / scale; // Double the padding at the top
+		// Start at top with padding
+		let y = (this.config.padding * 2) / scale;
+
+		// Calculate bottom area height based on screen width
+		const bottomAreaHeight = width <= 480 ? 110 : 260;
 
 		// Limit text to 90% of the screen width on mobile, 60% on desktop
 		const textAreaWidth = width <= 480 ? width * 0.9 : width * 0.6;
@@ -270,22 +273,53 @@ export class ImageRenderingService {
 
 		// 5. Language description if available
 		if (endangeredLanguage.shortDescriptions && endangeredLanguage.shortDescriptions['en']) {
+			// Create a modified config for language description with increased line height and spacing
+			const descriptionConfig = {
+				...this.config.languages,
+				lineHeight: this.config.languages.lineHeight * 1.5, // Increase line height by 50%
+				lineSpacing: this.config.languages.lineSpacing * 2, // Double the line spacing
+				marginBottom: this.config.languages.marginBottom * 1.5 // Increase bottom margin
+			};
+
 			elements.push({
 				text: endangeredLanguage.shortDescriptions['en'],
-				config: this.config.languages
+				config: descriptionConfig
 			});
 		}
 
-		// Render all elements in the order they are in the array (top to bottom)
+		// Calculate total height needed for all elements
+		let totalElementHeight = 0;
 		for (const element of elements) {
-			y = this._renderTextFromTop(
+			context.font = element.config.font;
+			const lines = ImageRenderingService._getTextLines(context, element.text, maxTextWidth);
+			const elementHeight = lines.length * element.config.lineHeight +
+				(lines.length - 1) * element.config.lineSpacing +
+				element.config.marginBottom;
+			totalElementHeight += elementHeight;
+		}
+
+		// Calculate available height (excluding top and bottom padding)
+		const availableHeight = (height - bottomAreaHeight - (this.config.padding * 4)) / scale;
+
+		// Calculate equal spacing between elements
+		const equalSpacing = (availableHeight - totalElementHeight) / (elements.length - 1);
+
+		// Render all elements with equal spacing
+		let currentY = y;
+		for (const element of elements) {
+			currentY = this._renderTextFromTop(
 				context,
 				element.text,
 				element.config,
 				centerX,
-				y,
+				currentY,
 				maxTextWidth
 			);
+
+			// Add equal spacing after each element except the last one
+			if (element !== elements[elements.length - 1]) {
+				currentY += equalSpacing;
+			}
 		}
 	}
 
@@ -323,9 +357,10 @@ export class ImageRenderingService {
 			context.fillStyle = '#FFFFFF'; // White text for maximum visibility
 			context.fillText(line, x, y, maxWidth);
 
-			y += config.lineHeight;
+			// Increase line height for better readability
+			y += config.lineHeight * 1.2; // Increased by 20% for better spacing
 			if (k < lines.length - 1) {
-				y += config.lineSpacing;
+				y += config.lineSpacing * 1.5; // Increased line spacing between lines
 			}
 		}
 
@@ -389,6 +424,16 @@ export class ImageRenderingService {
 			// Draw the tag
 			context.drawImage(tagImage, tagX, tagY, desiredWidth, tagHeight);
 
+			// Add Woolaroo URL text on the right side
+			context.font = width <= 480 ? "500 24px Arial" : "500 32px Arial"; // Increased size and added medium weight
+			context.fillStyle = "#1a73e8"; // Google blue color
+			const urlText = "goo.gle/Woolaroo";
+			const textMetrics = context.measureText(urlText);
+			const rightPadding = width <= 480 ? width * 0.05 : width * 0.03; // Same padding as left side
+			const textX = width - textMetrics.width - rightPadding;
+			const textY = bottomAreaY + (bottomAreaHeight / 2); // Center vertically
+			context.fillText(urlText, textX, textY);
+
 			// Restore the previous context state
 			context.restore();
 
@@ -406,6 +451,14 @@ export class ImageRenderingService {
 
 			// Render "Google Arts & Culture" text below the logo
 			context.fillText("Google Arts & Culture", width * 0.05, centerY + 20);
+
+			// Add Woolaroo URL text on the right side
+			context.font = "500 32px Arial"; // Increased size and added medium weight
+			context.fillStyle = "#1a73e8"; // Google blue color
+			const urlText = "goo.gle/Woolaroo";
+			const textMetrics = context.measureText(urlText);
+			const textX = width - textMetrics.width - (width * 0.03);
+			context.fillText(urlText, textX, centerY);
 		}
 	}
 
