@@ -199,13 +199,13 @@ mat-toolbar {
 	gap: 12px;
 	width: 420px;
 	margin: 0 auto;
-	padding: 8px 0 16px;
+	padding: 0 0 16px;
 	box-sizing: border-box;
 
 	@media only screen and (max-width: 480px) {
 		width: calc(100% - 32px);
 		margin: 0 16px;
-		padding: 8px 16px 16px;
+		padding: 0 16px 16px;
 	}
 
 	.language-button {

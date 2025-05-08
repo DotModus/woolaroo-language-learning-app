@@ -17,6 +17,7 @@ ul {
     width: 100%;
     position: relative;
     bottom: 0;
+	height: auto !important;
     list-style-type: none;
     white-space: nowrap;
     li {
@@ -46,8 +47,8 @@ ul {
                 padding: 0 12px;
                 border: 1px solid mat.get-color-from-palette($app-primary, 500);
                 text-shadow: none;
-                height: 44px;
-                line-height: 44px;
+                height: 56px;
+                line-height: 56px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -60,8 +61,8 @@ ul {
             border: 2px solid mat.get-color-from-palette($app-primary, 500);
             border-radius: 8px;
             padding: 6px 12px;
-            height: 44px;
-            line-height: 44px;
+            height: 56px;
+            line-height: 56px;
             display: flex;
             align-items: center;
             justify-content: center;
