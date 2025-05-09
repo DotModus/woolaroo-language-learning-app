@@ -17,6 +17,16 @@
   </div>
 </form>
 <section class="legal">
-  <p [innerHTML]="'Go to the <a href=https://support.google.com/legal/answer/3110420>Legal Help page</a> to request content changes for legal reasons.'|translate:'feedbackLegal1'"></p>
-  <p [innerHTML]="'We will use the information you give us to improve our services, subject to our <a href=https://policies.google.com/privacy?hl=en>Privacy Policy</a> and <a href=https://policies.google.com/terms?hl=en>Terms of Service</a>.'|translate:'feedbackLegal2'"></p>
+  <p>
+    <span [innerHTML]="'Go to the ' | translate:'feedbackLegal1Start'"></span>
+    <a (click)="onLegalHelpClick($event)" class="external-link">Legal Help page</a>
+    <span [innerHTML]="' to request content changes for legal reasons.' | translate:'feedbackLegal1End'"></span>
+  </p>
+  <p>
+    <span [innerHTML]="'We will use the information you give us to improve our services, subject to our ' | translate:'feedbackLegal2Start'"></span>
+    <a (click)="onPrivacyPolicyClick($event)" class="external-link">Privacy Policy</a>
+    <span [innerHTML]="' and ' | translate:'feedbackLegal2Middle'"></span>
+    <a (click)="onTermsOfServiceClick($event)" class="external-link">Terms of Service</a>
+    <span [innerHTML]="'.' | translate:'feedbackLegal2End'"></span>
+  </p>
 </section>
