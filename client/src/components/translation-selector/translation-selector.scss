@@ -360,8 +360,8 @@ app-word-scroll-list {
 
   /* Hide audio element */
   audio {
-    position: absolute;
-    visibility: hidden;
+    // position: absolute;
+    // visibility: hidden;
     height: 0;
     width: 0;
   }
@@ -499,6 +499,10 @@ app-word-scroll-list {
         }
       }
     }
+
+	.audio-icon {
+		cursor: pointer;
+	}
 
     .word-container {
       flex: 1;
