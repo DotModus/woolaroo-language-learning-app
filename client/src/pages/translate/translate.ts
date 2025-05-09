@@ -512,12 +512,12 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 						language: endangeredLanguage.name,
 					}) || undefined;
 
-					// Send share message through the AxL service
-					this.axl.sendAxlMessage(AxL.ChildToHost.SHARE, {
-						title: `Do you know ${endangeredLanguage.name}?`,
-						text: `Do you know ${endangeredLanguage.name}?`,
-						url: window.location.href
-					});
+					// // Send share message through the AxL service
+					// this.axl.sendAxlMessage(AxL.ChildToHost.SHARE, {
+					// 	title: `Do you know ${endangeredLanguage.name}?`,
+					// 	text: `Do you know ${endangeredLanguage.name}?`,
+					// 	url: window.location.href
+					// });
 
 					share({
 						text: shareText,
