@@ -32,7 +32,7 @@
     <div class="section bottom-section">
         <!-- Checkbox container moved above the feature box -->
         <div class="custom-checkbox-container">
-            <input (click)="onTermsToggled()" (touchend)="onTermsToggled()" type="checkbox" id="terms-checkbox" [(ngModel)]="tAndC" class="custom-checkbox-input">
+            <input type="checkbox" id="terms-checkbox" [(ngModel)]="tAndC" class="custom-checkbox-input">
             <label for="terms-checkbox" class="custom-checkbox-label"
 			[innerHTML]="'Accept terms & conditions' | translate: 't_and_c'"></label>
         </div>

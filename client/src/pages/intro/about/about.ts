@@ -218,7 +218,8 @@ export class IntroAboutPageComponent implements AfterViewInit {
 	}
 
 	onTermsToggled() {
-		console.log("Terms toggled");
+		console.log("Terms toggled", this.tAndC);
+
 		this.tAndC = !this.tAndC;
 	}
 
