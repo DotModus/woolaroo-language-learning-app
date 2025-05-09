@@ -109,6 +109,11 @@ export class FeedbackPageComponent implements AfterViewInit {
     );
   }
 
+	navigateExternalLink(url: string) {
+		this.axl.navigateExternalLink(AxL.ChildToHost.NAVIGATE, url);
+		window.open(url, '_blank');
+	}
+
   onCloseClick(ev: Event) {
     ev.stopPropagation();
     ev.preventDefault();
@@ -116,5 +121,23 @@ export class FeedbackPageComponent implements AfterViewInit {
     this.router.navigateByUrl(AppRoutes.CaptureImage, {
       replaceUrl: true // Replace current URL to prevent adding to browser history
     });
+  }
+
+  onLegalHelpClick(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.navigateExternalLink('https://support.google.com/legal/answer/3110420');
+  }
+
+  onPrivacyPolicyClick(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.navigateExternalLink('https://policies.google.com/privacy?hl=en');
+  }
+
+  onTermsOfServiceClick(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.navigateExternalLink('https://policies.google.com/terms?hl=en');
   }
 }

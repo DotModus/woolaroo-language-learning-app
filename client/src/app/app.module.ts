@@ -23,6 +23,7 @@ import { ServiceWorkerModule } from "@angular/service-worker";
 import { environment } from "../environments/environment";
 import { AxlService } from "../services/axl.service";
 
+
 @NgModule({
 	declarations: [AppComponent],
 	imports: [
