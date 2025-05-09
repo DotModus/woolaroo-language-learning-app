@@ -35,12 +35,13 @@
 				<span>{{ displayTranslation?.split_sentence[2] }}</span>
 			</div>
 		</div>
-		<div class="icon-placeholder" *ngIf="!showSentence"
+		<button class="icon-placeholder" *ngIf="!showSentence"
 		     (click)="onPlayAudioClick()"
 		     [class.disabled]="!displayTranslation?.soundURL"
-		     [ngClass]="{'no-audio': !displayTranslation?.soundURL}">
+		     [ngClass]="{'no-audio': !displayTranslation?.soundURL}"
+		     [attr.aria-label]="'Play audio'">
 			<app-icon icon="audio_black"></app-icon>
-		</div>
+		</button>
 	</div>
 
 	<!-- Fixed height word type -->
