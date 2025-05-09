@@ -407,13 +407,21 @@ app-word-scroll-list {
       justify-content: center;
       color: rgba(69, 43, 0, 1) !important;
       cursor: pointer;
-      flex-shrink: 0; /* Prevent icons from shrinking */
-      position: relative; /* Always have position relative */
-      z-index: 2; /* Ensure it's above other elements */
+      flex-shrink: 0;
+      position: relative;
+      z-index: 2;
+      background: none;
+      border: none;
+      padding: 0;
+      outline: none;
+
+      &:focus {
+        outline: none;
+      }
 
       &.disabled {
-        cursor: not-allowed;
         opacity: 0.5;
+        cursor: not-allowed;
 
         &:hover::after {
           content: "No word selected";
@@ -447,16 +455,14 @@ app-word-scroll-list {
       }
 
       &.no-audio {
-        opacity: 1;
-        position: relative;
+        opacity: 0.3;
         cursor: not-allowed;
-		opacity: 0.5;
 
         &:hover::after {
           content: "No audio available";
           position: absolute;
           left: 50%;
-          top: -20px;
+          top: -40px;
           transform: translateX(-50%);
           background-color: #DEC2A2;
           color: #452B00;
@@ -466,6 +472,7 @@ app-word-scroll-list {
           white-space: nowrap;
           z-index: 100;
           pointer-events: none;
+          opacity: 0.9;
         }
 
         &:hover::before {
