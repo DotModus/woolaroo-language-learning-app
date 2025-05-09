@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, ChangeDetectorRef, OnDestroy, Optional, NgZone } from '@angular/core';
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { I18nService } from "../../../i18n/i18n.service";
-import { Router, ActivatedRoute, ParamMap, NavigationEnd } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ViewportScroller } from '@angular/common';
 import {
 	EndangeredLanguage,
@@ -12,7 +12,6 @@ import { Subscription } from 'rxjs';
 import { ExternalNavigationService } from '../../../services/external-navigation.service';
 import { AxlService } from '../../../services/axl.service';
 import AxL from '../../../external/axl';
-import { filter } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-view-language',
@@ -35,8 +34,8 @@ export class ViewLanguagePageComponent implements OnInit, OnDestroy {
 		private cdr: ChangeDetectorRef,
 		private externalNavigationService: ExternalNavigationService,
 		private axl: AxlService,
-		private viewportScroller: ViewportScroller,
-		private zone: NgZone,
+		private readonly viewportScroller: ViewportScroller,
+		private readonly zone: NgZone,
 		@Optional() private bottomSheetRef?: MatBottomSheetRef<ViewLanguagePageComponent>
 	) {
 		this.i18nService = i18nService;
