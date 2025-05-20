@@ -213,12 +213,13 @@ export class IntroAboutPageComponent implements AfterViewInit {
 		this.sidenavOpen = false;
 	}
 
-	onViewTermsClick() {
-		this.router.navigateByUrl(AppRoutes.TermsAndConditions, {replaceUrl: true});
-	}
-
 	onTermsToggled() {
 		this.tAndC = !this.tAndC;
+	}
+
+	openTermsAndConditions(event: Event) {
+		event.preventDefault();
+		this.router.navigateByUrl(AppRoutes.TermsAndConditions, {replaceUrl: true});
 	}
 
 	nextPage(profile: Profile | null = null) {

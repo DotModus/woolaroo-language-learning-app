@@ -34,25 +34,26 @@
         <div class="custom-checkbox-container">
             <input type="checkbox" id="terms-checkbox" [(ngModel)]="tAndC" class="custom-checkbox-input">
             <label for="terms-checkbox" class="custom-checkbox-label"
-			[innerHTML]="'Accept terms & conditions' | translate: 't_and_c'"></label>
+                (click)="openTermsAndConditions($event)"
+                [innerHTML]="'Accept terms & conditions' | translate: 't_and_c'"></label>
         </div>
 
         <!-- Desktop-only feature box -->
-        <div class="feature-box desktop-only" (appFileUpload)="onImageUploaded($event)" [class.disabled]="!tAndC" accept="image/*">
+        <!-- <div class="feature-box" (appFileUpload)="onImageUploaded($event)" [class.disabled]="!tAndC" accept="image/*">
             <div class="feature-box-content">
                 <div class="feature-icon-container">
                     <app-icon icon="photo_library_black" class="feature-icon"></app-icon>
                 </div>
                 <p class="feature-text" [innerHTML]="'Upload a picture to discover new words' | translate: 'uploadPicture'"></p>
             </div>
-        </div>
+        </div> -->
 
         <!-- Mobile-only button -->
         <button
             mat-flat-button
             color="primary"
             (click)="onNextClick()"
-            class="next mobile-only"
+            class="next"
             [disabled]="!tAndC"
         >
             <span [innerHTML]="'Let\`s get started' | translate:'getStarted'"></span>
