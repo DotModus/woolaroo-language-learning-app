@@ -6,9 +6,9 @@ import {
   EventEmitter,
   OnDestroy, ElementRef, InjectionToken, Inject, Input
 } from '@angular/core';
-import { canvasToBlob } from 'util/image';
-import { cameraStreamIsAvailable } from 'util/camera';
-import {getLogger} from 'util/logging';
+import { canvasToBlob } from '../../util/image';
+import { cameraStreamIsAvailable } from '../../util/camera';
+import { getLogger } from '../../util/logging';
 
 interface CameraPreviewConfig {
   resizeDelay: number;

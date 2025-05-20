@@ -12,7 +12,6 @@ import {
 	CameraPreviewComponent,
 	CameraPreviewStatus,
 } from "../../components/camera-preview/camera-preview";
-import { CapturePopUpComponent } from "../../components/capture-popup/capture-popup";
 import { ErrorPopUpComponent } from "../../components/error-popup/error-popup";
 import { ANALYTICS_SERVICE, IAnalyticsService } from "../../services/analytics";
 import {
@@ -25,15 +24,11 @@ import { SessionService } from "../../services/session";
 import { addOpenedListener } from "../../util/dialog";
 import { I18nService } from "../../i18n/i18n.service";
 import { IProfileService, PROFILE_SERVICE } from "../../services/profile";
-import { getLogger } from "../../util/logging";
 import AxL from "../../external/axl";
 import { AxlService } from "../../services/axl.service";
 import {
-	EndangeredLanguage,
 	EndangeredLanguageService,
 } from "../../services/endangered-language";
-
-const logger = getLogger("CapturePageComponent");
 
 export class ImageLoaderPageBase {
 	constructor(
@@ -227,6 +222,7 @@ export class CapturePageComponent
 		this.sessionService.currentSession.currentModal = loadingPopUp;
 
 		this.analyticsService.logPageView(this.router.url, "Capture");
+		console.log("Camera preview:", this.cameraPreview);
 		if (!this.cameraPreview) {
 			// Close the loading popup since camera failed
 			if (loadingPopUp) {
@@ -250,6 +246,9 @@ export class CapturePageComponent
 				}
 			},
 			(err) => {
+
+				console.log("Error starting camera", err);
+
 				// Close the loading popup since camera failed
 				if (loadingPopUp) {
 					loadingPopUp.close();

@@ -213,12 +213,15 @@ export class IntroAboutPageComponent implements AfterViewInit {
 		this.sidenavOpen = false;
 	}
 
-	onViewTermsClick() {
-		this.router.navigateByUrl(AppRoutes.TermsAndConditions, {replaceUrl: true});
-	}
-
 	onTermsToggled() {
 		this.tAndC = !this.tAndC;
+	}
+
+	openTermsAndConditions(event: Event) {
+		event.preventDefault();
+		event.stopPropagation();
+		this.axl.navigateExternalLink(AxL.ChildToHost.NAVIGATE, AppRoutes.TermsAndConditions);
+		window.open(AppRoutes.TermsAndConditions, '_blank');
 	}
 
 	nextPage(profile: Profile | null = null) {

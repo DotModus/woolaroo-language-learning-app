@@ -118,7 +118,7 @@ export class FeedbackPageComponent implements AfterViewInit {
     ev.stopPropagation();
     ev.preventDefault();
     // Navigate to capture page without adding to browser history
-    this.router.navigateByUrl(AppRoutes.CaptureImage, {
+    this.router.navigateByUrl(AppRoutes.IntroAbout, {
       replaceUrl: true // Replace current URL to prevent adding to browser history
     });
   }
