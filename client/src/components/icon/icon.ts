@@ -52,7 +52,8 @@ export class IconComponent {
 		switch: '360.svg',
 	  partner_link:'partner-link.svg',
       expand_more: 'expand_more.svg',
-      check: 'check.svg'
+		check: 'check.svg',
+	  camera: 'camera_black.svg',
     };
     for (const iconID of Object.keys(icons)) {
       this.iconRegistry.addSvgIcon(iconID, this.domSanitizer.bypassSecurityTrustResourceUrl(baseUrl + icons[iconID]));

@@ -219,7 +219,9 @@ export class IntroAboutPageComponent implements AfterViewInit {
 
 	openTermsAndConditions(event: Event) {
 		event.preventDefault();
-		this.router.navigateByUrl(AppRoutes.TermsAndConditions, {replaceUrl: true});
+		event.stopPropagation();
+		this.axl.navigateExternalLink(AxL.ChildToHost.NAVIGATE, AppRoutes.TermsAndConditions);
+		window.open(AppRoutes.TermsAndConditions, '_blank');
 	}
 
 	nextPage(profile: Profile | null = null) {

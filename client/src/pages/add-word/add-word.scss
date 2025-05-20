@@ -54,6 +54,8 @@ mat-toolbar {
   justify-content: space-between;
   align-items: center;
   padding: 0 8px;
+  border: none;
+  box-shadow: none;
 
   // Close button
   button.close {
@@ -61,7 +63,7 @@ mat-toolbar {
     background: transparent;
     border: none;
     cursor: pointer;
-    padding: 8px;
+    padding: 0px;
     flex: 0 0 auto;
     position: absolute;
     left: 8px;
