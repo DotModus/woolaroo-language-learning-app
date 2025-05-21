@@ -407,7 +407,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 	}
 
 	onViewLanguageClick() {
-		this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: "view language" });
+		this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: "view language", label: this.endangeredLanguageService.currentLanguage?.name });
 		this.bottomSheetService.openViewLanguage();
 	}
 

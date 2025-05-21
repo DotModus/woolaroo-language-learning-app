@@ -240,7 +240,7 @@ export class ChangeLanguagePageComponent implements AfterViewInit {
 		if (e.region === "all" && e.language === null) {
 			_endangeredLanguages = this.allLanguages;
 			this.selectedRegion = 'All Regions';
-			this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: `choose region - all` });
+			this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: `choose region`, label: 'all' });
 		} else if (
 			e.region !== "none" &&
 			e.region !== "" &&
@@ -250,7 +250,7 @@ export class ChangeLanguagePageComponent implements AfterViewInit {
 				(lan) => (typeof lan.region === 'string' ? lan.region.toLowerCase() : lan.region) === e.region.toLowerCase()
 			);
 			this.selectedRegion = this.allRegions.find(r => r.code === e.region)?.name || e.region;
-			this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: `choose region - ${e.region.toLowerCase()}` });
+			this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: `choose region`, label: e.region.toLowerCase() });
 		} else if (
 			e.language !== "none" &&
 			e.language !== "" &&

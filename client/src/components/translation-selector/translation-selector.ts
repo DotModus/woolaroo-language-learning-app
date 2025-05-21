@@ -141,7 +141,7 @@ export class TranslationSelectorComponent {
 			return;
 		}
 		try {
-		this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: "click audio icon" });
+		this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: "click audio icon", label: this.currentLanguage });
 		if (!this.audioPlayer || !this.audioPlayer.nativeElement) {
 			logger.warn("Audio player not initialized");
 			return;
@@ -227,7 +227,7 @@ export class TranslationSelectorComponent {
 	}
 
 	onShareClick() {
-		this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: "click share button" });
+		this.axl.sendAxlMessage(AxL.ChildToHost.TRACK, { action: "click share button", label: this.currentLanguage });
 
 		// Only proceed if there's a selected word and translation
 		if (!this.selectedWordVisible || !this.selectedWord || !this.displayTranslation?.translation) {
