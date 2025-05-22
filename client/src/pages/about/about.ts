@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IAnalyticsService, ANALYTICS_SERVICE } from '../../services/analytics';
+import { AppRoutes } from '../../app/routes';
 
 @Component({
   selector: 'app-page-about',
@@ -23,6 +24,8 @@ export class AboutPageComponent implements AfterViewInit {
 
   onCloseClick(ev: MouseEvent) {
     ev.stopPropagation();
-    this.router.navigate([".."], {relativeTo: this.route})
+    this.router.navigateByUrl(AppRoutes.CaptureImage, {
+      replaceUrl: true
+    });
   }
 }

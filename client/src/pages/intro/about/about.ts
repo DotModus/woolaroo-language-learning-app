@@ -220,8 +220,8 @@ export class IntroAboutPageComponent implements AfterViewInit {
 	openTermsAndConditions(event: Event) {
 		event.preventDefault();
 		event.stopPropagation();
-		this.axl.navigateExternalLink(AxL.ChildToHost.NAVIGATE, AppRoutes.TermsAndConditions);
-		window.open(AppRoutes.TermsAndConditions, '_blank');
+		this.axl.navigateExternalLink(AxL.ChildToHost.NAVIGATE, 'https://policies.google.com/privacy?hl=en');
+		window.open('https://policies.google.com/privacy?hl=en', '_blank');
 	}
 
 	nextPage(profile: Profile | null = null) {

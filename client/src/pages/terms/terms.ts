@@ -36,7 +36,7 @@ export class TermsPageComponent implements AfterViewInit {
 
   onCloseClick(ev: MouseEvent) {
     ev.stopPropagation();
-    this.router.navigateByUrl(AppRoutes.IntroAbout, {
+    this.router.navigateByUrl(AppRoutes.CaptureImage, {
       replaceUrl: true
     });
   }

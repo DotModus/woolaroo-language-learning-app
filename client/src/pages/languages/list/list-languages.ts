@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { I18nService } from '../../../i18n/i18n.service';
 import { EndangeredLanguage, EndangeredLanguageService } from '../../../services/endangered-language';
+import { AppRoutes } from '../../../app/routes';
 
 interface Region {
   code: string;
@@ -76,7 +77,10 @@ export class ListLanguagesPageComponent implements OnInit {
 
   onCloseClick(ev: MouseEvent) {
     ev.stopPropagation();
-    this.router.navigate([".."], { relativeTo: this.route, replaceUrl: true });
+	  // this.router.navigate([".."], { relativeTo: this.route, replaceUrl: true });
+	  this.router.navigateByUrl(AppRoutes.CaptureImage, {
+      replaceUrl: true
+    });
   }
 
   onLanguageClick(code: string) {
