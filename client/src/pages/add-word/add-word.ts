@@ -155,7 +155,7 @@ export class AddWordPageComponent implements AfterViewInit {
 		ev.preventDefault();
 		ev.stopPropagation();
 		// Navigate to capture page without adding to browser history
-		this.router.navigateByUrl(AppRoutes.IntroAbout, {
+		this.router.navigateByUrl(AppRoutes.CaptureImage, {
 			replaceUrl: true
 		});
 	}

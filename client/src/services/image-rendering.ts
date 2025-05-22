@@ -4,6 +4,17 @@ import { canvasToBlob } from "../util/image";
 import { I18nService, Language } from "../i18n/i18n.service";
 import { EndangeredLanguage } from "./endangered-language";
 
+// Add FontFace type declaration
+declare global {
+	interface FontFace {
+		load(): Promise<FontFace>;
+	}
+	interface FontFaceSet {
+		add(font: FontFace): void;
+		check(font: string): boolean;
+	}
+}
+
 interface ImageRenderingConfig {
 	dropShadowDistance: number;
 	dropShadowColor: string;
@@ -82,6 +93,29 @@ export class ImageRenderingService {
 		});
 	}
 
+	private static async _loadFont(): Promise<void> {
+		try {
+			// Check if font is already loaded
+			if (document.fonts.check('1em "Google Sans"')) {
+				return;
+			}
+
+			// Load the font
+			const font = new FontFace('Google Sans', 'url(https://fonts.gstatic.com/s/googlesans/v58/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPiIUvaYr.woff2)', {
+				weight: '400',
+				style: 'normal'
+			});
+
+			// Wait for the font to load
+			const loadedFont = await font.load();
+			document.fonts.add(loadedFont);
+		} catch (ex) {
+			console.error('Failed to load Google Sans font:', ex);
+			// Fallback to system font if Google Sans fails to load
+			return;
+		}
+	}
+
 	constructor(
 		@Inject(IMAGE_RENDERING_CONFIG) private config: ImageRenderingConfig,
 		private i18n: I18nService
@@ -95,6 +129,9 @@ export class ImageRenderingService {
 		width: number,
 		height: number
 	): Promise<Blob> {
+		// Load font first
+		await ImageRenderingService._loadFont();
+
 		const imageURL = URL.createObjectURL(imageData);
 		let image: HTMLImageElement;
 		try {
@@ -105,9 +142,15 @@ export class ImageRenderingService {
 			throw ex;
 		}
 
+		// Fixed dimensions for the canvas
+		const CANVAS_WIDTH = 512;
+		const CANVAS_HEIGHT = 640;
+		const TOP_SECTION_HEIGHT = 512;
+		const BOTTOM_SECTION_HEIGHT = 128;
+
 		const canvas: HTMLCanvasElement = document.createElement("canvas");
-		canvas.width = width;
-		canvas.height = height;
+		canvas.width = CANVAS_WIDTH;
+		canvas.height = CANVAS_HEIGHT;
 		const imageWidth = image.naturalWidth;
 		const imageHeight = image.naturalHeight;
 		const context = canvas.getContext("2d");
@@ -116,65 +159,62 @@ export class ImageRenderingService {
 			throw new Error("Unable to create canvas context");
 		}
 
-		// multiplier to scale canvas down to contain image dimensions
-		const imageScale = Math.min(imageWidth / width, imageHeight / height);
-		const croppedImageWidth = Math.round(width * imageScale);
-		const croppedImageHeight = Math.round(height * imageScale);
-		const croppedImageDx = (imageWidth - croppedImageWidth) * 0.5;
-		const croppedImageDy = (imageHeight - croppedImageHeight) * 0.5;
+		// Calculate scale to fit image within the top section (512x512)
+		const imageScale = Math.min(
+			TOP_SECTION_HEIGHT / imageHeight,
+			CANVAS_WIDTH / imageWidth
+		);
+		const scaledImageWidth = Math.round(imageWidth * imageScale);
+		const scaledImageHeight = Math.round(imageHeight * imageScale);
 
+		// Center the image in the top section
+		const imageX = (CANVAS_WIDTH - scaledImageWidth) / 2;
+		const imageY = (TOP_SECTION_HEIGHT - scaledImageHeight) / 2;
+
+		// Draw the image
 		context.drawImage(
 			image,
-			croppedImageDx,
-			croppedImageDy,
-			croppedImageWidth,
-			croppedImageHeight,
 			0,
 			0,
-			width,
-			height
+			imageWidth,
+			imageHeight,
+			imageX,
+			imageY,
+			scaledImageWidth,
+			scaledImageHeight
 		);
 
-		// Add semi-transparent black overlay with 0.5 opacity
-		context.fillStyle = 'rgba(0, 0, 0, 0.5)'; // Black with 0.5 opacity
-		context.fillRect(0, 0, width, height);
+		// Add semi-transparent black overlay to the top section only
+		context.fillStyle = 'rgba(0, 0, 0, 0.5)';
+		context.fillRect(0, 0, CANVAS_WIDTH, TOP_SECTION_HEIGHT);
 
-		// Calculate scale for rendering
-		const scale = Math.min(
-			width / window.innerWidth,
-			height / window.innerHeight
-		);
-
-		// Add full-width area at the bottom with height of 420px
-		const bottomAreaHeight = width <= 480 ? 110 : 260; // Reduced by half on mobile
-		const bottomAreaY = height - bottomAreaHeight;
-
-		// Set the background color to #F0F2E7
+		// Add bottom section with light background
 		context.fillStyle = '#F0F2E7';
-		context.fillRect(0, bottomAreaY, width, bottomAreaHeight);
+		context.fillRect(0, TOP_SECTION_HEIGHT, CANVAS_WIDTH, BOTTOM_SECTION_HEIGHT);
 
-		// Add a subtle divider line at the top of the bottom area
+		// Add a subtle divider line
 		context.strokeStyle = 'rgba(0, 0, 0, 0.2)';
 		context.lineWidth = 1;
 		context.beginPath();
-		context.moveTo(0, bottomAreaY);
-		context.lineTo(width, bottomAreaY);
+		context.moveTo(0, TOP_SECTION_HEIGHT);
+		context.lineTo(CANVAS_WIDTH, TOP_SECTION_HEIGHT);
 		context.stroke();
 
 		if (!word) {
 			return canvasToBlob(canvas);
 		}
 
-		context.setTransform(scale, 0, 0, scale, 0, 0);
+		// Calculate scale for text rendering
+		const scale = 1; // No need to scale since we're using fixed dimensions
 
-		// Adjust text sizes based on screen width
-		const textScale = width <= 480 ? 0.4 : 0.85; // Further reduced text size on mobile
-		this.config.translation.font = width <= 480 ? "400 28px Arial" : "400 48px Arial"; // Reduced weight, increased size
-		this.config.transliteration.font = width <= 480 ? "16px Arial" : "30px Arial";
-		this.config.languages.font = width <= 480 ? "14px Arial" : "24px Arial";
-		this.config.originalWord.font = width <= 480 ? "400 32px Arial" : "400 52px Arial"; // Reduced weight, increased size
+		// Adjust text sizes for fixed dimensions
+		this.config.translation.font = "400 42px 'Google Sans'";
+		this.config.transliteration.font = "26px 'Google Sans'";
+		this.config.languages.font = "20px 'Google Sans'";
+		this.config.originalWord.font = "400 46px 'Google Sans'";
 
 		// Scale line heights and spacing
+		const textScale = 1; // No need to scale since we're using fixed dimensions
 		this.config.translation.lineHeight *= textScale;
 		this.config.translation.lineSpacing *= textScale;
 		this.config.translation.marginBottom *= textScale;
@@ -188,26 +228,31 @@ export class ImageRenderingService {
 		this.config.originalWord.lineSpacing *= textScale;
 		this.config.originalWord.marginBottom *= textScale;
 
-		// Further reduce padding on mobile
-		this.config.padding = width <= 480 ? 4 : 32;
+		// Set padding for text
+		this.config.padding = 24;
 
-		// Render translations first (from top)
+		// Render translations in the top section
 		this._renderTranslations(
 			context,
 			word,
 			sourceLanguage,
 			endangeredLanguage,
-			width,
-			height - bottomAreaHeight,
+			CANVAS_WIDTH,
+			TOP_SECTION_HEIGHT,
 			scale
 		);
 
-		// Render logo and attribution in the bottom area
-		await this._renderBottomAreaContent(context, width, scale, bottomAreaY, bottomAreaHeight);
+		// Render bottom area content
+		await this._renderBottomAreaContent(
+			context,
+			CANVAS_WIDTH,
+			scale,
+			TOP_SECTION_HEIGHT,
+			BOTTOM_SECTION_HEIGHT
+		);
 
 		// Convert canvas to blob
 		const resultBlob = await canvasToBlob(canvas);
-
 		return resultBlob;
 	}
 
@@ -227,8 +272,8 @@ export class ImageRenderingService {
 		// Calculate bottom area height based on screen width
 		const bottomAreaHeight = width <= 480 ? 110 : 260;
 
-		// Limit text to 90% of the screen width on mobile, 60% on desktop
-		const textAreaWidth = width <= 480 ? width * 0.9 : width * 0.6;
+		// Use fixed width for text area since canvas has fixed dimensions
+		const textAreaWidth = 512 * 0.9;
 		const maxTextWidth = (textAreaWidth - 2 * this.config.padding) / scale;
 
 		// The correct order of elements from top to bottom is:
@@ -245,7 +290,10 @@ export class ImageRenderingService {
 		if (word.translation && word.translation !== word.transliteration) {
 			elements.push({
 				text: word.translation.charAt(0).toUpperCase() + word.translation.slice(1),
-				config: this.config.translation
+				config: {
+					...this.config.translation,
+					marginBottom: this.config.translation.marginBottom * 0.6 // Reduce space before transliteration
+				}
 			});
 		}
 
@@ -253,7 +301,10 @@ export class ImageRenderingService {
 		if (word.transliteration) {
 			elements.push({
 				text: word.transliteration,
-				config: this.config.transliteration
+				config: {
+					...this.config.transliteration,
+					marginBottom: this.config.transliteration.marginBottom * 0.6 // Reduce space before language text
+				}
 			});
 		}
 
@@ -261,24 +312,35 @@ export class ImageRenderingService {
 		const introText = `It's the ${endangeredLanguage.name} word for`;
 		elements.push({
 			text: introText,
-			config: this.config.languages
+			config: {
+				...this.config.languages,
+				font: "300 22px 'Google Sans'", // Reduced weight to 300, increased size from 20px to 22px
+				lineHeight: this.config.languages.lineHeight,
+				lineSpacing: this.config.languages.lineSpacing,
+				marginBottom: this.config.languages.marginBottom
+			}
 		});
 
 		// 4. Original word (English)
 		const originalWord = word.original || word.english;
 		elements.push({
 			text: originalWord.charAt(0).toUpperCase() + originalWord.slice(1),
-			config: this.config.originalWord
+			config: {
+				...this.config.originalWord,
+				marginBottom: this.config.originalWord.marginBottom * 0.4 // Consistent spacing
+			}
 		});
 
 		// 5. Language description if available
 		if (endangeredLanguage.shortDescriptions && endangeredLanguage.shortDescriptions['en']) {
-			// Create a modified config for language description with increased line height and spacing
+			// Create a modified config for language description with reduced size and spacing
 			const descriptionConfig = {
 				...this.config.languages,
-				lineHeight: this.config.languages.lineHeight * 1.5, // Increase line height by 50%
-				lineSpacing: this.config.languages.lineSpacing * 2, // Double the line spacing
-				marginBottom: this.config.languages.marginBottom * 1.5 // Increase bottom margin
+				font: "16px 'Google Sans'",
+				lineHeight: this.config.languages.lineHeight * 0.8,
+				lineSpacing: this.config.languages.lineSpacing * 0.8,
+				marginBottom: this.config.languages.marginBottom * 0.4, // Match the spacing of English word
+				marginTop: 0 // Remove any extra top margin
 			};
 
 			elements.push({
@@ -299,19 +361,19 @@ export class ImageRenderingService {
 		}
 
 		// Calculate available height (excluding top and bottom padding)
-		const availableHeight = (height - bottomAreaHeight - (this.config.padding * 4)) / scale;
+		const availableHeight = (height - 128 - (this.config.padding * 4)) / scale; // 128 is BOTTOM_SECTION_HEIGHT
 
 		// Calculate equal spacing between elements
-		const equalSpacing = (availableHeight - totalElementHeight) / (elements.length - 1);
+		const equalSpacing = (availableHeight - totalElementHeight) / (elements.length - 1) * 0.8; // Reduced spacing by 20%
 
 		// Render all elements with equal spacing
-		let currentY = y;
+		let currentY = (this.config.padding * 2) / scale;
 		for (const element of elements) {
 			currentY = this._renderTextFromTop(
 				context,
 				element.text,
 				element.config,
-				centerX,
+				256 / scale, // 256 is half of CANVAS_WIDTH (512)
 				currentY,
 				maxTextWidth
 			);
@@ -389,7 +451,7 @@ export class ImageRenderingService {
 			);
 
 			// Calculate the desired width based on screen size
-			const desiredWidth = width <= 480 ? width * 0.3 : width * 0.15; // 30% on mobile, 15% on desktop/tablet
+			const desiredWidth = width <= 480 ? width * 0.4 : width * 0.25; // Increased from 0.3/0.15 to 0.4/0.25
 
 			// Calculate scales for both images to match the desired width
 			const logoScale = desiredWidth / logoImage.naturalWidth;
@@ -425,9 +487,9 @@ export class ImageRenderingService {
 			context.drawImage(tagImage, tagX, tagY, desiredWidth, tagHeight);
 
 			// Add Woolaroo URL text on the right side
-			context.font = width <= 480 ? "500 24px Arial" : "500 32px Arial"; // Increased size and added medium weight
+			context.font = width <= 480 ? "400 16px 'Google Sans'" : "400 18px 'Google Sans'"; // Reduced size and weight
 			context.fillStyle = "#1a73e8"; // Google blue color
-			const urlText = "goo.gle/Woolaroo";
+			const urlText = "g.co/woolaroo";
 			const textMetrics = context.measureText(urlText);
 			const rightPadding = width <= 480 ? width * 0.05 : width * 0.03; // Same padding as left side
 			const textX = width - textMetrics.width - rightPadding;
@@ -453,9 +515,9 @@ export class ImageRenderingService {
 			context.fillText("Google Arts & Culture", width * 0.05, centerY + 20);
 
 			// Add Woolaroo URL text on the right side
-			context.font = "500 32px Arial"; // Increased size and added medium weight
+			context.font = "400 18px 'Google Sans'"; // Reduced size and weight
 			context.fillStyle = "#1a73e8"; // Google blue color
-			const urlText = "goo.gle/Woolaroo";
+			const urlText = "g.co/woolaroo";
 			const textMetrics = context.measureText(urlText);
 			const textX = width - textMetrics.width - (width * 0.03);
 			context.fillText(urlText, textX, centerY);
