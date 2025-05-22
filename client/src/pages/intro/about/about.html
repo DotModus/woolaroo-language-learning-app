@@ -3,77 +3,77 @@
     <app-sidenav (menuClosed)="onSidenavClosed()"></app-sidenav>
   </mat-sidenav>
   <mat-sidenav-content>
-<app-toolbar>
-    @if (getLanguageDirection() === 'ltr') {
-      <button (click)="onOpenMenuClick()" class="open-menu" aria-label="Open Menu" slot="start" [disabled]="!tAndC">
-          <app-icon icon="menu"></app-icon>
-      </button>
-    } @else {
-      <button (click)="onOpenMenuClick()" class="open-menu" aria-label="Open Menu" slot="end" [disabled]="!tAndC">
-          <app-icon icon="menu"></app-icon>
-      </button>
-    }
-</app-toolbar>
+    <app-toolbar>
+      @if (getLanguageDirection() === 'ltr') {
+        <button (click)="onOpenMenuClick()" class="open-menu" aria-label="Open Menu" slot="start" [disabled]="!tAndC">
+            <app-icon icon="menu"></app-icon>
+        </button>
+      } @else {
+        <button (click)="onOpenMenuClick()" class="open-menu" aria-label="Open Menu" slot="end" [disabled]="!tAndC">
+            <app-icon icon="menu"></app-icon>
+        </button>
+      }
+    </app-toolbar>
 
-<div class="content-container">
-    <div class="section top-section">
-        <app-logo attributionEnabled="true"></app-logo>
-    </div>
+    <div class="content-wrapper">
+      <div class="content-container">
+        <div class="section top-section">
+            <app-logo attributionEnabled="true"></app-logo>
+        </div>
 
-    <div class="section main-section">
-        <div class="intro">
+        <div class="section main-section">
+            <div class="intro">
+                <p
+                    class="mat-body-1"
+                    [innerHTML]="'Explore endangered languages using AI. <br/> Let your camera translate the world around you' | translate: 'exploreEndangeredLanguages'"
+                ></p>
+            </div>
+        </div>
+
+        <div class="section bottom-section">
+            <div class="custom-checkbox-container">
+                <input type="checkbox" id="terms-checkbox" [(ngModel)]="tAndC" class="custom-checkbox-input">
+                <label for="terms-checkbox" class="custom-checkbox-label"
+                    (click)="openTermsAndConditions($event)"
+                    [innerHTML]="'Accept terms & conditions' | translate: 't_and_c'"></label>
+            </div>
+
+            <div class="actions-container">
+                <div class="feature-box desktop-only" (appFileUpload)="onImageUploaded($event)" [class.disabled]="!tAndC" accept="image/*">
+                    <div class="feature-box-content">
+                        <div class="feature-icon-container">
+                            <app-icon icon="photo_library_black" class="feature-icon"></app-icon>
+                        </div>
+                        <p class="feature-text" [innerHTML]="'Upload a picture to discover new words' | translate: 'uploadPicture'"></p>
+                    </div>
+                </div>
+
+                <div class="feature-box desktop-only" (click)="onNextClick()" [class.disabled]="!tAndC">
+                    <div class="feature-box-content">
+                        <div class="feature-icon-container">
+                            <app-icon icon="camera" class="feature-icon"></app-icon>
+                        </div>
+                        <p class="feature-text" [innerHTML]="'Take a picture with your camera' | translate:'takePictureWithCamera'"></p>
+                    </div>
+                </div>
+
+                <button
+                    mat-flat-button
+                    color="primary"
+                    (click)="onNextClick()"
+                    class="next mobile-only"
+                    [disabled]="!tAndC"
+                >
+                    <span [innerHTML]="'Let\`s get started' | translate:'getStarted'"></span>
+                </button>
+            </div>
+
             <p
-                class="mat-body-1"
-                [innerHTML]="'Explore endangered languages using AI. <br/> Let your camera translate the world around you' | translate: 'exploreEndangeredLanguages'"
+                class="mat-body-1 feedback"
+                [innerHTML]="'This is an educational experiment and translations have been provided by our partners.' | translate: 'introFeedback'"
             ></p>
         </div>
+      </div>
     </div>
-
-    <div class="section bottom-section">
-        <!-- Checkbox container moved above the feature box -->
-        <div class="custom-checkbox-container">
-            <input type="checkbox" id="terms-checkbox" [(ngModel)]="tAndC" class="custom-checkbox-input">
-            <label for="terms-checkbox" class="custom-checkbox-label"
-                (click)="openTermsAndConditions($event)"
-                [innerHTML]="'Accept terms & conditions' | translate: 't_and_c'"></label>
-        </div>
-
-        <div class="actions-container">
-            <div class="feature-box desktop-only" (appFileUpload)="onImageUploaded($event)" [class.disabled]="!tAndC" accept="image/*">
-                <div class="feature-box-content">
-                    <div class="feature-icon-container">
-                        <app-icon icon="photo_library_black" class="feature-icon"></app-icon>
-                    </div>
-                    <p class="feature-text" [innerHTML]="'Upload a picture to discover new words' | translate: 'uploadPicture'"></p>
-                </div>
-            </div>
-
-            <div class="feature-box desktop-only" (click)="onNextClick()" [class.disabled]="!tAndC">
-                <div class="feature-box-content">
-                    <div class="feature-icon-container">
-                        <app-icon icon="camera" class="feature-icon"></app-icon>
-                    </div>
-                    <p class="feature-text" [innerHTML]="'Take a picture with your camera' | translate:'takePictureWithCamera'"></p>
-                </div>
-            </div>
-
-            <button
-                mat-flat-button
-                color="primary"
-                (click)="onNextClick()"
-                class="next mobile-only"
-                [disabled]="!tAndC"
-            >
-                <span [innerHTML]="'Let\`s get started' | translate:'getStarted'"></span>
-            </button>
-        </div>
-
-        <p
-            class="mat-body-1 feedback"
-            [innerHTML]="'This is an educational experiment and translations have been provided by our partners.' | translate: 'introFeedback'"
-        ></p>
-    </div>
-</div>
-
- </mat-sidenav-content>
+  </mat-sidenav-content>
 </mat-sidenav-container>

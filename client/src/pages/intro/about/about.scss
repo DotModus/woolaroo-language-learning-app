@@ -34,15 +34,24 @@ mat-sidenav-content {
   background-color: mat.get-color-from-palette($app-inverted, '900');
 }
 
-.content-container {
+.content-wrapper {
   display: flex;
   flex-direction: column;
   flex: 1;
+  min-height: calc(100vh - 64px); // Subtract header height
+  justify-content: center; // Center the content group vertically
+  align-items: center;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
   padding: 0 20px;
   box-sizing: border-box;
+  gap: 40px; // Equal spacing between all sections
 }
 
 .section {
@@ -54,7 +63,7 @@ mat-sidenav-content {
 
 .top-section {
   flex: 0 0 auto;
-  padding-top: 20px;
+  padding-top: 0;
 }
 
 .main-section {
@@ -64,7 +73,7 @@ mat-sidenav-content {
   justify-content: center;
 
   @media (max-width: 767px) {
-    flex: 2 1 auto; // Takes more space on mobile
+    flex: 2 1 auto;
   }
 }
 
@@ -74,7 +83,7 @@ mat-sidenav-content {
   flex-direction: column;
   justify-content: center;
   gap: 20px;
-  padding-bottom: 30px;
+  padding-bottom: 0;
 
   @media (max-width: 767px) {
     flex: 1 1 auto;
@@ -83,7 +92,7 @@ mat-sidenav-content {
 
 app-logo {
   height: 60px;
-  margin: 80px 0;
+  margin: 0;
 }
 
 // Open menu button in toolbar
@@ -110,7 +119,7 @@ app-logo {
     font-size: 22px;
     line-height: 32px;
     letter-spacing: -0.02em;
-    font-weight: 300;
+    font-weight: 400;
     text-shadow: none !important;
 
     @media (max-width: 767px) {

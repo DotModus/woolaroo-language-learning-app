@@ -3,25 +3,25 @@
     <app-sidenav (menuClosed)="onSidenavClosed()"></app-sidenav>
   </mat-sidenav>
   <mat-sidenav-content>
-
     <app-toolbar>
-		@if (getSlot() === 'start') {
-			<button slot="start" class="open-menu" (click)="onOpenMenuClick()">
-				<app-icon icon="menu"></app-icon>
-			</button>
-		} @else {
-			<button slot="end" class="open-menu" (click)="onOpenMenuClick()">
-				<app-icon icon="menu"></app-icon>
-			</button>
-		}
+      @if (getSlot() === 'start') {
+        <button slot="start" class="open-menu" (click)="onOpenMenuClick()">
+          <app-icon icon="menu"></app-icon>
+        </button>
+      } @else {
+        <button slot="end" class="open-menu" (click)="onOpenMenuClick()">
+          <app-icon icon="menu"></app-icon>
+        </button>
+      }
     </app-toolbar>
 
-	 <app-image-display [imageUrl]="backgroundImageURL" [altText]="'Captured image'">
-	 </app-image-display>
+    <div class="content-wrapper">
+      <app-image-display [imageUrl]="backgroundImageURL" [altText]="'Captured image'">
+      </app-image-display>
 
-	 @if (translations && translations.length > 0) {
-    <div class="translation-container">
-        <app-translation-selector
+      @if (translations && translations.length > 0) {
+        <div class="translation-container">
+          <app-translation-selector
             [translations]="translations"
             [defaultSelectedWordIndex]="defaultSelectedWordIndex"
             [currentLanguage]="currentLanguage"
@@ -30,31 +30,32 @@
             (wordShared)="onWordShared($event)"
             (selectedWordChanged)="onSelectedWordChanged($event)"
             (manualEntrySelected)="onManualEntrySelected()">
-        </app-translation-selector>
-    </div>
-    <div class="language-controls">
-        <button class="language-button" (click)="onSwitchLanguageClick()">
+          </app-translation-selector>
+        </div>
+        <div class="language-controls">
+          <button class="language-button" (click)="onSwitchLanguageClick()">
             <span [innerHTML]="'Change language'|translate:'switchLanguage'"></span>
-        </button>
-        <button class="language-button" (click)="onViewLanguageClick()">
-           <span [innerHTML]="'About' | translate:'about'"></span>{{currentLanguage}}
-        </button>
-    </div>
-} @else {
-    <div class="no-translations">
-        <div class="no-translations-content">
+          </button>
+          <button class="language-button" (click)="onViewLanguageClick()">
+            <span [innerHTML]="'About' | translate:'about'"></span>{{currentLanguage}}
+          </button>
+        </div>
+      } @else {
+        <div class="no-translations">
+          <div class="no-translations-content">
             <span>Sorry, we can't translate anything in this photo. Pick a different photo or switch language.</span>
-			</div>
-    </div>
+          </div>
+        </div>
 
-	  <div class="language-controls">
-        <button class="language-button" (click)="onSwitchLanguageClick()">
+        <div class="language-controls">
+          <button class="language-button" (click)="onSwitchLanguageClick()">
             <span [innerHTML]="'Change language'|translate:'switchLanguage'"></span>
-        </button>
-        <button class="language-button" (click)="onViewLanguageClick()">
-           <span [innerHTML]="'About' | translate:'about'"></span>{{currentLanguage}}
-        </button>
+          </button>
+          <button class="language-button" (click)="onViewLanguageClick()">
+            <span [innerHTML]="'About' | translate:'about'"></span>{{currentLanguage}}
+          </button>
+        </div>
+      }
     </div>
-}
   </mat-sidenav-content>
 </mat-sidenav-container>

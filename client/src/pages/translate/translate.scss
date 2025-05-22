@@ -49,6 +49,24 @@ mat-sidenav-container {
 	}
 }
 
+mat-sidenav-content {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	padding-top: 32px; // Header height
+	align-items: center; // Center children horizontally
+	justify-content: center; // Center children vertically
+}
+
+.content-wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+	padding: 0 16px;
+	box-sizing: border-box;
+}
+
 // Add RTL support for open menu button
 :host-context([dir="rtl"]) {
 	mat-toolbar {
@@ -65,7 +83,7 @@ app-image-display {
 	position: relative;
 	z-index: 1;
 	display: block;
-	margin: 60px auto 16px;  // Added top margin to account for header
+	margin: 0 auto;
 	width: 100%;
 	max-width: 540px;
 }
@@ -132,10 +150,13 @@ app-translation-selector {
 }
 
 mat-toolbar {
-	.back app-icon,
-	.submit-feedback app-icon {
-		@include directional;
-	}
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 1000;
+	background-color: #4F4539;
+	height: 64px; // Explicitly set header height
 }
 
 .next {
@@ -314,8 +335,7 @@ app-toolbar {
 .no-translations {
 	flex: 1 1 auto;
 	min-height: 200px;
-	margin-top: 120px;  // Reduced from 380px
-	margin-bottom: 12px;
+	margin: 0 auto 12px;  // Removed top margin since we're centering
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -323,30 +343,30 @@ app-toolbar {
 
 	// Adjust positioning for desktop
 	@media only screen and (min-width: 1024px) {
-		margin-top: 140px;  // Reduced from 400px
+		margin: 0 auto 12px;  // Removed top margin
 	}
 
 	// Tablet positioning (portrait)
 	@media only screen and (min-width: 481px) and (max-width: 768px) {
-		margin-top: 100px;  // Reduced from 340px
+		margin: 0 auto 12px;  // Removed top margin
 		min-height: 190px;
 	}
 
 	// Tablet positioning (landscape)
 	@media only screen and (min-width: 769px) and (max-width: 1023px) {
-		margin-top: 120px;  // Reduced from 370px
+		margin: 0 auto 12px;  // Removed top margin
 		min-height: 190px;
 	}
 
 	// Adjust for smaller devices
 	@media only screen and (max-width: 480px) {
-		margin-top: 80px;  // Reduced from 300px
+		margin: 0 auto 12px;  // Removed top margin
 		min-height: 180px;
 	}
 
 	// Even smaller devices
 	@media only screen and (max-width: 360px) {
-		margin-top: 70px;  // Reduced from 270px
+		margin: 0 auto 12px;  // Removed top margin
 	}
 
 	.no-translations-content {
