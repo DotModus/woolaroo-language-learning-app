@@ -112,7 +112,6 @@ export class AddWordPageComponent implements AfterViewInit {
 			.then(
 				() => {
 					logger.log("Added word submitted");
-					this.location.back();
 					const snackbarCssClass = this.prevPageCssClass
 						? `${this.prevPageCssClass}-snack-bar`
 						: "";
@@ -133,9 +132,19 @@ export class AddWordPageComponent implements AfterViewInit {
 							)[0].parentNode as Element
 						).remove();
 					}, environment.components.snackBar.duration + 500);
+
+					// Reset form after successful submission
+					this.form.reset({
+						types: ["suggested"] // Reset to default value
+					});
+					// Reset form state
+					Object.keys(this.form.controls).forEach(key => {
+						this.form.get(key)?.setErrors(null);
+						this.form.get(key)?.markAsPristine();
+						this.form.get(key)?.markAsUntouched();
+					});
 				},
 				(err) => {
-
 					logger.warn("Failed adding word", err);
 					const errorMessage =
 						this.i18n.getTranslation("sendFeedbackError") ||
