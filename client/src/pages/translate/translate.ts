@@ -511,14 +511,6 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 						translation: selectedTranslation.translation,
 						language: endangeredLanguage.name,
 					}) || undefined;
-
-					// // Send share message through the AxL service
-					// this.axl.sendAxlMessage(AxL.ChildToHost.SHARE, {
-					// 	title: `Do you know ${endangeredLanguage.name}?`,
-					// 	text: `Do you know ${endangeredLanguage.name}?`,
-					// 	url: window.location.href
-					// });
-
 					share({
 						text: shareText,
 						title: shareTitle,
@@ -531,13 +523,21 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 							logger.warn("Error sharing image", ex);
 							if (ex instanceof NotSupportedError) {
 								// If sharing is not supported, show download dialog
-								this._downloadData = {
-									image: img,
-									filename: `woolaroo-translation-${selectedTranslation.original || selectedTranslation.english}.jpg`,
-								};
-								this.dialog.open(DownnloadDialog, {
-									data: this._downloadData,
+								// this._downloadData = {
+								// 	image: img,
+								// 	filename: `woolaroo-translation-${selectedTranslation.original || selectedTranslation.english}.jpg`,
+								// };
+								// this.dialog.open(DownnloadDialog, {
+								// 	data: this._downloadData,
+								// });
+
+								// // Send share message through the AxL service
+								this.axl.sendAxlMessage(AxL.ChildToHost.SHARE, {
+									title: `Do you know ${endangeredLanguage.name}?`,
+									text: `Do you know ${endangeredLanguage.name}?`,
+									url: window.location.href
 								});
+
 							}
 						}
 					);

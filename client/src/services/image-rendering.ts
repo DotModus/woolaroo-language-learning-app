@@ -489,7 +489,7 @@ export class ImageRenderingService {
 			// Add Woolaroo URL text on the right side
 			context.font = width <= 480 ? "400 16px 'Google Sans'" : "400 18px 'Google Sans'"; // Reduced size and weight
 			context.fillStyle = "#1a73e8"; // Google blue color
-			const urlText = "g.co/woolaroo";
+			const urlText = "goo.gl/woolaroo";
 			const textMetrics = context.measureText(urlText);
 			const rightPadding = width <= 480 ? width * 0.05 : width * 0.03; // Same padding as left side
 			const textX = width - textMetrics.width - rightPadding;
@@ -517,7 +517,7 @@ export class ImageRenderingService {
 			// Add Woolaroo URL text on the right side
 			context.font = "400 18px 'Google Sans'"; // Reduced size and weight
 			context.fillStyle = "#1a73e8"; // Google blue color
-			const urlText = "g.co/woolaroo";
+			const urlText = "goo.gl/woolaroo";
 			const textMetrics = context.measureText(urlText);
 			const textX = width - textMetrics.width - (width * 0.03);
 			context.fillText(urlText, textX, centerY);
