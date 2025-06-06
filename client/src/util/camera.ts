@@ -1,7 +1,6 @@
 import { AppRoutes } from '../app/routes';
 
 export function cameraStreamIsAvailable() {
-	console.log("navigator.mediaDevices", navigator.mediaDevices);
   return navigator.mediaDevices && navigator.mediaDevices.getUserMedia;
 }
 

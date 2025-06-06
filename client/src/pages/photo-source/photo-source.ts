@@ -48,15 +48,18 @@ export class PhotoSourcePageComponent extends ImageLoaderPageBase implements Aft
 
   onCaptureClick() {
     // Check camera availability first
-    if (!this.cameraIsAvailable) {
+	  if (!this.cameraIsAvailable) {
+		console.log("Camera is not available");
       const errorMessage = this.i18n.getTranslation("startCameraError") ||
-        "Camera access denied. To proceed, please enable camera permissions in your browser settings.";
-      const errorDialog = this.dialog.open(ErrorPopUpComponent, {
+		  "Camera access denied. To proceed, please enable camera permissions in your browser settings.";
+
+    this.dialog.open(ErrorPopUpComponent, {
         data: { message: errorMessage },
         panelClass: "capture-camera-error",
       });
       return;
-    }
+	  }
+	  console.log("Camera is available");
 
     this._profileService.loadProfile().then(
       profile => {
