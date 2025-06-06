@@ -49,7 +49,6 @@ export class PhotoSourcePageComponent extends ImageLoaderPageBase implements Aft
   onCaptureClick() {
     // Check camera availability first
 	  if (!this.cameraIsAvailable) {
-		console.log("Camera is not available");
       const errorMessage = this.i18n.getTranslation("startCameraError") ||
 		  "Camera access denied. To proceed, please enable camera permissions in your browser settings.";
 
@@ -59,7 +58,6 @@ export class PhotoSourcePageComponent extends ImageLoaderPageBase implements Aft
       });
       return;
 	  }
-	  console.log("Camera is available");
 
     this._profileService.loadProfile().then(
       profile => {
